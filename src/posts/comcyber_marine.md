@@ -224,7 +224,7 @@ Points clés identifiés :
 
 J'ai commencé à tester différentes modifications du paramètre agent_id, notamment en essayant d'**injecter des commandes bash**. Les premières tentatives ont généré des erreurs awk indiquant une syntaxe incorrecte.
 
-Après plusieurs ajustements de la syntaxe pour éliminer les erreurs, j'ai réussi à construire un **payload fonctionnelle** :
+Après plusieurs ajustements de la syntaxe pour éliminer les erreurs, j'ai réussi à construire une **payload fonctionnelle** :
 
 ```json
 {
@@ -255,5 +255,5 @@ Cette découverte a confirmé la possibilité d'**exploiter le endpoint /api/ref
 ```
 
 La réponse du serveur a révélé le flag : **RM{dfbc2fb4c76b315aa6fa06e5f35aef23b1da32f5}**
-&nbsp;
+
 Cette exploitation réussie de l'injection de commandes a permis de compléter le challenge de pentest web.

@@ -4,7 +4,7 @@ import profilePicture from "../assets/zapzProfilePicture.webp";
 import { FaExternalLinkAlt, FaCircle } from "react-icons/fa";
 
 const Hero = () => {
-    const HERO_CONTENT = "Software engineer en C et C++, enthusiast à l'idée de devenir reverse engineer. Je partage ici mes write-ups, mes projets et side projects. Très intéressé par le game hacking et les CTF, j'aimerais un jour mettre mes compétences au service d'une cause utile";
+    const HERO_CONTENT = "Software engineer en C et C++, enthusiast à l'idée de devenir reverse engineer. Je partage ici mes write-ups, mes projets et side projects. Très intéressé par le game hacking et les CTF, j'aimerais mettre mes compétences au service d'une cause utile ou d'un projet ambitieux qui me passionne.";
     
     return (
         <div className="pb-4 lg:mb-36">
