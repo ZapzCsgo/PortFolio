@@ -10,7 +10,7 @@ const Navbar = () => {
                 </a>
             </div>
             <div className="m-8 flex items-center justify-center gap-4 text-2xl">
-                <a href="discordapp.com/users/612982073552142350"
+                <a href="https://discordapp.com/users/612982073552142350"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Discord">
