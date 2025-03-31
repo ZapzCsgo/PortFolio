@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import comcyberMarineImage from "../assets/comcyber_marine.webp"; // Import direct de l'image
 
 // Données des articles avec images ajoutées
 const blogPosts = [
@@ -10,7 +9,7 @@ const blogPosts = [
     date: "15 mars 2023",
     excerpt: "Dans ce writeup, j'analyse étape par étape comment j'ai résolu les challenges du CTF COMCYBER X MARINE",
     slug: "comcyber_marine",
-    image: comcyberMarineImage, // Utilisation de la variable importée au lieu d'un chemin relatif
+    image: "/comcyber_marine.webp", // Chemin vers l'image dans le dossier public
     altText: "Logo du CTF COMCYBER X MARINE"
   }
   // Vous pourrez ajouter d'autres articles ici dans le futur
