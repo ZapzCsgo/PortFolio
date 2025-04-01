@@ -224,7 +224,7 @@ Points clés identifiés :
 
 J'ai commencé à tester différentes modifications du paramètre agent_id, notamment en essayant d'**injecter des commandes bash**. Les premières tentatives ont généré des erreurs awk indiquant une syntaxe incorrecte.
 
-Après plusieurs ajustements de la syntaxe pour éliminer les erreurs, j'ai réussi à construire une **payload fonctionnelle** :
+Après plusieurs ajustements de la syntaxe pour éliminer les erreurs, j'ai réussi à construire une **payload fonctionnelle** en lisant la doc awk :
 
 ```json
 {
