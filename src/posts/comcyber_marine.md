@@ -30,6 +30,12 @@ Les chiffres repérés correspondent aux **numéros de série** situés sur les 
 
 &nbsp;
 
+### **Résultat obtenu ✅**
+
+Le flag pour ce premier challenge est **"RM{3BQAVP6X9}"** ! (plustot simple)
+
+&nbsp;
+
 ---
 &nbsp;
 ## __02 - Forensic / Reverse 🔬__
@@ -224,7 +230,7 @@ Points clés identifiés :
 
 J'ai commencé à tester différentes modifications du paramètre agent_id, notamment en essayant d'**injecter des commandes bash**. Les premières tentatives ont généré des erreurs awk indiquant une syntaxe incorrecte.
 
-Après plusieurs ajustements de la syntaxe pour éliminer les erreurs, j'ai réussi à construire une **payload fonctionnelle** en lisant la doc awk :
+Après plusieurs ajustements de la syntaxe pour éliminer les erreurs, j'ai réussi à construire un **payload fonctionnelle** en lisant la doc awk :
 
 ```json
 {
@@ -248,12 +254,12 @@ Cette réponse a confirmé la possibilité d'**exploiter la requete** pour exéc
 
 ### **Extraction du flag 🚩**
 
-À l'aide d'une commande cat ciblée sur le fichier flag_3.txt, j'ai pu extraire le flag :
+À l'aide d'une commande cat sur le fichier flag_3.txt, j'ai pu extraire le flag :
 
 ```json
 {"agent_id": "2\") system(\"cat flag_3.txt\") } #"}
 ```
 
-La réponse du serveur a révélé le flag : **RM{dfbc2fb4c76b315aa6fa06e5f35aef23b1da32f5}**
+La réponse du serveur a donné le flag : **RM{dfbc2fb4c76b315aa6fa06e5f35aef23b1da32f5}**
 
-Cette exploitation réussie de l'injection de commandes a permis de compléter le challenge de pentest web.
+Cette modification de la requete a permis de compléter le challenge de pentest web !
