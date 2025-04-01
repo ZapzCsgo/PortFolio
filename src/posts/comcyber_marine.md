@@ -242,7 +242,7 @@ requirements.txt
 static
 ```
 
-Cette découverte a confirmé la possibilité d'**exploiter le endpoint /api/refresh** pour exécuter des commandes système sur le serveur.
+Cette réponse a confirmé la possibilité d'**exploiter la requete** pour exécuter des commandes système sur le serveur.
 
 &nbsp;
 
