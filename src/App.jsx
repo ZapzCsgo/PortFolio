@@ -6,7 +6,6 @@ import Projects from "./components/Projects";
 import ToolsTechnologies from "./components/ToolsTechnologies";
 import CTFBlog from "./components/CtfBlog";
 import CTFBlogPost from "./components/CtfBlogPost";
-import SecretContact from "./components/SecretContact";
 
 const App = () => {
   return (
@@ -26,7 +25,6 @@ const App = () => {
               <Hero />
               <ToolsTechnologies />
               <Projects />
-              <SecretContact />
             </div>
           } />
           <Route path="/ctf-blog" element={
