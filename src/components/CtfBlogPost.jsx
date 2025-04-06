@@ -5,8 +5,8 @@ import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/atom-one-dark.css';
 
-// Importez directement le fichier MD pour Vite
 import comcyberMarine from '../posts/comcyber_marine.md?raw';
+import dgseRootMe from '../posts/dgse_root_me.md?raw';
 
 const CTFBlogPost = () => {
   const { slug } = useParams();
@@ -16,16 +16,13 @@ const CTFBlogPost = () => {
   const [fontSize, setFontSize] = useState(16);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Détection des appareils mobiles
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
     
-    // Vérification initiale
     checkIfMobile();
     
-    // Écouter les changements de taille d'écran
     window.addEventListener('resize', checkIfMobile);
     
     return () => {
@@ -34,9 +31,9 @@ const CTFBlogPost = () => {
   }, []);
 
   useEffect(() => {
-    // Mapping des slugs aux contenus importés
     const postContents = {
-      'comcyber_marine': comcyberMarine
+      'comcyber_marine': comcyberMarine,
+      'dgse_root_me': dgseRootMe
     };
     
     // Récupérer le contenu correspondant au slug

@@ -1,18 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Données des articles avec images ajoutées
 const blogPosts = [
   {
     id: "COMCYBER_X_MARINE",
     title: "⚓️ COMCYBER X MARINE",
-    date: "15 mars 2023",
+    date: "15 mars 2025",
     excerpt: "Dans ce writeup, j'analyse étape par étape comment j'ai résolu les challenges du CTF COMCYBER X MARINE",
     slug: "comcyber_marine",
-    image: "/comcyber_marine.webp", // Chemin vers l'image dans le dossier public
+    image: "/comcyber_marine.webp",
     altText: "Logo du CTF COMCYBER X MARINE"
   }
-  // Vous pourrez ajouter d'autres articles ici dans le futur
+,
+  {
+    id: "DGSE_ROOT_ME",
+    title: "🕵️‍♂️ DGSE ROOT ME",
+    date: "7 avril 2025",
+    excerpt: "Dans ce writeup, je partage mon expérience sur le CTF DGSE ROOT ME, en détaillant les challenges et les solutions.",
+    slug: "dgse_root_me",
+    image: "/dgse_rootme.webp",
+    altText: "Logo du CTF DGSE ROOT ME"
+  },
 ];
 
 const CTFBlog = () => {
