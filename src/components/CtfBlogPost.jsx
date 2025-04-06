@@ -6,7 +6,7 @@ import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/atom-one-dark.css';
 
 import comcyberMarine from '../posts/comcyber_marine.md?raw';
-import dgseRootMe from '../posts/dgse_root_me.md?raw';
+import dgseRootMe from '../posts/dgse_rootme.md?raw';
 
 const CTFBlogPost = () => {
   const { slug } = useParams();
