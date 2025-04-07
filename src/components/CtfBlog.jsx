@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const blogPosts = [
   {
@@ -32,7 +33,7 @@ const CTFBlog = () => {
             key={post.id} 
             className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300"
           >
-            <div className="mb-6 overflow-hidden rounded-xl h-96 flex items-center justify-center">
+            <div className="mb-6 overflow-hidden rounded-xl h-64 flex items-center justify-center">
               {post.image ? (
                 <img
                   src={post.image}
@@ -48,12 +49,12 @@ const CTFBlog = () => {
             <h2 className="text-2xl text-white mb-2 font-bold">{post.title}</h2>
             <p className="text-gray-300 mb-4 text-sm">{post.date}</p>
             <p className="text-gray-400 mb-4">{post.excerpt}</p>
-            <a
-              href={`/ctf-blog/${post.slug}`}
+            <Link
+              to={`/ctf-blog/${post.slug}`}
               className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-300"
             >
               Lire la suite →
-            </a>
+            </Link>
           </div>
         ))}
       </div>
