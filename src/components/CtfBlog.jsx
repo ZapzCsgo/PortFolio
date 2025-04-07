@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const blogPosts = [
   {
     id: "COMCYBER_X_MARINE",
-    title: "⚓️ COMCYBER X MARINE",
+    title: "⚓️ COMCYBER X MARINE ROOT ME",
     date: "1 mars 2025",
     excerpt: "Dans ce writeup, j'analyse étape par étape comment j'ai résolu les challenges du CTF COMCYBER X MARINE",
     slug: "comcyber_marine",
