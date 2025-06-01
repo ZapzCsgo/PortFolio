@@ -1,5 +1,4 @@
 // constants/index.js
-
 // Données des projets
 export const PROJECTS_DATA = [
   {
@@ -8,8 +7,8 @@ export const PROJECTS_DATA = [
     description: "Simulation du problème des philosophes dînant, démontrant la synchronisation des threads.",
     image: "philosophers42.webp",
     tags: ["C", "Threads", "Mutex"],
-    githubLink: "https://matteo-murru.com/",
-    liveLink: "https://matteo-murru.com/",
+    githubLink: "",
+    liveLink: "",
     type: "42"
   },
   {
@@ -18,8 +17,8 @@ export const PROJECTS_DATA = [
     description: "Bibliothèque de fonctions C personnalisée recréant les fonctions standard de la libc.",
     image: "libft42.webp",
     tags: ["C", "Library"],
-    githubLink: "https://matteo-murru.com/",
-    liveLink: "https://matteo-murru.com/",
+    githubLink: "",
+    liveLink: "",
     type: "42"
   },
   {
@@ -28,8 +27,8 @@ export const PROJECTS_DATA = [
     description: "Moteur de rendu 3D minimaliste inspiré de Wolfenstein 3D avec raycasting.",
     image: "cub3d.webp",
     tags: ["C", "Raycasting", "Graphics"],
-    githubLink: "https://matteo-murru.com/",
-    liveLink: "hhttps://matteo-murru.com/",
+    githubLink: "",
+    liveLink: "",
     type: "42"
   },
   {
@@ -38,8 +37,8 @@ export const PROJECTS_DATA = [
     description: "Implémentation d'un shell minimaliste inspiré de bash.",
     image: "minishell.webp",
     tags: ["C", "Shell", "Parsing"],
-    githubLink: "https://matteo-murru.com/",
-    liveLink: "https://matteo-murru.com/",
+    githubLink: "",
+    liveLink: "",
     type: "42"
   },
   {
@@ -48,19 +47,19 @@ export const PROJECTS_DATA = [
     description: "Petit jeu 2D avec la MiniLibX.",
     image: "so_long.webp",
     tags: ["C", "Game", "2D"],
-    githubLink: "https://matteo-murru.com/",
-    liveLink: "https://matteo-murru.com/",
+    githubLink: "",
+    liveLink: "",
     type: "42"
   },
   {
-  id: "la_voie_de_la_pierre",
-  title: "La voie de la pierre",
-   description: "La Voie de la Pierre est une application web destinée aux profanes qui souhaitent découvrir la franc-maçonnerie et mieux comprendre les différentes obédiences existantes. Grâce à un questionnaire, l’utilisateur est guidé vers l’obédience qui correspond le mieux à ses valeurs, convictions et attentes spirituelles.",
-   image: "voie_de_la_pierre.webp",
+    id: "la_voie_de_la_pierre",
+    title: "La voie de la pierre",
+    description: "La Voie de la Pierre est une application web destinée aux profanes qui souhaitent découvrir la franc-maçonnerie et mieux comprendre les différentes obédiences existantes. Grâce à un questionnaire, l'utilisateur est guidé vers l'obédience qui correspond le mieux à ses valeurs, convictions et attentes spirituelles.",
+    image: "voie_de_la_pierre.webp",
     tags: ["React", "Firebase", "Tailwind"],
     githubLink: "https://github.com/ZapzCsgo/La-Voie-de-la-Pierre",
-   liveLink: "https://matteo-murru.com/",
-     type: "side_project"
+    liveLink: "",
+    type: "side_project"
   }
 ];
 
@@ -72,4 +71,3 @@ export const FILE_PROJECT_MAPPING = {
   '42/common_core/so_long.c': 'so_long',
   'side_projects/voie_de_la_pierre.jsx': 'la_voie_de_la_pierre'
 };
-

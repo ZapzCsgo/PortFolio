@@ -19,6 +19,10 @@ const imageMapping = {
 };
 
 const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) => {
+  // Vérifier si les liens sont valides (pas juste des placeholders)
+  const hasValidGithubLink = githubLink && !githubLink.includes("matteo-murru.com");
+  const hasValidLiveLink = liveLink && !liveLink.includes("matteo-murru.com");
+
   return (
     <div className="overflow-hidden rounded-lg bg-gray-900/50 backdrop-blur-sm transition-all hover:shadow-xl">
       <div className="relative">
@@ -35,25 +39,33 @@ const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) 
             </span>
           ))}
         </div>
-        <div className="flex gap-4">
-          <a
-            href={liveLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-blue-400 hover:text-blue-300"
-          >
-            <span>Voir le projet</span>
-            <FaExternalLinkAlt />
-          </a>
-          <a
-            href={githubLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-2xl text-white hover:text-gray-300"
-          >
-            <FaGithub />
-          </a>
-        </div>
+        
+        {/* Afficher les liens seulement s'ils sont valides */}
+        {(hasValidGithubLink || hasValidLiveLink) && (
+          <div className="flex gap-4">
+            {hasValidLiveLink && (
+              <a
+                href={liveLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-blue-400 hover:text-blue-300"
+              >
+                <span>Voir le projet</span>
+                <FaExternalLinkAlt />
+              </a>
+            )}
+            {hasValidGithubLink && (
+              <a
+                href={githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-2xl text-white hover:text-gray-300"
+              >
+                <FaGithub />
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
