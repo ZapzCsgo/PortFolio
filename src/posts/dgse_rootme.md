@@ -6,4 +6,4 @@
 
 ## __EN COUR DE RESOLUTION 🔍__
 
-Je posterais ce writeup a la fin du challenge lorsque ca sera autorisé le 07/05/2025.
+Je posterais ce writeup a la fin du challenge lorsque ca sera autorisé le 07/06/2025.
