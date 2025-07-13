@@ -58,6 +58,5 @@ export const FILE_PROJECT_MAPPING = {
   '42/common_core/libft.c': 'libft',
   '42/common_core/cube3d.c': 'cube3d',
   '42/common_core/minishell.c': 'minishell',
-  '42/common_core/so_long.c': 'so_long',
-  'side_projects/voie_de_la_pierre.jsx': 'la_voie_de_la_pierre'
+  '42/common_core/so_long.c': 'so_long'
 };
