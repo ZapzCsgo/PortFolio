@@ -50,16 +50,6 @@ export const PROJECTS_DATA = [
     githubLink: "",
     liveLink: "",
     type: "42"
-  },
-  {
-    id: "la_voie_de_la_pierre",
-    title: "La voie de la pierre",
-    description: "La Voie de la Pierre est une application web destinée aux profanes qui souhaitent découvrir la franc-maçonnerie et mieux comprendre les différentes obédiences existantes. Grâce à un questionnaire, l'utilisateur est guidé vers l'obédience qui correspond le mieux à ses valeurs, convictions et attentes spirituelles.",
-    image: "voie_de_la_pierre.webp",
-    tags: ["React", "Firebase", "Tailwind"],
-    githubLink: "https://github.com/ZapzCsgo/La-Voie-de-la-Pierre",
-    liveLink: "",
-    type: "side_project"
   }
 ];
 
