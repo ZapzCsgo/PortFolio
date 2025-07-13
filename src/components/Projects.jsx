@@ -7,7 +7,6 @@ import libftImage from "../assets/libft42.webp";
 import soLongImage from "../assets/so_long.webp";
 import cub3dImage from "../assets/cub3d.webp";
 import minishellImage from "../assets/minishell.webp";
-import voieDeLaPierreImage from "../assets/voie_de_la_pierre.webp";
 
 const imageMapping = {
   "philosophers42.webp": philosophersImage,
@@ -15,7 +14,6 @@ const imageMapping = {
   "so_long.webp": soLongImage,
   "cub3d.webp": cub3dImage,
   "minishell.webp": minishellImage,
-  "voie_de_la_pierre.webp": voieDeLaPierreImage,
 };
 
 const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) => {
@@ -180,15 +178,6 @@ const Projects = () => {
             </div>
             {expandedFolders["side_projects"] && (
               <div className="ml-4">
-                <div
-                  className={`flex items-center mb-2 cursor-pointer ${
-                    selectedPath === "side_projects/voie_de_la_pierre.jsx" ? "text-blue-400" : ""
-                  }`}
-                  onClick={() => setSelectedPath("side_projects/voie_de_la_pierre.jsx")}
-                >
-                  <FaFile className="text-gray-400 mr-2" />
-                  <span>voie_de_la_pierre.jsx</span>
-                </div>
               </div>
             )}
           </div>
