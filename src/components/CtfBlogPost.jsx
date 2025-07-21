@@ -7,6 +7,7 @@ import 'highlight.js/styles/atom-one-dark.css';
 
 import comcyberMarine from '../posts/comcyber_marine.md?raw';
 import dgseRootMe from '../posts/dgse_rootme.md?raw';
+import cs2EntityList from '../posts/cs2_entity_list.md?raw';
 
 const CTFBlogPost = () => {
   const { slug } = useParams();
@@ -33,7 +34,8 @@ const CTFBlogPost = () => {
   useEffect(() => {
     const postContents = {
       'comcyber_marine': comcyberMarine,
-      'dgse_root_me': dgseRootMe
+      'dgse_root_me': dgseRootMe,
+      'cs2_entity_list': cs2EntityList
     };
     
     // Récupérer le contenu correspondant au slug
@@ -213,12 +215,20 @@ const CTFBlogPost = () => {
         
         /* Images */
         .markdown-content img {
-          max-width: 100%;
+          max-width: 70%;
+          width: auto;
           height: auto;
           margin: 1.5rem auto;
           border-radius: 0.5rem;
           display: block;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        /* Images sur mobile - encore plus petites */
+        @media (max-width: 768px) {
+          .markdown-content img {
+            max-width: 85%;
+          }
         }
         
         /* Séparateurs */

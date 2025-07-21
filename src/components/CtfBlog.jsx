@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 const blogPosts = [
   {
-    id: "COMCYBER_X_MARINE",
-    title: "⚓️ COMCYBER X MARINE ROOT ME",
-    date: "1 mars 2025",
-    excerpt: "Dans ce writeup, j'analyse étape par étape comment j'ai résolu les challenges du CTF COMCYBER X MARINE",
-    slug: "comcyber_marine",
-    image: "/comcyber_marine.webp",
-    altText: "Logo du CTF COMCYBER X MARINE"
+    id: "CS2_ENTITY_LIST",
+    title: "🎯 Counter-Strike 2 - Reverse Entity List",
+    date: "21 juillet 2025",
+    excerpt: "Analyse dynamique pour la récupération de l'entity_list sur Counter-Strike 2 via Cheat Engine",
+    slug: "cs2_entity_list",
+    image: "/Counter-Strike-2.jpg",
+    altText: "Counter-Strike 2"
   },
   {
     id: "DGSE_ROOT_ME",
@@ -20,6 +20,15 @@ const blogPosts = [
     image: "/dgse_rootme.webp",
     altText: "Logo du CTF DGSE ROOT ME"
   },
+  {
+    id: "COMCYBER_X_MARINE",
+    title: "⚓️ COMCYBER X MARINE ROOT ME",
+    date: "1 mars 2025",
+    excerpt: "Dans ce writeup, j'analyse étape par étape comment j'ai résolu les challenges du CTF COMCYBER X MARINE",
+    slug: "comcyber_marine",
+    image: "/comcyber_marine.webp",
+    altText: "Logo du CTF COMCYBER X MARINE"
+  }
 ];
 
 const CTFBlog = () => {
