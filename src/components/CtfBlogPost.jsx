@@ -12,6 +12,7 @@ import cs2EntityList from '../posts/cs2_entity_list.md?raw';
 const CTFBlogPost = () => {
   const { slug } = useParams();
   const [post, setPost] = useState(null);
+  const [postMeta, setPostMeta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [fontSize, setFontSize] = useState(16);
@@ -37,12 +38,32 @@ const CTFBlogPost = () => {
       'dgse_root_me': dgseRootMe,
       'cs2_entity_list': cs2EntityList
     };
+
+    const postMetadata = {
+      'comcyber_marine': {
+        title: "⚓️ COMCYBER X MARINE ROOT ME",
+        image: "/comcyber_marine.webp",
+        altText: "Logo du CTF COMCYBER X MARINE"
+      },
+      'dgse_root_me': {
+        title: "🕵️‍♂️ DGSE ROOT ME", 
+        image: "/dgse_rootme.webp",
+        altText: "Logo du CTF DGSE ROOT ME"
+      },
+      'cs2_entity_list': {
+        title: "🎯 Counter-Strike 2 - Reverse Entity List",
+        image: "/Counter-Strike-2.jpg",
+        altText: "Counter-Strike 2"
+      }
+    };
     
     // Récupérer le contenu correspondant au slug
     const content = postContents[slug];
+    const metadata = postMetadata[slug];
     
-    if (content) {
+    if (content && metadata) {
       setPost(content);
+      setPostMeta(metadata);
       setLoading(false);
     } else {
       setError(`Post '${slug}' non trouvé`);
@@ -87,6 +108,17 @@ const CTFBlogPost = () => {
               A+
             </button>
           </div>
+        </div>
+      )}
+
+      {/* Image d'en-tête du post */}
+      {postMeta && postMeta.image && (
+        <div className="mb-8 flex justify-center">
+          <img
+            src={postMeta.image}
+            alt={postMeta.altText || postMeta.title}
+            className="max-w-sm w-full h-auto object-contain rounded-lg shadow-lg"
+          />
         </div>
       )}
       
