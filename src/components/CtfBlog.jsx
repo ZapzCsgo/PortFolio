@@ -5,7 +5,7 @@ const blogPosts = [
   {
     id: "CS2_ENTITY_LIST",
     title: "🎯 Counter-Strike 2 - Reverse Entity List",
-    date: "21 juillet 2025",
+    date: "19 juillet 2025",
     excerpt: "Analyse dynamique pour la récupération de l'entity_list sur Counter-Strike 2 via Cheat Engine",
     slug: "cs2_entity_list",
     image: "/Counter-Strike-2.jpg",
