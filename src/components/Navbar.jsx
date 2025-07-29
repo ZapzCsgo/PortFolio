@@ -24,12 +24,6 @@ const Navbar = () => {
                 </a>
             </div>
             <div className="m-8 flex items-center justify-center gap-4 text-2xl">
-                <a href="https://discordapp.com/users/612982073552142350"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Discord">
-                    <FaDiscord style={{ color: 'white' }} />
-                </a>
                 <a href="https://github.com/ZapzCsgo"
                     target="_blank"
                     rel="noopener noreferrer"

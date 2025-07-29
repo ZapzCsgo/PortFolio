@@ -2,6 +2,26 @@
 // Données des projets
 export const PROJECTS_DATA = [
   {
+    id: "antidebug",
+    title: "AntiDebug",
+    description: "Outil open source pour tester les techniques d'anti-debug Windows x86_64. Interface terminal, détections multiples, C++17.",
+    image: "antidebug.webp",
+    tags: ["C++", "Windows", "Reverse", "Anti-Debug"],
+    githubLink: "https://github.com/haxo-games/AntiDebug",
+    liveLink: "",
+    type: "contribution"
+  },
+  {
+    id: "webserv",
+    title: "Webserv",
+    description: "Serveur HTTP en C++98 compatible nginx avec support CGI, gestion des requêtes GET/POST/DELETE.",
+    image: "webserv_42.webp",
+    tags: ["C++", "HTTP", "Server", "CGI"],
+    githubLink: "",
+    liveLink: "",
+    type: "42"
+  },
+  {
     id: "philosophers",
     title: "Philosophers",
     description: "Simulation du problème des philosophes dînant, démontrant la synchronisation des threads.",
@@ -54,9 +74,11 @@ export const PROJECTS_DATA = [
 ];
 
 export const FILE_PROJECT_MAPPING = {
+  '42/common_core/webserv.cpp': 'webserv',
   '42/common_core/philosophers.c': 'philosophers',
   '42/common_core/libft.c': 'libft',
   '42/common_core/cube3d.c': 'cube3d',
   '42/common_core/minishell.c': 'minishell',
-  '42/common_core/so_long.c': 'so_long'
+  '42/common_core/so_long.c': 'so_long',
+  'contributions/antidebug.cpp': 'antidebug'
 };

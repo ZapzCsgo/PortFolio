@@ -1,26 +1,29 @@
-import React, { useState } from "react";
-import { FaFolder, FaFolderOpen, FaFile, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import { PROJECTS_DATA, FILE_PROJECT_MAPPING } from "../constants";
-
+const projectImages = {
+  philosophers: philosophersImage,
+  libft: libftImage,
+  so_long: soLongImage,
+  cube3d: cub3dImage,
+  minishell: minishellImage,
+  webserv: webservImage,
+  antidebug: antidebugImage,
+};
 import philosophersImage from "../assets/philosophers42.webp";
 import libftImage from "../assets/libft42.webp";
 import soLongImage from "../assets/so_long.webp";
 import cub3dImage from "../assets/cub3d.webp";
 import minishellImage from "../assets/minishell.webp";
+import webservImage from "../assets/webserv_42.webp";
+import antidebugImage from "../assets/antidebug.webp";
+import React, { useState } from "react";
+import { FaFolder, FaFolderOpen, FaFile, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { PROJECTS_DATA, FILE_PROJECT_MAPPING } from "../constants";
 
-const imageMapping = {
-  "philosophers42.webp": philosophersImage,
-  "libft42.webp": libftImage,
-  "so_long.webp": soLongImage,
-  "cub3d.webp": cub3dImage,
-  "minishell.webp": minishellImage,
-};
+
+
 
 const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) => {
-  // Vérifier si les liens sont valides (pas juste des placeholders)
   const hasValidGithubLink = githubLink && !githubLink.includes("matteo-murru.com");
   const hasValidLiveLink = liveLink && !liveLink.includes("matteo-murru.com");
-
   return (
     <div className="overflow-hidden rounded-lg bg-gray-900/50 backdrop-blur-sm transition-all hover:shadow-xl">
       <div className="relative">
@@ -31,14 +34,12 @@ const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) 
         <h3 className="mb-2 text-2xl font-medium text-white">{title}</h3>
         <p className="mb-4 text-sm text-gray-300">{description}</p>
         <div className="mb-6 flex flex-wrap gap-2">
-          {tags.map((tag, index) => (
+          {tags && tags.map((tag, index) => (
             <span key={index} className="rounded-md bg-gray-800 px-3 py-1 text-xs text-gray-300">
               {tag}
             </span>
           ))}
         </div>
-        
-        {/* Afficher les liens seulement s'ils sont valides */}
         {(hasValidGithubLink || hasValidLiveLink) && (
           <div className="flex gap-4">
             {hasValidLiveLink && (
@@ -71,36 +72,28 @@ const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) 
 
 const Projects = () => {
   const [selectedPath, setSelectedPath] = useState(null);
-  const [expandedFolders, setExpandedFolders] = useState({
-    "42": true,
-    "42/common_core": true,
-    "side_projects": true,
-  });
 
-  const projectsData = PROJECTS_DATA.map((project) => ({
-    ...project,
-    image: imageMapping[project.image],
-  }));
+  let displayedProjects = PROJECTS_DATA;
+  if (selectedPath) {
+    if (FILE_PROJECT_MAPPING[selectedPath]) {
+      displayedProjects = PROJECTS_DATA.filter((project) => project.id === FILE_PROJECT_MAPPING[selectedPath]);
+    } else if (selectedPath === "42/common_core") {
+      displayedProjects = PROJECTS_DATA.filter((project) => project.type === "42");
+    } else if (selectedPath === "42") {
+      displayedProjects = PROJECTS_DATA.filter((project) => project.type === "42");
+    } else if (selectedPath === "side_projects") {
+      displayedProjects = PROJECTS_DATA.filter((project) => project.type === "side_projects");
+    } else if (selectedPath === "contributions") {
+      displayedProjects = PROJECTS_DATA.filter((project) => project.type === "contribution");
+    }
+  }
 
-  const displayedProjects = selectedPath
-    ? projectsData.filter((project) => project.id === FILE_PROJECT_MAPPING[selectedPath])
-    : projectsData;
-
-  const handleReset = () => {
-    setSelectedPath(null);
-  };
-
-  const toggleFolder = (folder) => {
-    setExpandedFolders((prev) => ({
-      ...prev,
-      [folder]: !prev[folder],
-    }));
-  };
+  const handleReset = () => setSelectedPath(null);
+  const toggleFolder = (folder) => setSelectedPath(folder);
 
   return (
     <div className="pb-24">
       <h2 className="my-10 text-center text-4xl text-white">Projets</h2>
-
       <div className="flex flex-col md:flex-row gap-8">
         {/* Panneau de navigation de fichiers à gauche */}
         <div className="md:w-1/4 bg-gray-900/60 p-4 rounded-lg">
@@ -113,81 +106,82 @@ const Projects = () => {
               Reset
             </button>
           </div>
-
           {/* Dossier 42 */}
           <div className="ml-2 mt-2">
             <div
               className="flex items-center mb-2 cursor-pointer"
               onClick={() => toggleFolder("42")}
             >
-              {expandedFolders["42"] ? (
-                <FaFolderOpen className="text-yellow-400 mr-2" />
-              ) : (
-                <FaFolder className="text-yellow-400 mr-2" />
-              )}
+              <FaFolderOpen className="text-yellow-400 mr-2" />
               <span>42</span>
             </div>
-
-            {expandedFolders["42"] && (
-              <div className="ml-4">
-                {/* Common Core */}
-                <div
-                  className="flex items-center mb-2 cursor-pointer"
-                  onClick={() => toggleFolder("42/common_core")}
-                >
-                  {expandedFolders["42/common_core"] ? (
-                    <FaFolderOpen className="text-yellow-400 mr-2" />
-                  ) : (
-                    <FaFolder className="text-yellow-400 mr-2" />
-                  )}
-                  <span>common_core</span>
-                </div>
-
-                {expandedFolders["42/common_core"] && (
-                  <div className="ml-4">
-                    {["philosophers.c", "libft.c", "cube3d.c", "minishell.c", "so_long.c"].map((file) => (
-                      <div
-                        key={file}
-                        className={`flex items-center mb-2 cursor-pointer ${
-                          selectedPath === `42/common_core/${file}` ? "text-blue-400" : ""
-                        }`}
-                        onClick={() => setSelectedPath(`42/common_core/${file}`)}
-                      >
-                        <FaFile className="text-gray-400 mr-2" />
-                        <span>{file}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+            <div className="ml-4">
+              {/* Common Core */}
+              <div
+                className="flex items-center mb-2 cursor-pointer"
+                onClick={() => toggleFolder("42/common_core")}
+              >
+                <FaFolderOpen className="text-yellow-400 mr-2" />
+                <span>common_core</span>
               </div>
-            )}
+              <div className="ml-4">
+                {["webserv.cpp", "philosophers.c", "libft.c", "cube3d.c", "minishell.c", "so_long.c"].map((file) => (
+                  <div
+                    key={file}
+                    className={`flex items-center mb-2 cursor-pointer ${selectedPath === `42/common_core/${file}` ? "text-blue-400" : ""}`}
+                    onClick={() => setSelectedPath(`42/common_core/${file}`)}
+                  >
+                    <FaFile className="text-gray-400 mr-2" />
+                    <span>{file}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-
+          {/* Dossier contributions */}
+          <div className="ml-2 mt-2">
+            <div
+              className="flex items-center mb-2 cursor-pointer"
+              onClick={() => setSelectedPath("contributions")}
+            >
+              <FaFolderOpen className="text-yellow-400 mr-2" />
+              <span>contributions</span>
+            </div>
+            <div className="ml-4">
+              <div
+                className={`flex items-center mb-2 cursor-pointer ${selectedPath === `contributions/antidebug.cpp` ? "text-blue-400" : ""}`}
+                onClick={() => setSelectedPath(`contributions/antidebug.cpp`)}
+              >
+                <FaFile className="text-gray-400 mr-2" />
+                <span>antidebug.cpp</span>
+              </div>
+            </div>
+          </div>
           {/* Dossier side_projects */}
           <div className="ml-2 mt-2">
             <div
               className="flex items-center mb-2 cursor-pointer"
-              onClick={() => toggleFolder("side_projects")}
+              onClick={() => setSelectedPath("side_projects")}
             >
-              {expandedFolders["side_projects"] ? (
-                <FaFolderOpen className="text-yellow-400 mr-2" />
-              ) : (
-                <FaFolder className="text-yellow-400 mr-2" />
-              )}
+              <FaFolderOpen className="text-yellow-400 mr-2" />
               <span>side_projects</span>
             </div>
-            {expandedFolders["side_projects"] && (
-              <div className="ml-4">
-              </div>
-            )}
+            <div className="ml-4">
+              {/* Ajoute ici les fichiers de side_projects si besoin */}
+            </div>
           </div>
         </div>
-
         {/* Projets à droite */}
         <div className="md:w-3/4">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {displayedProjects.length > 0 ? (
-              displayedProjects.map((project, index) => <ProjectCard key={index} {...project} />)
+              displayedProjects.map((project, index) => (
+                <ProjectCard
+                  key={index}
+                  {...project}
+                  image={projectImages[project.id] || project.image}
+                />
+              ))
             ) : (
               <div className="col-span-2 text-center text-gray-400 py-20">
                 <p>Aucun projet à afficher. Sélectionnez un fichier dans la structure à gauche.</p>
@@ -198,6 +192,5 @@ const Projects = () => {
       </div>
     </div>
   );
-};
-
+}
 export default Projects;
