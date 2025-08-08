@@ -84,32 +84,30 @@ const CTFBlogPost = () => {
   if (!post) return <div className="text-white text-center py-20">Article non trouvé.</div>;
 
   return (
-    <div className="container mx-auto px-4 sm:px-8 py-8 sm:py-16">
-      <Link to="/ctf-blog" className="text-blue-400 hover:text-blue-300 mb-4 sm:mb-8 inline-block">
+    <div className={`container mx-auto py-8 sm:py-16 ${isMobile ? 'px-2' : 'px-4 sm:px-8'}`}>
+      <Link to="/ctf-blog" className="text-blue-400 hover:text-blue-300 mb-4 sm:mb-8 inline-block px-2">
         ← Retour aux articles
       </Link>
       
-      {isMobile && (
-        <div className="mb-4 flex justify-between items-center bg-gray-800 p-3 rounded-lg">
-          <h3 className="text-white text-sm">Contrôles de lecture</h3>
-          <div className="flex space-x-3">
-            <button 
-              onClick={decreaseFontSize} 
-              className="bg-gray-700 text-white px-3 py-1 rounded text-sm"
-              aria-label="Diminuer la taille du texte"
-            >
-              A-
-            </button>
-            <button 
-              onClick={increaseFontSize} 
-              className="bg-gray-700 text-white px-3 py-1 rounded text-sm"
-              aria-label="Augmenter la taille du texte"
-            >
-              A+
-            </button>
-          </div>
+      <div className="mb-4 flex justify-between items-center bg-gray-800 p-3 rounded-lg mx-2">
+        <h3 className="text-white text-sm">Contrôles de lecture</h3>
+        <div className="flex space-x-3">
+          <button 
+            onClick={decreaseFontSize} 
+            className="bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600 transition-colors"
+            aria-label="Diminuer la taille du texte"
+          >
+            A-
+          </button>
+          <button 
+            onClick={increaseFontSize} 
+            className="bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600 transition-colors"
+            aria-label="Augmenter la taille du texte"
+          >
+            A+
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Image d'en-tête du post */}
       {postMeta && postMeta.image && (
@@ -196,27 +194,33 @@ const CTFBlogPost = () => {
         /* Blocs de code */
         .markdown-content pre {
           background-color: #1a202c;
-          padding: 1rem;
+          padding: ${isMobile ? '0.75rem' : '1rem'};
           margin: 1.25rem 0;
           border-radius: 0.375rem;
           overflow-x: auto;
           border: 1px solid #2d3748;
+          font-size: ${isMobile ? '12px' : '14px'};
+          line-height: 1.4;
         }
         
         .markdown-content code {
-          font-family: 'Fira Code', monospace;
+          font-family: 'Fira Code', 'Courier New', monospace;
           font-size: ${Math.max(fontSize - 2, 12)}px;
           background-color: #2d3748;
           padding: 0.2rem 0.4rem;
           border-radius: 0.25rem;
           color: #f59e0b;
+          word-break: break-all;
+          overflow-wrap: anywhere;
         }
         
         .markdown-content pre code {
           background-color: transparent;
           padding: 0;
           color: inherit;
-          font-size: ${Math.max(fontSize - 1, 13)}px;
+          font-size: ${isMobile ? '11px' : Math.max(fontSize - 1, 13) + 'px'};
+          word-break: normal;
+          overflow-wrap: normal;
         }
         
         /* Citations */
@@ -277,23 +281,45 @@ const CTFBlogPost = () => {
           border-collapse: collapse;
           margin: 1.5rem 0;
           overflow-x: auto;
-          display: block;
+          display: ${isMobile ? 'block' : 'table'};
+          white-space: ${isMobile ? 'nowrap' : 'normal'};
         }
         
         .markdown-content table th {
           background-color: #2d3748;
-          padding: 0.75rem;
+          padding: ${isMobile ? '0.5rem' : '0.75rem'};
           font-weight: 600;
           border: 1px solid #4a5568;
+          font-size: ${isMobile ? '14px' : '16px'};
         }
         
         .markdown-content table td {
-          padding: 0.75rem;
+          padding: ${isMobile ? '0.5rem' : '0.75rem'};
           border: 1px solid #4a5568;
+          font-size: ${isMobile ? '14px' : '16px'};
         }
         
         .markdown-content table tr:nth-child(even) {
           background-color: rgba(45, 55, 72, 0.5);
+        }
+        
+        /* Amélioration mobile pour le contenu général */
+        @media (max-width: 768px) {
+          .markdown-content {
+            overflow-x: hidden;
+          }
+          
+          .markdown-content pre {
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+            border-radius: 0;
+          }
+          
+          .markdown-content table {
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+            width: calc(100% + 1rem);
+          }
         }
         
         /* Styles spécifiques pour les emojis */
@@ -313,7 +339,7 @@ const CTFBlogPost = () => {
         }
       `}</style>
       
-      <div className="bg-gray-900/70 backdrop-blur-sm p-4 sm:p-8 rounded-lg shadow-xl">
+      <div className={`bg-gray-900/70 backdrop-blur-sm rounded-lg shadow-xl ${isMobile ? 'p-3 mx-1' : 'p-4 sm:p-8'}`}>
         <article className="markdown-content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}

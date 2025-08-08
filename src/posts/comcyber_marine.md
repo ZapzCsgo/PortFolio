@@ -44,9 +44,9 @@ Cette deuxième partie du CTF consistait à effectuer une analyse de rétro-ing�
 
 &nbsp;
 
-### **Analyse initiale du code 📝**
+### **Analyse du code 📝**
 
-Le code source révèle plusieurs éléments importants :
+Le code révèle plusieurs éléments importants :
 
 - 🔐 Présence de fonctions de **chiffrement utilisant AES**
 
@@ -80,7 +80,7 @@ Le malware présente les caractéristiques suivantes :
 
 ### **Analyse des chaînes encodées 🔍**
 
-En analysant le code source du malware, j'ai identifié plusieurs chaînes importantes encodées en Base64 :
+En analysant le code du malware, j'ai identifié plusieurs chaînes importantes encodées en Base64 :
 
 ```
 OF/sfn87WwjfIX14p17jp8mu5uavNFecb4D97pgVfZc=
