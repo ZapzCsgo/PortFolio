@@ -12,15 +12,6 @@ const blogPosts = [
     altText: "Counter-Strike 2"
   },
   {
-    id: "DGSE_ROOT_ME",
-    title: "🕵️‍♂️ DGSE ROOT ME",
-    date: "7 avril 2025",
-    excerpt: "Dans ce writeup, je partage mon expérience sur le CTF DGSE ROOT ME, en détaillant les challenges et les solutions.",
-    slug: "dgse_root_me",
-    image: "/dgse_rootme.webp",
-    altText: "Logo du CTF DGSE ROOT ME"
-  },
-  {
     id: "COMCYBER_X_MARINE",
     title: "⚓️ COMCYBER X MARINE ROOT ME",
     date: "1 mars 2025",
