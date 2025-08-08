@@ -77,12 +77,12 @@ const CTFBlogPost = () => {
   if (!post) return <div className="text-white text-center py-20">Article non trouvé.</div>;
 
   return (
-    <div className={`container mx-auto py-8 sm:py-16 ${isMobile ? 'px-2' : 'px-4 sm:px-8'}`}>
-      <Link to="/ctf-blog" className="text-blue-400 hover:text-blue-300 mb-4 sm:mb-8 inline-block px-2">
+    <div className={`container mx-auto py-8 sm:py-16 ${isMobile ? 'px-1' : 'px-4 sm:px-8'}`}>
+      <Link to="/ctf-blog" className={`text-blue-400 hover:text-blue-300 mb-4 sm:mb-8 inline-block ${isMobile ? 'px-4' : 'px-2'}`}>
         ← Retour aux articles
       </Link>
       
-      <div className="mb-4 flex justify-between items-center bg-gray-800 p-3 rounded-lg mx-2">
+      <div className={`mb-4 flex justify-between items-center bg-gray-800 p-3 rounded-lg ${isMobile ? 'mx-2' : 'mx-2'}`}>
         <h3 className="text-white text-sm">Contrôles de lecture</h3>
         <div className="flex space-x-3">
           <button 
@@ -119,6 +119,7 @@ const CTFBlogPost = () => {
           color: #f8f9fa;
           max-width: none;
           overflow-wrap: break-word;
+          ${isMobile ? 'padding: 0 0.5rem;' : ''}
         }
         
         /* Titres */
@@ -167,8 +168,9 @@ const CTFBlogPost = () => {
         .markdown-content p {
           margin-top: 1rem;
           margin-bottom: 1rem;
-          line-height: 1.7;
+          line-height: ${isMobile ? '1.8' : '1.7'};
           font-size: ${fontSize}px;
+          ${isMobile ? 'text-align: justify;' : ''}
         }
         
         /* Listes */
@@ -300,18 +302,47 @@ const CTFBlogPost = () => {
         @media (max-width: 768px) {
           .markdown-content {
             overflow-x: hidden;
+            font-size: 16px;
+            line-height: 1.8;
           }
           
           .markdown-content pre {
-            margin-left: -0.5rem;
-            margin-right: -0.5rem;
+            margin-left: -1rem;
+            margin-right: -1rem;
             border-radius: 0;
+            font-size: 13px;
+            padding: 1rem;
+            overflow-x: auto;
           }
           
           .markdown-content table {
+            margin-left: -1rem;
+            margin-right: -1rem;
+            width: calc(100% + 2rem);
+            font-size: 13px;
+          }
+          
+          .markdown-content h1, .markdown-content h2, .markdown-content h3 {
             margin-left: -0.5rem;
             margin-right: -0.5rem;
-            width: calc(100% + 1rem);
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+          }
+          
+          .markdown-content ul, .markdown-content ol {
+            padding-left: 1.5rem;
+            margin-left: 0;
+          }
+          
+          .markdown-content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+          }
+          
+          .markdown-content blockquote {
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+            padding-left: 1rem;
           }
         }
         
@@ -332,7 +363,7 @@ const CTFBlogPost = () => {
         }
       `}</style>
       
-      <div className={`bg-gray-900/70 backdrop-blur-sm rounded-lg shadow-xl ${isMobile ? 'p-3 mx-1' : 'p-4 sm:p-8'}`}>
+      <div className={`bg-gray-900/70 backdrop-blur-sm rounded-lg shadow-xl ${isMobile ? 'p-4 mx-1' : 'p-4 sm:p-8'}`}>
         <article className="markdown-content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
