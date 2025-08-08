@@ -6,7 +6,6 @@ import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/atom-one-dark.css';
 
 import comcyberMarine from '../posts/comcyber_marine.md?raw';
-import dgseRootMe from '../posts/dgse_rootme.md?raw';
 import cs2EntityList from '../posts/cs2_entity_list.md?raw';
 
 const CTFBlogPost = () => {
@@ -35,7 +34,6 @@ const CTFBlogPost = () => {
   useEffect(() => {
     const postContents = {
       'comcyber_marine': comcyberMarine,
-      'dgse_root_me': dgseRootMe,
       'cs2_entity_list': cs2EntityList
     };
 
@@ -44,11 +42,6 @@ const CTFBlogPost = () => {
         title: "⚓️ COMCYBER X MARINE ROOT ME",
         image: "/comcyber_marine.webp",
         altText: "Logo du CTF COMCYBER X MARINE"
-      },
-      'dgse_root_me': {
-        title: "🕵️‍♂️ DGSE ROOT ME", 
-        image: "/dgse_rootme.webp",
-        altText: "Logo du CTF DGSE ROOT ME"
       },
       'cs2_entity_list': {
         title: "🎯 Counter-Strike 2 - Reverse Entity List",
