@@ -16,6 +16,8 @@ const CTFBlogPost = () => {
   const [error, setError] = useState(null);
   const [fontSize, setFontSize] = useState(16);
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -70,6 +72,44 @@ const CTFBlogPost = () => {
 
   const decreaseFontSize = () => {
     setFontSize(prev => Math.max(prev - 2, 14));
+  };
+
+  const openImageModal = (imageSrc, imageAlt) => {
+    setSelectedImage({ src: imageSrc, alt: imageAlt });
+    setIsImageModalOpen(true);
+    document.body.style.overflow = 'hidden'; // Empêcher le scroll du body
+  };
+
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
+    setSelectedImage(null);
+    document.body.style.overflow = 'unset'; // Rétablir le scroll du body
+  };
+
+  // Fermer la modal avec Escape
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isImageModalOpen) {
+        closeImageModal();
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isImageModalOpen]);
+
+  // Composant personnalisé pour les images
+  const ClickableImage = ({ src, alt, ...props }) => {
+    return (
+      <img
+        src={src}
+        alt={alt}
+        {...props}
+        onClick={() => openImageModal(src, alt)}
+        style={{ cursor: 'pointer' }}
+        title="Cliquer pour agrandir"
+      />
+    );
   };
 
   if (loading) return <div className="text-white text-center py-20">Chargement de l'article...</div>;
@@ -368,11 +408,43 @@ const CTFBlogPost = () => {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}
+            components={{
+              img: ClickableImage
+            }}
           >
             {post}
           </ReactMarkdown>
         </article>
       </div>
+
+      {/* Modal pour afficher l'image en plein écran */}
+      {isImageModalOpen && selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
+          onClick={closeImageModal}
+        >
+          <div className="relative max-w-full max-h-full">
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              className="max-w-full max-h-full object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button
+              onClick={closeImageModal}
+              className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-colors"
+              aria-label="Fermer l'image"
+            >
+              ✕
+            </button>
+            {selectedImage.alt && (
+              <div className="absolute bottom-4 left-4 right-4 text-white bg-black bg-opacity-50 p-2 rounded text-center">
+                {selectedImage.alt}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
