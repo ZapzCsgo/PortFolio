@@ -423,22 +423,24 @@ const CTFBlogPost = () => {
           className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
           onClick={closeImageModal}
         >
-          <div className="relative max-w-full max-h-full">
-            <img
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              className="max-w-full max-h-full object-contain"
-              onClick={(e) => e.stopPropagation()}
-            />
-            <button
-              onClick={closeImageModal}
-              className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-colors"
-              aria-label="Fermer l'image"
-            >
-              ✕
-            </button>
+          <div className="relative max-w-full max-h-full flex flex-col items-center">
+            <div className="relative">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="max-w-full max-h-[80vh] object-contain"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <button
+                onClick={closeImageModal}
+                className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-colors"
+                aria-label="Fermer l'image"
+              >
+                ✕
+              </button>
+            </div>
             {selectedImage.alt && (
-              <div className="absolute bottom-4 left-4 right-4 text-white bg-black bg-opacity-50 p-2 rounded text-center">
+              <div className="mt-4 text-white bg-black bg-opacity-50 px-4 py-2 rounded text-center max-w-full">
                 {selectedImage.alt}
               </div>
             )}
