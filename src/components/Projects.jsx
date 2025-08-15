@@ -22,7 +22,6 @@ import { PROJECTS_DATA, FILE_PROJECT_MAPPING } from "../constants";
 
 
 const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) => {
-  const hasValidGithubLink = githubLink && !githubLink.includes("matteo-murru.com");
   const hasValidLiveLink = liveLink && !liveLink.includes("matteo-murru.com");
   return (
     <div className="overflow-hidden rounded-lg bg-gray-900/50 backdrop-blur-sm transition-all hover:shadow-xl">
@@ -40,29 +39,17 @@ const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) 
             </span>
           ))}
         </div>
-        {(hasValidGithubLink || hasValidLiveLink) && (
+        {hasValidLiveLink && (
           <div className="flex gap-4">
-            {hasValidLiveLink && (
-              <a
-                href={liveLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-blue-400 hover:text-blue-300"
-              >
-                <span>Voir le projet</span>
-                <FaExternalLinkAlt />
-              </a>
-            )}
-            {hasValidGithubLink && (
-              <a
-                href={githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-2xl text-white hover:text-gray-300"
-              >
-                <FaGithub />
-              </a>
-            )}
+            <a
+              href={liveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-blue-400 hover:text-blue-300"
+            >
+              <span>Voir le projet</span>
+              <FaExternalLinkAlt />
+            </a>
           </div>
         )}
       </div>
@@ -83,6 +70,8 @@ const Projects = () => {
       displayedProjects = PROJECTS_DATA.filter((project) => project.type === "42");
     } else if (selectedPath === "side_projects") {
       displayedProjects = PROJECTS_DATA.filter((project) => project.type === "side_projects");
+    } else if (selectedPath === "side_projects/la_voie_de_la_pierre.jsx") {
+      displayedProjects = PROJECTS_DATA.filter((project) => project.id === "la_voie_de_la_pierre");
     } else if (selectedPath === "contributions") {
       displayedProjects = PROJECTS_DATA.filter((project) => project.type === "contribution");
     }
@@ -167,7 +156,13 @@ const Projects = () => {
               <span>side_projects</span>
             </div>
             <div className="ml-4">
-              {/* Ajoute ici les fichiers de side_projects si besoin */}
+              <div
+                className={`flex items-center mb-2 cursor-pointer ${selectedPath === `side_projects/la_voie_de_la_pierre.jsx` ? "text-blue-400" : ""}`}
+                onClick={() => setSelectedPath("side_projects/la_voie_de_la_pierre.jsx")}
+              >
+                <FaFile className="text-gray-400 mr-2" />
+                <span>la_voie_de_la_pierre.jsx</span>
+              </div>
             </div>
           </div>
         </div>

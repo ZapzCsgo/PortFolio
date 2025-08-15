@@ -71,6 +71,18 @@ export const PROJECTS_DATA = [
     liveLink: "",
     type: "42"
   }
+    ,
+    {
+      id: "la_voie_de_la_pierre",
+      title: "La Voie de la Pierre",
+      description: "Application interactive destinée aux profanes souhaitant découvrir la franc-maçonnerie et mieux comprendre les différentes obédiences existantes. Questionnaire personnalisé guidant l’utilisateur vers l’obédience correspondant à ses valeurs et attentes spirituelles.",
+  description: "Application interactive destinée aux profanes souhaitant découvrir la franc-maçonnerie et mieux comprendre les différentes obédiences existantes. Questionnaire personnalisé guidant l’utilisateur vers l’obédience correspondant à ses valeurs et attentes spirituelles. Ce projet avait pour but et du sens selon moi d’enlever les idées conspirationnistes et d’informer les profanes tout en gardant et respectant le secret maçonnique.",
+    image: "/lvdlp.webp",
+      tags: ["TypeScript", "React", "Quizz", "Spiritualité"],
+      githubLink: "https://github.com/ZapzCsgo/La-Voie-de-la-Pierre",
+      liveLink: "https://la-voie-de-la-pierre.vercel.app/",
+      type: "side_projects"
+    }
 ];
 
 export const FILE_PROJECT_MAPPING = {
