@@ -1,10 +1,10 @@
 import logo from "../assets/zapzLogo.webp";
 import { NavLink } from "react-router-dom";
-import { FaGithub, FaLinkedin, FaHome } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaHome, FaUser, FaCertificate } from "react-icons/fa";
 import IconLink from "./ui/IconLink";
 
 const navLinkClasses = ({ isActive }) =>
-    `rounded-sm text-sm transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black ${isActive ? "text-accent" : "text-white/80"}`;
+    `flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-white/5 hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black ${isActive ? "bg-white/5 text-accent" : "text-white/80"}`;
 
 const Navbar = () => {
     return (
@@ -28,9 +28,15 @@ const Navbar = () => {
                     </div>
                 </a>
             </div>
-            <div className="flex items-center gap-6">
-                <NavLink to="/about" className={navLinkClasses}>À propos</NavLink>
-                <NavLink to="/certifications" className={navLinkClasses}>Certifications</NavLink>
+            <div className="flex items-center gap-2">
+                <NavLink to="/about" className={navLinkClasses}>
+                    <FaUser aria-hidden="true" />
+                    <span>À propos</span>
+                </NavLink>
+                <NavLink to="/certifications" className={navLinkClasses}>
+                    <FaCertificate aria-hidden="true" />
+                    <span>Certifications</span>
+                </NavLink>
             </div>
             <div className="m-8 flex items-center justify-center gap-4">
                 <IconLink href="https://github.com/ZapzCsgo" icon={FaGithub} label="Github" size="lg" />
