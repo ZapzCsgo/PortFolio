@@ -12,7 +12,15 @@ const Hero = () => {
             <div className="flex flex-wrap lg:flex-row-reverse">
                 <div className="w-full lg:w-1/2">
                     <div className="flex justify-center lg:p-8">
-                        <img src={profilePicture} alt="zapz pp" className="border border-stone-900 rounded-3xl"/>
+                        <img
+                            src={profilePicture}
+                            alt="zapz pp"
+                            className="rounded-3xl"
+                            style={{
+                                maskImage: "radial-gradient(ellipse 62% 65% at 50% 38%, black 35%, transparent 100%)",
+                                WebkitMaskImage: "radial-gradient(ellipse 62% 65% at 50% 38%, black 35%, transparent 100%)",
+                            }}
+                        />
                     </div>
                 </div>
                 <div className="w-full lg:w-1/2">
