@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/atom-one-dark.css';
+import Card from './ui/Card';
+import Button from './ui/Button';
 
 import comcyberMarine from '../posts/comcyber_marine.md?raw';
 import cs2EntityList from '../posts/cs2_entity_list.md?raw';
@@ -18,6 +20,7 @@ const CTFBlogPost = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const closeButtonRef = useRef(null);
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -98,6 +101,13 @@ const CTFBlogPost = () => {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isImageModalOpen]);
 
+  // Déplacer le focus sur le bouton de fermeture à l'ouverture de la modal
+  useEffect(() => {
+    if (isImageModalOpen) {
+      closeButtonRef.current?.focus();
+    }
+  }, [isImageModalOpen]);
+
   // Composant personnalisé pour les images
   const ClickableImage = ({ src, alt, ...props }) => {
     return (
@@ -118,29 +128,31 @@ const CTFBlogPost = () => {
 
   return (
     <div className={`container mx-auto py-8 sm:py-16 ${isMobile ? 'px-1' : 'px-4 sm:px-8'}`}>
-      <Link to="/ctf-blog" className={`text-blue-400 hover:text-blue-300 mb-4 sm:mb-8 inline-block ${isMobile ? 'px-4' : 'px-2'}`}>
+      <Link to="/ctf-blog" className={`text-accent hover:text-accent-light mb-4 sm:mb-8 inline-block ${isMobile ? 'px-4' : 'px-2'}`}>
         ← Retour aux articles
       </Link>
-      
-      <div className={`mb-4 flex justify-between items-center bg-gray-800 p-3 rounded-lg ${isMobile ? 'mx-2' : 'mx-2'}`}>
+
+      <Card padding="sm" surface="raised" className={`mb-4 flex justify-between items-center ${isMobile ? 'mx-2' : 'mx-2'}`}>
         <h3 className="text-white text-sm">Contrôles de lecture</h3>
         <div className="flex space-x-3">
-          <button 
-            onClick={decreaseFontSize} 
-            className="bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600 transition-colors"
+          <Button
+            onClick={decreaseFontSize}
+            variant="neutral"
+            size="sm"
             aria-label="Diminuer la taille du texte"
           >
             A-
-          </button>
-          <button 
-            onClick={increaseFontSize} 
-            className="bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600 transition-colors"
+          </Button>
+          <Button
+            onClick={increaseFontSize}
+            variant="neutral"
+            size="sm"
             aria-label="Augmenter la taille du texte"
           >
             A+
-          </button>
+          </Button>
         </div>
-      </div>
+      </Card>
 
       {/* Image d'en-tête du post */}
       {postMeta && postMeta.image && (
@@ -169,7 +181,7 @@ const CTFBlogPost = () => {
           margin-top: ${isMobile ? '1.5rem' : '2.5rem'};
           margin-bottom: ${isMobile ? '1rem' : '1.5rem'};
           color: #ffffff;
-          border-bottom: 2px solid #4299e1;
+          border-bottom: 2px solid var(--accent);
           padding-bottom: 0.5rem;
           text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
@@ -180,7 +192,7 @@ const CTFBlogPost = () => {
           margin-top: ${isMobile ? '1.5rem' : '2rem'};
           margin-bottom: ${isMobile ? '1rem' : '1.25rem'};
           color: #f0f0f0;
-          border-left: 4px solid #3182ce;
+          border-left: 4px solid var(--accent-dark);
           padding-left: 0.75rem;
         }
         
@@ -198,7 +210,7 @@ const CTFBlogPost = () => {
           content: "";
           width: 6px;
           height: 6px;
-          background-color: #4299e1;
+          background-color: var(--accent);
           border-radius: 50%;
           margin-right: 0.5rem;
           display: inline-block;
@@ -260,10 +272,10 @@ const CTFBlogPost = () => {
         
         /* Citations */
         .markdown-content blockquote {
-          border-left: 4px solid #4299e1;
+          border-left: 4px solid var(--accent);
           padding: 0.5rem 0 0.5rem 1rem;
           margin: 1.5rem 0;
-          background-color: rgba(66, 153, 225, 0.1);
+          background-color: rgba(var(--accent-rgb), 0.1);
           border-radius: 0 0.25rem 0.25rem 0;
         }
         
@@ -274,13 +286,13 @@ const CTFBlogPost = () => {
         
         /* Liens */
         .markdown-content a {
-          color: #63b3ed;
+          color: var(--accent-light);
           text-decoration: none;
           transition: color 0.2s;
         }
-        
+
         .markdown-content a:hover {
-          color: #90cdf4;
+          color: #fdba74;
           text-decoration: underline;
         }
         
@@ -306,7 +318,7 @@ const CTFBlogPost = () => {
         .markdown-content hr {
           border: 0;
           height: 2px;
-          background-image: linear-gradient(to right, rgba(66, 153, 225, 0), rgba(66, 153, 225, 0.75), rgba(66, 153, 225, 0));
+          background-image: linear-gradient(to right, rgba(var(--accent-rgb), 0), rgba(var(--accent-rgb), 0.6), rgba(var(--accent-rgb), 0));
           margin: 2rem 0;
         }
         
@@ -403,7 +415,7 @@ const CTFBlogPost = () => {
         }
       `}</style>
       
-      <div className={`bg-gray-900/70 backdrop-blur-sm rounded-lg shadow-xl ${isMobile ? 'p-4 mx-1' : 'p-4 sm:p-8'}`}>
+      <Card surface="70" padding={isMobile ? 'sm' : 'lg'} className={isMobile ? 'mx-1' : ''}>
         <article className="markdown-content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -415,13 +427,16 @@ const CTFBlogPost = () => {
             {post}
           </ReactMarkdown>
         </article>
-      </div>
+      </Card>
 
       {/* Modal pour afficher l'image en plein écran */}
       {isImageModalOpen && selectedImage && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
           onClick={closeImageModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedImage.alt || 'Image agrandie'}
         >
           <div className="relative max-w-full max-h-full flex flex-col items-center">
             <div className="relative">
@@ -432,8 +447,9 @@ const CTFBlogPost = () => {
                 onClick={(e) => e.stopPropagation()}
               />
               <button
+                ref={closeButtonRef}
                 onClick={closeImageModal}
-                className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-colors"
+                className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 aria-label="Fermer l'image"
               >
                 ✕

@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Card from './ui/Card';
+import Button from './ui/Button';
+import SectionHeading from './ui/SectionHeading';
+import useInView from '../hooks/useInView';
 
 const blogPosts = [
   {
@@ -23,15 +27,19 @@ const blogPosts = [
 ];
 
 const CTFBlog = () => {
+  const [ref, isInView] = useInView();
+
   return (
     <div className="container mx-auto px-8 py-16">
-      <h1 className="text-4xl font-bold text-white mb-8">Blog de Writeups CTF</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {blogPosts.map(post => (
-          <div 
-            key={post.id} 
-            className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300"
+      <SectionHeading as="h1" align="left">Blog de Writeups CTF</SectionHeading>
+
+      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {blogPosts.map((post, index) => (
+          <Card
+            key={post.id}
+            hoverable
+            className={isInView ? "animate-fade-in-up" : "opacity-0"}
+            style={{ animationDelay: isInView ? `${index * 80}ms` : undefined }}
           >
             <div className="mb-6 overflow-hidden rounded-xl h-64 flex items-center justify-center">
               {post.image ? (
@@ -49,13 +57,10 @@ const CTFBlog = () => {
             <h2 className="text-2xl text-white mb-2 font-bold">{post.title}</h2>
             <p className="text-gray-300 mb-4 text-sm">{post.date}</p>
             <p className="text-gray-400 mb-4">{post.excerpt}</p>
-            <Link
-              to={`/ctf-blog/${post.slug}`}
-              className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-300"
-            >
+            <Button as={Link} to={`/ctf-blog/${post.slug}`} variant="solid" size="sm">
               Lire la suite →
-            </Link>
-          </div>
+            </Button>
+          </Card>
         ))}
       </div>
     </div>

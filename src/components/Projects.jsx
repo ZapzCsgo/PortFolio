@@ -17,14 +17,15 @@ import antidebugImage from "../assets/antidebug.webp";
 import React, { useState } from "react";
 import { FaFolder, FaFolderOpen, FaFile, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { PROJECTS_DATA, FILE_PROJECT_MAPPING } from "../constants";
+import Card from "./ui/Card";
+import Badge from "./ui/Badge";
+import Button from "./ui/Button";
+import SectionHeading from "./ui/SectionHeading";
 
-
-
-
-const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) => {
+const ProjectCard = ({ title, description, image, tags, liveLink }) => {
   const hasValidLiveLink = liveLink && !liveLink.includes("matteo-murru.com");
   return (
-    <div className="overflow-hidden rounded-lg bg-gray-900/50 backdrop-blur-sm transition-all hover:shadow-xl">
+    <Card hoverable padding="none" className="overflow-hidden">
       <div className="relative">
         <img src={image} alt={title} className="h-60 w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60"></div>
@@ -34,9 +35,7 @@ const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) 
         <p className="mb-4 text-sm text-gray-300">{description}</p>
         <div className="mb-6 flex flex-wrap gap-2">
           {tags && tags.map((tag, index) => (
-            <span key={index} className="rounded-md bg-gray-800 px-3 py-1 text-xs text-gray-300">
-              {tag}
-            </span>
+            <Badge key={index}>{tag}</Badge>
           ))}
         </div>
         {hasValidLiveLink && (
@@ -45,15 +44,15 @@ const ProjectCard = ({ title, description, image, tags, githubLink, liveLink }) 
               href={liveLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-blue-400 hover:text-blue-300"
+              className="group flex items-center gap-2 text-accent hover:text-accent-light"
             >
               <span>Voir le projet</span>
-              <FaExternalLinkAlt />
+              <FaExternalLinkAlt aria-hidden="true" className="transform transition-transform duration-300 group-hover:translate-x-1" />
             </a>
           </div>
         )}
       </div>
-    </div>
+    </Card>
   );
 };
 
@@ -80,92 +79,76 @@ const Projects = () => {
   const handleReset = () => setSelectedPath(null);
   const toggleFolder = (folder) => setSelectedPath(folder);
 
+  const FolderRow = ({ path, children, indent = "ml-2" }) => (
+    <button
+      type="button"
+      aria-pressed={selectedPath === path}
+      onClick={() => toggleFolder(path)}
+      className={`flex w-full items-center gap-2 rounded px-1 py-1 text-left mb-2 transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${indent} ${selectedPath === path ? "text-accent" : ""}`}
+    >
+      <FaFolderOpen className="text-yellow-400" aria-hidden="true" />
+      <span>{children}</span>
+    </button>
+  );
+
+  const FileRow = ({ path, children, indent = "ml-4" }) => (
+    <button
+      type="button"
+      aria-pressed={selectedPath === path}
+      onClick={() => setSelectedPath(path)}
+      className={`flex w-full items-center gap-2 rounded px-1 py-1 text-left mb-2 transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${indent} ${selectedPath === path ? "text-accent" : ""}`}
+    >
+      <FaFile className="text-gray-400" aria-hidden="true" />
+      <span>{children}</span>
+    </button>
+  );
+
   return (
     <div className="pb-24">
-      <h2 className="my-10 text-center text-4xl text-white">Projets</h2>
+      <SectionHeading align="center">Projets</SectionHeading>
       <div className="flex flex-col md:flex-row gap-8">
         {/* Panneau de navigation de fichiers à gauche */}
-        <div className="md:w-1/4 bg-gray-900/60 p-4 rounded-lg">
+        <Card padding="md" surface="60" className="md:w-1/4">
           <div className="flex justify-between items-center mb-4">
             <span className="text-white">Projects</span>
-            <button
-              onClick={handleReset}
-              className="bg-gray-800 text-white px-3 py-1 rounded text-sm hover:bg-gray-700"
-            >
+            <Button variant="neutral" size="sm" onClick={handleReset}>
               Reset
-            </button>
+            </Button>
           </div>
           {/* Dossier 42 */}
-          <div className="ml-2 mt-2">
-            <div
-              className="flex items-center mb-2 cursor-pointer"
-              onClick={() => toggleFolder("42")}
-            >
-              <FaFolderOpen className="text-yellow-400 mr-2" />
-              <span>42</span>
-            </div>
+          <div className="mt-2">
+            <FolderRow path="42">42</FolderRow>
             <div className="ml-4">
               {/* Common Core */}
-              <div
-                className="flex items-center mb-2 cursor-pointer"
-                onClick={() => toggleFolder("42/common_core")}
-              >
-                <FaFolderOpen className="text-yellow-400 mr-2" />
-                <span>common_core</span>
-              </div>
+              <FolderRow path="42/common_core">common_core</FolderRow>
               <div className="ml-4">
                 {["webserv.cpp", "philosophers.c", "libft.c", "cube3d.c", "minishell.c", "so_long.c"].map((file) => (
-                  <div
-                    key={file}
-                    className={`flex items-center mb-2 cursor-pointer ${selectedPath === `42/common_core/${file}` ? "text-blue-400" : ""}`}
-                    onClick={() => setSelectedPath(`42/common_core/${file}`)}
-                  >
-                    <FaFile className="text-gray-400 mr-2" />
-                    <span>{file}</span>
-                  </div>
+                  <FileRow key={file} path={`42/common_core/${file}`} indent="">
+                    {file}
+                  </FileRow>
                 ))}
               </div>
             </div>
           </div>
           {/* Dossier contributions */}
-          <div className="ml-2 mt-2">
-            <div
-              className="flex items-center mb-2 cursor-pointer"
-              onClick={() => setSelectedPath("contributions")}
-            >
-              <FaFolderOpen className="text-yellow-400 mr-2" />
-              <span>contributions</span>
-            </div>
+          <div className="mt-2">
+            <FolderRow path="contributions">contributions</FolderRow>
             <div className="ml-4">
-              <div
-                className={`flex items-center mb-2 cursor-pointer ${selectedPath === `contributions/antidebug.cpp` ? "text-blue-400" : ""}`}
-                onClick={() => setSelectedPath(`contributions/antidebug.cpp`)}
-              >
-                <FaFile className="text-gray-400 mr-2" />
-                <span>antidebug.cpp</span>
-              </div>
+              <FileRow path="contributions/antidebug.cpp" indent="">
+                antidebug.cpp
+              </FileRow>
             </div>
           </div>
           {/* Dossier side_projects */}
-          <div className="ml-2 mt-2">
-            <div
-              className="flex items-center mb-2 cursor-pointer"
-              onClick={() => setSelectedPath("side_projects")}
-            >
-              <FaFolderOpen className="text-yellow-400 mr-2" />
-              <span>side_projects</span>
-            </div>
+          <div className="mt-2">
+            <FolderRow path="side_projects">side_projects</FolderRow>
             <div className="ml-4">
-              <div
-                className={`flex items-center mb-2 cursor-pointer ${selectedPath === `side_projects/la_voie_de_la_pierre.jsx` ? "text-blue-400" : ""}`}
-                onClick={() => setSelectedPath("side_projects/la_voie_de_la_pierre.jsx")}
-              >
-                <FaFile className="text-gray-400 mr-2" />
-                <span>la_voie_de_la_pierre.jsx</span>
-              </div>
+              <FileRow path="side_projects/la_voie_de_la_pierre.jsx" indent="">
+                la_voie_de_la_pierre.jsx
+              </FileRow>
             </div>
           </div>
-        </div>
+        </Card>
         {/* Projets à droite */}
         <div className="md:w-3/4">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

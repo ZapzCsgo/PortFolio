@@ -5,7 +5,32 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        accent: {
+          DEFAULT: '#f97316',
+          light: '#fb923c',
+          dark: '#ea580c',
+        },
+        surface: {
+          DEFAULT: '#111827',
+          raised: '#1f2937',
+          hover: '#374151',
+        },
+      },
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+      },
+      keyframes: {
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'fade-in-up': 'fade-in-up 0.5s ease-out both',
+      },
+    },
   },
   plugins: [],
 }

@@ -8,6 +8,13 @@ import CTFBlog from "./components/CtfBlog";
 import CTFBlogPost from "./components/CtfBlogPost";
 import Contact from "./components/Contact";
 
+const Layout = ({ children }) => (
+  <div className="container mx-auto px-8">
+    <Navbar />
+    {children}
+  </div>
+);
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -21,25 +28,22 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={
-            <div className="container mx-auto px-8">
-              <Navbar />
+            <Layout>
               <Hero />
               <ToolsTechnologies />
               <Projects />
               <Contact />
-            </div>
+            </Layout>
           } />
           <Route path="/ctf-blog" element={
-            <div className="container mx-auto px-8">
-              <Navbar />
+            <Layout>
               <CTFBlog />
-            </div>
+            </Layout>
           } />
           <Route path="/ctf-blog/:slug" element={
-            <div className="container mx-auto px-8">
-              <Navbar />
+            <Layout>
               <CTFBlogPost />
-            </div>
+            </Layout>
           } />
         </Routes>
       </div>
