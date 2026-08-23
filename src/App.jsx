@@ -7,6 +7,8 @@ import ToolsTechnologies from "./components/ToolsTechnologies";
 import CTFBlog from "./components/CtfBlog";
 import CTFBlogPost from "./components/CtfBlogPost";
 import Contact from "./components/Contact";
+import About from "./components/About";
+import Certifications from "./components/Certifications";
 
 const Layout = ({ children }) => (
   <div className="container mx-auto px-8">
@@ -43,6 +45,18 @@ const App = () => {
           <Route path="/ctf-blog/:slug" element={
             <Layout>
               <CTFBlogPost />
+            </Layout>
+          } />
+          <Route path="/about" element={
+            <Layout>
+              <About />
+              <Contact />
+            </Layout>
+          } />
+          <Route path="/certifications" element={
+            <Layout>
+              <Certifications />
+              <Contact />
             </Layout>
           } />
         </Routes>

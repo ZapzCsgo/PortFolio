@@ -22,7 +22,7 @@ const Hero = () => {
                         
                         <div className="flex items-center mt-2">
                             <FaCircle className="text-green-500 text-xs mr-2 animate-pulse" aria-hidden="true" />
-                            <span className="text-green-400 text-sm">Actuellement dans le common core de 42</span>
+                            <span className="text-green-400 text-sm">Actuellement à 42 Tokyo & LQA chez Keywords Studio</span>
                         </div>
 
                         <p className="my-2 max-w-lg py-6 text-xl leading-relaxed tracking-tighter text-gray-300">
