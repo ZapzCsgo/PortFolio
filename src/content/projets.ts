@@ -22,7 +22,7 @@ export const GTS: Record<Lang, CaseStudy> = {
     seoTitle: "GaijinToSensei, mise en production et exploitation",
     description:
       "Comment je mets en production GaijinToSensei : Next.js, Neon, Prisma, Upstash, Resend et Vercel, chaîne d'agents, déploiement contrôlé avec retour arrière et supervision.",
-    lead: "Une app pour apprendre le japonais, en production avec des utilisateurs réels. Je la raconte ici côté mise en prod et exploitation.",
+    lead: "Une app pour apprendre le japonais, en production avec des utilisateurs réels.",
     stack: ["Next.js", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Vercel", "Playwright", "Bash"],
     link: { href: "https://gajintosensei.com", label: "gajintosensei.com" },
     context: [
@@ -77,7 +77,7 @@ export const GTS: Record<Lang, CaseStudy> = {
     seoTitle: "GaijinToSensei, shipping and running it in production",
     description:
       "How I ship GaijinToSensei: Next.js, Neon, Prisma, Upstash, Resend and Vercel, an agent pipeline, checked deploys with automatic rollback, and monitoring.",
-    lead: "An app to learn Japanese, in production with real users. This page covers how it ships and how it runs.",
+    lead: "An app to learn Japanese, in production with real users.",
     stack: ["Next.js", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Vercel", "Playwright", "Bash"],
     link: { href: "https://gajintosensei.com", label: "gajintosensei.com" },
     context: [
@@ -135,13 +135,13 @@ export const INFRA: Record<Lang, CaseStudy> = {
     seoTitle: "Infra perso : VPS, tâches planifiées, tunnel et sites statiques",
     description:
       "Un VPS Linux qui fait tourner des agents et des tâches de nuit, un hub exposé par un tunnel Cloudflare derrière un proxy edge sur Vercel, des sites publiés sur Cloudflare Pages.",
-    lead: "Un VPS qui travaille la nuit, un hub perso qui n'ouvre aucun port, et des sites publiés tout seuls. Le tout gratuit ou presque.",
+    lead: "Un VPS qui travaille la nuit, un hub perso qui n'ouvre aucun port, et des sites publiés tout seuls.",
     stack: ["Linux", "systemd", "cron", "Bash", "Node.js", "Cloudflare Tunnel", "Vercel Edge", "Cloudflare Pages", "wrangler"],
     context: [
       "Je fais tourner plusieurs projets en même temps : GaijinToSensei, deux apps Overwolf et leurs sites. J'ai besoin que du travail avance quand je ne suis pas devant l'écran.",
     ],
     problem: [
-      "Faire tourner des agents et des tâches sans surveillance, sans leur donner tous les droits, sans exposer ma machine et sans payer d'hébergement.",
+      "Faire tourner des agents et des tâches sans surveillance, sans leur donner tous les droits, sans exposer ma machine et sans payer l'hébergement des sites.",
     ],
     done: [
       {
@@ -189,13 +189,13 @@ export const INFRA: Record<Lang, CaseStudy> = {
     seoTitle: "Personal infrastructure: VPS, scheduled jobs, tunnel and static sites",
     description:
       "A Linux VPS that runs agents and night jobs, a hub exposed through a Cloudflare tunnel behind an edge proxy on Vercel, and sites published to Cloudflare Pages.",
-    lead: "A VPS that works at night, a personal hub that opens no port, and sites that publish themselves. All of it free or close to it.",
+    lead: "A VPS that works at night, a personal hub that opens no port, and sites that publish themselves.",
     stack: ["Linux", "systemd", "cron", "Bash", "Node.js", "Cloudflare Tunnel", "Vercel Edge", "Cloudflare Pages", "wrangler"],
     context: [
       "I run several projects at once: GaijinToSensei, two Overwolf apps and their sites. I need work to move forward when I am not at the screen.",
     ],
     problem: [
-      "Run agents and jobs unattended, without giving them full rights, without exposing my machine and without paying for hosting.",
+      "Run agents and jobs unattended, without giving them full rights, without exposing my machine and without paying to host the sites.",
     ],
     done: [
       {

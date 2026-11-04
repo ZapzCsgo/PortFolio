@@ -10,7 +10,7 @@
         "http://localhost/en/"
       ],
       "settings": {
-        "chromeFlags": "--no-sandbox"
+        "chromeFlags": "--no-sandbox --disable-dev-shm-usage"
       }
     },
     "assert": {

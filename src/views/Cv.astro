@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { ALTERNANCE, CV_PDF, EMAIL, GITHUB, LINKEDIN, NAME, SITE_URL, type Lang } from "../content/site";
+import { CV_PDF, EMAIL, GITHUB, LINKEDIN, NAME, SITE_URL, type Lang } from "../content/site";
 import { CV } from "../content/cv";
 
 interface Props {
@@ -8,90 +8,103 @@ interface Props {
 }
 const { lang } = Astro.props;
 const c = CV[lang];
-const h2 = "mt-6 border-b border-line pb-1 text-base font-bold text-accent print:mt-3";
+const colon = lang === "fr" ? "\u00a0:" : ":";
+const h2 = "mt-5 border-b border-line pb-0.5 text-base font-bold text-accent print:mt-3";
 const strip = (u: string) => u.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "");
+const contacts = [
+  { text: c.location },
+  { text: EMAIL, href: `mailto:${EMAIL}` },
+  { text: strip(SITE_URL), href: SITE_URL },
+  { text: strip(LINKEDIN), href: LINKEDIN },
+  { text: strip(GITHUB), href: GITHUB },
+];
 ---
 
 <Base lang={lang} route="cv" title={c.seoTitle} description={c.description}>
-  <div class="no-print mb-6 flex flex-wrap gap-3">
-    <a href={CV_PDF[lang]} class="inline-flex min-h-11 items-center rounded-lg border border-accent bg-accent px-4 font-semibold text-white dark:text-black">{c.download}</a>
+  <div class="no-print mb-6">
+    <a href={CV_PDF[lang]} class="inline-flex min-h-11 items-center rounded-lg border border-accent bg-accent px-4 font-semibold text-white dark:text-black"
+      >{c.download}</a
+    >
   </div>
-  <article class="cv rounded-xl border border-line bg-card p-5 text-[0.9375rem] leading-normal sm:p-8 print:border-0 print:p-0">
+  <article class="cv rounded-xl border border-line bg-card p-5 text-[0.9375rem] leading-normal sm:p-8 print:rounded-none print:border-0 print:p-0">
     <header>
       <h1 class="text-3xl font-bold">{NAME}</h1>
       <p class="mt-1 text-lg font-semibold text-accent">{c.heading}</p>
-      <p class="mt-2">{ALTERNANCE[lang]}</p>
-      <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-muted">
-        <li>{c.location}</li>
-        <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
-        <li><a href={SITE_URL}>{strip(SITE_URL)}</a></li>
-        <li><a href={LINKEDIN}>{strip(LINKEDIN)}</a></li>
-        <li><a href={GITHUB}>{strip(GITHUB)}</a></li>
-      </ul>
+      <p class="mt-1 text-muted">
+        {
+          contacts.map((x, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> | </span>}
+              {x.href ? <a href={x.href}>{x.text}</a> : <span>{x.text}</span>}
+            </>
+          ))
+        }
+      </p>
     </header>
 
     <h2 class={h2}>{c.profileTitle}</h2>
-    <p class="mt-2">{c.profile}</p>
+    <p class="mt-1.5">{c.profile}</p>
 
     <h2 class={h2}>{c.skillsTitle}</h2>
-    <ul class="mt-2 space-y-1">
-      {c.skills.map((s) => <li><span class="font-semibold">{s.label}{lang === "fr" ? "\u00a0:" : ":"}</span> {s.text}</li>)}
+    <ul class="mt-1.5 space-y-0.5">
+      {c.skills.map((s) => <li><strong>{s.label}{colon}</strong> {s.text}</li>)}
     </ul>
 
     <h2 class={h2}>{c.projectsTitle}</h2>
     {
       c.projects.map((p) => (
-        <section class="mt-3 break-inside-avoid">
+        <section class="mt-2 break-inside-avoid">
           <h3 class="font-bold">
             {p.title}
-            {p.where && <span class="font-normal text-muted">, {p.where}</span>}
+            {p.where && <span class="font-normal text-muted"> ({p.where})</span>}
           </h3>
-          <ul class="mt-1 list-disc space-y-0.5 pl-5 marker:text-accent">
+          <ul class="mt-0.5 list-disc space-y-0.5 pl-5 marker:text-accent">
             {p.points.map((x) => <li>{x}</li>)}
           </ul>
         </section>
       ))
     }
 
-    <div class="grid gap-x-8 sm:grid-cols-2 print:grid-cols-2">
-      <div>
-        <h2 class={h2}>{c.workTitle}</h2>
-        {
-          c.work.map((w) => (
-            <p class="mt-2">
-              <span class="font-bold">{w.title}</span>
-              {w.where && <span>, {w.where}</span>}
-              {w.when && <span class="block text-muted">{w.when}</span>}
-            </p>
-          ))
-        }
-        <h2 class={h2}>{c.certTitle}</h2>
-        <ul class="mt-2 space-y-1">
-          {c.certs.map((x) => <li>{x.href ? <a href={x.href}>{x.text}</a> : x.text}</li>)}
-        </ul>
-      </div>
-      <div>
-        <h2 class={h2}>{c.eduTitle}</h2>
-        {
-          c.edu.map((e) => (
-            <p class="mt-2">
-              <span class="font-bold">{e.title}</span>
-              {e.when && <span class="block text-muted">{e.when}</span>}
-              {e.points.map((x) => <span class="block">{x}</span>)}
-            </p>
-          ))
-        }
-        <h2 class={h2}>{c.langTitle}</h2>
-        <p class="mt-2">{c.langs}</p>
-      </div>
-    </div>
+    <h2 class={h2}>{c.workTitle}</h2>
+    <ul class="mt-1.5 space-y-0.5">
+      {
+        c.work.map((w) => (
+          <li>
+            <strong>{w.title}</strong>
+            {w.where && <span>, {w.where}</span>}
+            {w.when && <span class="text-muted">, {w.when}</span>}
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 class={h2}>{c.eduTitle}</h2>
+    <ul class="mt-1.5 space-y-0.5">
+      {
+        c.edu.map((e) => (
+          <li>
+            <strong>{e.title}</strong>
+            {e.when && <span class="text-muted">, {e.when}</span>}
+            {e.points.length > 0 && <span>. {e.points.join(" ")}</span>}
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 class={h2}>{c.certTitle}</h2>
+    <ul class="mt-1.5 space-y-0.5">
+      {c.certs.map((x) => <li>{x.href ? <a href={x.href}>{x.text}</a> : x.text}</li>)}
+    </ul>
+
+    <h2 class={h2}>{c.langTitle}</h2>
+    <p class="mt-1.5">{c.langs}</p>
   </article>
 </Base>
 
 <style is:global>
   @page {
     size: A4;
-    margin: 10mm 12mm;
+    margin: 9mm 12mm;
   }
   @media print {
     :root,
@@ -105,7 +118,10 @@ const strip = (u: string) => u.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/,
       --accent: #c2410c;
       --accent-soft: #fff1e6;
       color-scheme: light;
-      font-size: 12.1px;
+      font-size: 11.8px;
+    }
+    body {
+      background: #fff;
     }
     main {
       max-width: none !important;
@@ -113,9 +129,6 @@ const strip = (u: string) => u.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/,
     }
     .cv a {
       text-decoration: none;
-    }
-    body {
-      background: #fff;
     }
   }
 </style>

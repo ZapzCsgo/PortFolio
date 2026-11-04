@@ -1,4 +1,4 @@
-// Texte du CV (page /cv et PDF). Faits vérifiés uniquement.
+// Texte du CV (page /cv et PDF). Positionnement DevOps / Cloud / SRE. Faits vérifiés uniquement.
 import type { Lang } from "./site";
 import { CODINGAME_URL } from "./pages";
 
@@ -29,73 +29,65 @@ export interface Cv {
   langTitle: string;
   langs: string;
   download: string;
-  print: string;
 }
 
 export const CV: Record<Lang, Cv> = {
   fr: {
     seoTitle: "CV de Matteo Murru, alternance DevOps / Cloud / SRE",
-    description: "CV de Matteo Murru : étudiant à 42 Nice, alternance DevOps / Cloud / SRE à Nice, Sophia Antipolis ou Monaco.",
-    heading: "Alternance DevOps / Cloud / SRE",
+    description: "CV de Matteo Murru : étudiant à 42 Nice, alternance DevOps / Cloud / SRE d'1 an à Nice, Sophia Antipolis ou Monaco.",
+    heading: "Alternance DevOps / Cloud / SRE (1 an)",
     location: "Nice",
     profileTitle: "Profil",
     profile:
-      "Étudiant à 42 Nice (tronc commun validé, branche Unix et bas niveau). Je fais tourner une app en production avec des utilisateurs réels : déploiement contrôlé avec retour arrière, supervision, et un incident de base de données réparé par point-in-time restore.",
+      "Étudiant à 42 Nice, je cherche une alternance d'1 an à Nice, Sophia Antipolis ou Monaco. Je fais tourner une app en production (utilisateurs réels) : mises en prod contrôlées, supervision, incident de base réparé.",
     skillsTitle: "Compétences",
     skills: [
-      { label: "En prod", text: "Linux (VPS, systemd, cron), Bash, Git, Vercel, Cloudflare (Pages, Tunnel), PostgreSQL (Neon) et Prisma, Redis (Upstash), TypeScript / Node.js, Python" },
-      { label: "En apprentissage", text: "Docker et Docker compose, Ansible, GitHub Actions, AWS (Cloud Practitioner en cours), HashiCorp Vault" },
-      { label: "Bas niveau", text: "C (certification CodinGame), C++, assembleur x86-64 (NASM), appels système, ELF" },
+      { label: "Utilisé en prod", text: "Linux (VPS, systemd, cron), Bash, Git, Vercel (CLI, edge), Cloudflare (Pages, Tunnel), PostgreSQL (Neon) avec Prisma, Redis (Upstash), Node.js / TypeScript, Python" },
+      { label: "Exploitation en prod", text: "route de santé, alertes planifiées, déploiement avec retour arrière automatique, migrations additives, restauration point-in-time (PITR)" },
+      { label: "En apprentissage", text: "Docker, Docker compose, Ansible, GitHub Actions, Lighthouse CI, AWS (Cloud Practitioner en cours), HashiCorp Vault" },
+      { label: "Sécurité système et bas niveau", text: "C (certification CodinGame), C++, assembleur x86-64, format ELF, appels système" },
     ],
-    projectsTitle: "Projets",
+    projectsTitle: "Projets en production",
     projects: [
       {
-        title: "GaijinToSensei : app d'apprentissage du japonais en production",
+        title: "GaijinToSensei, app d'apprentissage du japonais",
         where: "gajintosensei.com",
         points: [
-          "Next.js, PostgreSQL serverless (Neon) avec Prisma, Upstash Redis, Resend, hébergement Vercel. Utilisateurs réels.",
+          "En production avec des utilisateurs réels : Next.js, PostgreSQL serverless (Neon) avec Prisma, Redis (Upstash), e-mails Resend, hébergement Vercel.",
           "Chaîne d'agents Claude Code qui codent, testent (QA Playwright), fusionnent et déploient, avec verrous anti-conflits et déploiements groupés pour tenir le quota de la plateforme.",
-          "Mise en prod par script verrouillé : préversion, contrôles HTTP, promotion, nouveau contrôle et retour arrière automatique. Garde de prod planifiée toutes les 10 minutes.",
-          "Supervision : route de santé (base, Redis, e-mail, stockage), erreurs serveur enregistrées en base. Limitation de débit par fenêtres glissantes.",
-          "Incident du 29/10/2026 (base de prod vidée par une migration) : restauration par point-in-time restore, postmortem sans reproche, migrations additives uniquement et commandes destructives interdites sur la prod.",
+          "Mise en prod par script verrouillé : préversion, contrôles HTTP, promotion, nouveau contrôle, retour arrière automatique. Garde de prod planifiée toutes les 10 minutes.",
+          "Supervision : route de santé (base, Redis, e-mail, stockage), erreurs serveur enregistrées en base, limitation de débit par fenêtres glissantes.",
+          "Incident du 29/10/2026 : base de prod vidée par une migration mal ciblée, restaurée par point-in-time restore. Postmortem sans reproche, migrations additives uniquement, commandes destructives interdites sur la prod.",
         ],
       },
       {
         title: "Infra perso",
         points: [
           "VPS Linux : agents de nuit en service systemd sous un utilisateur dédié sans root, exécuteur root à liste fermée, 25 tâches planifiées (garde de prod, publications, surveillance d'un bot, alertes).",
-          "Hub perso exposé par un tunnel Cloudflare, sans port ouvert, derrière un proxy edge sur Vercel (PBKDF2, cookie HMAC, anti force brute, HSTS).",
-          "5 sites statiques publiés automatiquement sur Cloudflare Pages (intégration Git ou wrangler depuis le VPS).",
+          "Hub perso exposé par un tunnel Cloudflare sans port ouvert, derrière un proxy edge sur Vercel (mot de passe PBKDF2, cookie HMAC, délai anti force brute, HSTS).",
+          "5 sites statiques publiés automatiquement sur Cloudflare Pages (intégration Git ou wrangler depuis le VPS), dont MetaAOE et MetaDBD.",
+          "zapz.work : CI GitHub Actions (lint, build, tests, Lighthouse), image Docker publiée sur GHCR, déploiement Vercel, contrôle de disponibilité planifié.",
         ],
       },
       {
-        title: "Projets 42 système et infra",
+        title: "Projets 42 (système et infra)",
         points: [
-          "Cloud-1 (en cours, en binôme) : déploiement automatisé d'un site sur le cloud avec Ansible et Docker.",
-          "ft_transcendence (équipe) : HashiCorp Vault en conteneur pour les secrets, Docker compose, nginx en TLS.",
-          "ft_strace (traçage des appels système), woody_woodpacker (chiffrement de binaires ELF64), libasm (NASM x86-64), ft_ls, AntiDebug (anti-débogage Windows x86_64).",
-          "Tronc commun : Minishell, Webserv (serveur HTTP en C++98), Philosophers, Libft.",
+          "Cloud-1, en cours, en binôme : déploiement automatisé d'un site sur le cloud avec Ansible et Docker.",
+          "ft_transcendence, en équipe : HashiCorp Vault en conteneur pour les secrets, Docker compose, nginx en TLS.",
+          "ft_strace (traçage des appels système), woody_woodpacker (chiffrement de binaires ELF64), libasm (assembleur x86-64), ft_ls, AntiDebug (Windows x86_64).",
+          "Tronc commun : Minishell, Webserv (serveur HTTP en C++98), Philosophers (threads), Libft.",
         ],
-      },
-      {
-        title: "Apps Overwolf MetaAOE et MetaDBD",
-        points: ["Livraison par une boucle d'agents sur le VPS et publication automatique des sites sur Cloudflare Pages."],
       },
     ],
     workTitle: "Expérience",
     work: [
-      {
-        title: "Testeur de localisation (LQA)",
-        where: "Keywords Studios, Tokyo",
-        when: "Juin à octobre 2026",
-        points: [],
-      },
+      { title: "Localization QA (LQA)", where: "Keywords Studios, Tokyo", when: "Juin 2026 à octobre 2026", points: [] },
       { title: "Équipier polyvalent", where: "McDonald's", points: [] },
     ],
     eduTitle: "Formation",
     edu: [
-      { title: "42 Nice", when: "Depuis janvier 2025", points: ["Tronc commun validé en 2025. Branche Unix et bas niveau, vers le titre RNCP niveau 7 de 42."] },
-      { title: "42 Tokyo (échange), puis PVT au Japon", when: "Mars à octobre 2026", points: [] },
+      { title: "42 Nice", when: "Depuis janvier 2025", points: ["Tronc commun validé en 2025, branche Unix et bas niveau, vers le titre RNCP niveau 7 de 42."] },
+      { title: "42 Tokyo (échange), puis PVT au Japon", when: "Mars 2026 à octobre 2026", points: [] },
       { title: "Bac pro Commercialisation et services en restauration", points: [] },
     ],
     certTitle: "Certifications",
@@ -106,71 +98,63 @@ export const CV: Record<Lang, Cv> = {
     langTitle: "Langues",
     langs: "Français, anglais, japonais (pratiqué au quotidien au Japon en 2026)",
     download: "Télécharger le PDF",
-    print: "Imprimer",
   },
   en: {
     seoTitle: "Resume of Matteo Murru, DevOps / Cloud / SRE work-study",
-    description: "Resume of Matteo Murru: 42 Nice student, looking for a DevOps / Cloud / SRE work-study contract in Nice, Sophia Antipolis or Monaco.",
-    heading: "DevOps / Cloud / SRE work-study",
+    description: "Resume of Matteo Murru: 42 Nice student, looking for a 1-year DevOps / Cloud / SRE work-study contract in Nice, Sophia Antipolis or Monaco.",
+    heading: "DevOps / Cloud / SRE work-study (1 year)",
     location: "Nice, France",
     profileTitle: "Profile",
     profile:
-      "42 Nice student (common core completed, Unix and low-level branch). I run an app in production with real users: checked releases with rollback, monitoring, and a database incident fixed with point-in-time restore.",
+      "42 Nice student looking for a 1-year work-study contract in Nice, Sophia Antipolis or Monaco. I run an app in production with real users: checked releases, monitoring, and a database incident fixed.",
     skillsTitle: "Skills",
     skills: [
-      { label: "In production", text: "Linux (VPS, systemd, cron), Bash, Git, Vercel, Cloudflare (Pages, Tunnel), PostgreSQL (Neon) and Prisma, Redis (Upstash), TypeScript / Node.js, Python" },
-      { label: "Learning", text: "Docker and Docker compose, Ansible, GitHub Actions, AWS (Cloud Practitioner in progress), HashiCorp Vault" },
-      { label: "Low level", text: "C (CodinGame certification), C++, x86-64 assembly (NASM), system calls, ELF" },
+      { label: "Used in production", text: "Linux (VPS, systemd, cron), Bash, Git, Vercel (CLI, edge), Cloudflare (Pages, Tunnel), PostgreSQL (Neon) with Prisma, Redis (Upstash), Node.js / TypeScript, Python" },
+      { label: "Operations in production", text: "health route, scheduled alerts, deployments with automatic rollback, additive migrations, point-in-time restore (PITR)" },
+      { label: "Learning", text: "Docker, Docker compose, Ansible, GitHub Actions, Lighthouse CI, AWS (Cloud Practitioner in progress), HashiCorp Vault" },
+      { label: "Systems security and low level", text: "C (CodinGame certification), C++, x86-64 assembly, ELF format, system calls" },
     ],
-    projectsTitle: "Projects",
+    projectsTitle: "Projects in production",
     projects: [
       {
-        title: "GaijinToSensei: a Japanese learning app in production",
+        title: "GaijinToSensei, a Japanese learning app",
         where: "gajintosensei.com",
         points: [
-          "Next.js, serverless PostgreSQL (Neon) with Prisma, Upstash Redis, Resend, hosted on Vercel. Real users.",
+          "In production with real users: Next.js, serverless PostgreSQL (Neon) with Prisma, Redis (Upstash), Resend emails, hosted on Vercel.",
           "A Claude Code agent pipeline that writes code, tests (Playwright QA), merges and deploys, with locks against conflicts and batched deployments to fit the platform quota.",
-          "Releases through a locked script: preview, HTTP checks, promotion, a second check and automatic rollback. A scheduled production guard every 10 minutes.",
-          "Monitoring: health route (database, Redis, email, storage), server errors stored in the database. Sliding-window rate limits.",
-          "Incident on 29/10/2026 (production database wiped by a migration): point-in-time restore, blameless postmortem, additive-only migrations and destructive commands banned on production.",
+          "Releases through a locked script: preview, HTTP checks, promotion, a second check, automatic rollback. A scheduled production guard every 10 minutes.",
+          "Monitoring: health route (database, Redis, email, storage), server errors stored in the database, sliding-window rate limits.",
+          "Incident on 29/10/2026: production database wiped by a mis-targeted migration, restored with point-in-time restore. Blameless postmortem, additive-only migrations, destructive commands banned on production.",
         ],
       },
       {
         title: "Personal infrastructure",
         points: [
           "Linux VPS: night agents as a systemd service under a dedicated non-root user, a closed-list root executor, 25 scheduled jobs (production guard, publishing, bot watchdog, alerts).",
-          "Personal hub exposed through a Cloudflare tunnel with no open port, behind an edge proxy on Vercel (PBKDF2, HMAC cookie, brute-force delay, HSTS).",
-          "5 static sites published automatically to Cloudflare Pages (Git integration or wrangler from the VPS).",
+          "Personal hub exposed through a Cloudflare tunnel with no open port, behind an edge proxy on Vercel (PBKDF2 password, HMAC cookie, brute-force delay, HSTS).",
+          "5 static sites published automatically to Cloudflare Pages (Git integration or wrangler from the VPS), including MetaAOE and MetaDBD.",
+          "zapz.work: GitHub Actions CI (lint, build, tests, Lighthouse), Docker image published to GHCR, Vercel deployment, scheduled uptime check.",
         ],
       },
       {
-        title: "42 systems and infrastructure projects",
+        title: "42 projects (systems and infrastructure)",
         points: [
-          "Cloud-1 (in progress, in a pair): automated deployment of a website to the cloud with Ansible and Docker.",
-          "ft_transcendence (team): HashiCorp Vault in a container for secrets, Docker compose, nginx with TLS.",
-          "ft_strace (system call tracing), woody_woodpacker (ELF64 binary encryption), libasm (NASM x86-64), ft_ls, AntiDebug (Windows x86_64 anti-debugging).",
-          "Common core: Minishell, Webserv (HTTP server in C++98), Philosophers, Libft.",
+          "Cloud-1, in progress, in a pair: automated deployment of a website to the cloud with Ansible and Docker.",
+          "ft_transcendence, team project: HashiCorp Vault in a container for secrets, Docker compose, nginx with TLS.",
+          "ft_strace (system call tracing), woody_woodpacker (ELF64 binary encryption), libasm (x86-64 assembly), ft_ls, AntiDebug (Windows x86_64).",
+          "Common core: Minishell, Webserv (HTTP server in C++98), Philosophers (threads), Libft.",
         ],
-      },
-      {
-        title: "Overwolf apps MetaAOE and MetaDBD",
-        points: ["Shipped by an agent loop on the VPS, with sites published automatically to Cloudflare Pages."],
       },
     ],
     workTitle: "Experience",
     work: [
-      {
-        title: "Localization QA tester (LQA)",
-        where: "Keywords Studios, Tokyo",
-        when: "June to October 2026",
-        points: [],
-      },
+      { title: "Localization QA (LQA)", where: "Keywords Studios, Tokyo", when: "June 2026 to October 2026", points: [] },
       { title: "Crew member", where: "McDonald's", points: [] },
     ],
     eduTitle: "Education",
     edu: [
-      { title: "42 Nice", when: "Since January 2025", points: ["Common core completed in 2025. Unix and low-level branch, towards 42's RNCP level 7 degree."] },
-      { title: "42 Tokyo (exchange), then working holiday in Japan", when: "March to October 2026", points: [] },
+      { title: "42 Nice", when: "Since January 2025", points: ["Common core completed in 2025, Unix and low-level branch, towards 42's RNCP level 7 degree (master's level)."] },
+      { title: "42 Tokyo (exchange), then working holiday in Japan", when: "March 2026 to October 2026", points: [] },
       { title: "Vocational high school diploma in restaurant service (bac pro)", points: [] },
     ],
     certTitle: "Certifications",
@@ -181,6 +165,5 @@ export const CV: Record<Lang, Cv> = {
     langTitle: "Languages",
     langs: "French, English, Japanese (used every day in Japan in 2026)",
     download: "Download the PDF",
-    print: "Print",
   },
 };

@@ -17,7 +17,7 @@ export const HOME = {
     casesTitle: "Études de cas",
     moreTitle: "Aussi",
     contactTitle: "Contact",
-    contactText: "Le plus simple, c'est un e-mail. Je réponds vite.",
+    contactText: "Le plus simple, c'est un e-mail.",
   },
   en: {
     seoTitle: "Matteo Murru, DevOps / Cloud / SRE work-study in Nice",
@@ -32,7 +32,7 @@ export const HOME = {
     casesTitle: "Case studies",
     moreTitle: "Also",
     contactTitle: "Contact",
-    contactText: "Email is the easiest way. I reply quickly.",
+    contactText: "Email is the easiest way.",
   },
 } as const;
 
@@ -137,7 +137,7 @@ export const CASES = {
     {
       key: "infra" as const,
       title: "Mon infra perso",
-      problem: "Faire tourner des agents et des tâches la nuit sans tout exposer ni payer.",
+      problem: "Faire tourner des agents et des tâches la nuit sans exposer ma machine.",
       result: "VPS en systemd et cron, hub derrière un tunnel sans port ouvert, 5 sites publiés seuls.",
     },
   ],
@@ -157,7 +157,7 @@ export const CASES = {
     {
       key: "infra" as const,
       title: "My personal infrastructure",
-      problem: "Run agents and jobs at night without exposing everything or paying.",
+      problem: "Run agents and jobs at night without exposing my machine.",
       result: "VPS with systemd and cron, a hub behind a tunnel with no open port, 5 sites that publish themselves.",
     },
   ],
@@ -182,7 +182,7 @@ export const ABOUT = {
     photoAlt: "Photo de Matteo Murru",
     paragraphs: [
       "Je m'appelle Matteo Murru et j'habite à Nice. J'étudie à 42 Nice : j'ai fini le tronc commun, je suis la branche Unix et bas niveau et je vise le titre RNCP niveau 7 de 42.",
-      "Ce qui me plaît dans l'infra, c'est qu'on voit tout de suite si ça marche. Un déploiement passe ou il casse, une alerte sonne ou elle se tait. J'aime construire les garde-fous qui évitent de casser deux fois la même chose.",
+      "J'ai appris l'exploitation en faisant tourner mes propres projets : une app en production, un VPS qui travaille la nuit, des sites publiés automatiquement. Je veux maintenant le faire au sein d'une équipe.",
     ],
     japanTitle: "Japon",
     japan: [
@@ -215,7 +215,7 @@ export const ABOUT = {
     photoAlt: "Photo of Matteo Murru",
     paragraphs: [
       "My name is Matteo Murru and I live in Nice. I study at 42 Nice: I finished the common core, I follow the Unix and low-level branch and I am working towards 42's RNCP level 7 degree (master's level).",
-      "What I like about infrastructure is that you see right away whether it works. A deployment passes or it breaks, an alert fires or it stays quiet. I like building the guardrails that stop the same thing from breaking twice.",
+      "I learned operations by running my own projects: an app in production, a VPS that works at night, sites that publish themselves. Now I want to do it as part of a team.",
     ],
     japanTitle: "Japan",
     japan: [
