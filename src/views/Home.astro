@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Contacts from "../components/Contacts.astro";
-import { NAME, ROUTES, UI, type Lang } from "../content/site";
+import { CV_PDF, EMAIL, GITHUB, LINKEDIN, NAME, PHOTO, ROUTES, UI, type Lang } from "../content/site";
 import { CASES, HOME, MORE, SKILLS } from "../content/pages";
 
 interface Props {
@@ -10,128 +10,275 @@ interface Props {
 const { lang } = Astro.props;
 const h = HOME[lang];
 const t = UI[lang];
-const sep = lang === "fr" ? "\u00a0:" : ":";
-const card = h.card.map((c) => ({ ...c, href: "href" in c ? c.href : ROUTES[c.route as "incident" | "deploy"][lang] }));
+const sep = lang === "fr" ? "\u00a0: " : ": ";
+const featured = CASES[lang].find((c) => c.key === "incident")!;
+const others = CASES[lang].filter((c) => c.key !== "incident");
+const gtsLive = h.card[0];
+const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9375rem] font-medium text-muted hover:text-fg";
 ---
 
 <Base lang={lang} route="home" title={h.seoTitle} description={h.description} wide>
-  <section aria-labelledby="titre" class="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start">
+  <!-- Premier écran : le titre, puis la preuve, puis les actions. Le schéma à droite reste discret. -->
+  <section aria-labelledby="titre" class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-center lg:gap-16">
     <div>
-      <p class="font-semibold text-muted"><span class="text-fg">{NAME}</span>{h.kicker.slice(NAME.length)}</p>
-      <h1 id="titre" class="mt-3 max-w-[20ch] text-[2.125rem] font-bold leading-[1.12] sm:text-5xl">{h.headline}</h1>
-      <dl class="mt-5 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[0.9375rem]">
+      <div class="flex items-center gap-3">
+        {
+          PHOTO && (
+            <img
+              src={PHOTO.src}
+              srcset={`${PHOTO.src} 1x, ${PHOTO.src2x} 2x`}
+              alt={h.photoAlt}
+              width="56"
+              height="56"
+              class="size-14 rounded-full object-cover"
+              fetchpriority="high"
+            />
+          )
+        }
+        <p class="text-[0.9375rem] font-medium text-muted"><span class="font-semibold text-fg">{NAME}</span>{h.kicker.slice(NAME.length)}</p>
+      </div>
+      <h1 id="titre" class="mt-4 max-w-[17ch] text-[2.375rem] font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-[3.5rem]">{h.headline}</h1>
+      <dl class="mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-[0.9375rem]">
         {
           h.facts.map((f) => (
-            <>
-              <dt class="font-semibold text-muted">{f.k}</dt>
-              <dd>{f.v}</dd>
-            </>
+            <div class="flex gap-2">
+              <dt class="text-muted">{f.k}</dt>
+              <dd class="font-medium">{f.v}</dd>
+            </div>
           ))
         }
       </dl>
-      <p class="mt-5 max-w-[58ch] border-l-2 border-accent pl-4">
+      <p class="mt-6 max-w-[56ch] text-[1.0625rem] leading-relaxed sm:text-lg">
         {h.proof}
         <a href={ROUTES.incident[lang]} class="ml-1 font-semibold text-accent underline underline-offset-4 hover:decoration-2">{h.proofLink}</a>
       </p>
-      <div class="mt-6">
-        <Contacts lang={lang} />
+      <div class="mt-8 grid grid-cols-[1fr_auto] gap-3 sm:flex sm:flex-wrap sm:items-center">
+        <a
+          href="#projets"
+          class="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-accent px-5 text-base sm:px-6 font-bold text-white hover:brightness-110 dark:text-black"
+        >
+          {h.ctaProjects}
+          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+        </a>
+        <a href={CV_PDF[lang]} class="inline-flex min-h-12 items-center gap-2 rounded-lg border border-line bg-card px-5 text-base font-semibold hover:border-accent">
+          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"
+            ><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M12 12v6M9 15l3 3 3-3"></path></svg
+          >
+          {t.cvPdf}
+        </a>
       </div>
+      <ul class="mt-3 flex flex-wrap gap-x-4">
+        <li>
+          <a href={`mailto:${EMAIL}`} class={quiet}>
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"
+              ><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg
+            >{EMAIL}
+          </a>
+        </li>
+        <li><a href={LINKEDIN} rel="me" class={quiet}>LinkedIn</a></li>
+        <li><a href={GITHUB} rel="me" class={quiet}>GitHub</a></li>
+      </ul>
     </div>
-    <aside class="rounded-xl border border-line bg-card p-5" aria-labelledby="t-preuves">
-      <h2 id="t-preuves" class="text-sm font-semibold text-muted">{h.cardTitle}</h2>
-      <ul class="mt-3 divide-y divide-line">
+
+    <aside aria-labelledby="t-statut" class="rounded-2xl border border-line p-5 sm:p-6">
+      <h2 id="t-statut" class="flex items-center gap-2.5 text-[0.9375rem] font-semibold">
+        <span class="live-dot inline-block size-2.5 shrink-0 rounded-full bg-ok" aria-hidden="true"></span>
+        {h.statusTitle}
+      </h2>
+      <ol class="mt-5" aria-label={h.pipelineLabel}>
         {
-          card.map((s) => (
-            <li class="py-3 first:pt-0">
-              <a href={s.href} class="group flex gap-3">
-                <span class="mt-2 size-2 shrink-0 rounded-full bg-ok" aria-hidden="true" />
-                <span>
-                  <span class="block font-semibold group-hover:underline group-hover:decoration-accent group-hover:underline-offset-4">{s.k}</span>
-                  <span class="block text-[0.9375rem] text-muted">{s.v}</span>
-                </span>
-              </a>
+          h.pipeline.map((s, i) => (
+            <li class="relative flex gap-3.5 pb-4 last:pb-0">
+              {i < h.pipeline.length - 1 && <span class="absolute left-[5px] top-4 h-full w-px bg-line" aria-hidden="true" />}
+              <span
+                class:list={["relative mt-[0.4rem] size-[11px] shrink-0 rounded-full border-2 border-ok", i === h.pipeline.length - 1 ? "bg-ok" : "bg-bg"]}
+                aria-hidden="true"
+              />
+              <span class="min-w-0 leading-snug">
+                <span class="block text-[0.9375rem] font-semibold">{s.k}</span>
+                <span class="block text-sm text-muted">{s.v}</span>
+              </span>
             </li>
           ))
         }
+      </ol>
+      <ul class="mt-5 space-y-1 border-t border-line pt-4 text-sm">
+        <li>
+          <a href={ROUTES.deploy[lang]} class="inline-flex min-h-8 items-center font-semibold underline-offset-4 hover:text-accent hover:underline">
+            {t.footerDeploy}
+          </a>
+        </li>
+        <li>
+          <a href={gtsLive.href} class="inline-block py-1 text-muted underline-offset-4 hover:text-fg hover:underline">
+            {gtsLive.k}, {gtsLive.v}
+            <svg class="ml-0.5 inline size-3.5 align-[-2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+          </a>
+        </li>
       </ul>
-      <p class="mt-2 border-t border-line pt-3 text-[0.875rem]">{h.toolsProd}</p>
-      <p class="mt-1 text-[0.875rem] text-muted">{h.toolsLearning}</p>
     </aside>
   </section>
 
-  <section id="projets" aria-labelledby="t-cas" class="mt-20">
-    <h2 id="t-cas" class="text-2xl font-bold sm:text-3xl">{h.casesTitle}</h2>
-    <ul class="mt-6 grid gap-4 md:grid-cols-3">
+  <section id="projets" aria-labelledby="t-cas" class="mt-24 sm:mt-28">
+    <h2 id="t-cas" class="text-[1.75rem] font-bold sm:text-4xl">{h.casesTitle}</h2>
+
+    <article class="card-link mt-8 grid gap-8 rounded-2xl border border-line bg-card p-6 sm:p-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+      <div class="flex flex-col">
+        <h3 class="text-2xl font-bold leading-tight sm:text-[1.875rem]">
+          <a href={ROUTES.incident[lang]} class="stretch">{featured.title}</a>
+        </h3>
+        <p class="mt-4 text-muted">{featured.problem}</p>
+        <p class="mt-5 flex gap-3 rounded-lg bg-ok-soft px-4 py-3 font-semibold leading-snug">
+          <svg class="mt-0.5 size-5 shrink-0 text-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m5 12 5 5L20 7"></path></svg>
+          <span><span class="sr-only">{t.caseSections.result}{sep}</span>{featured.result}</span>
+        </p>
+        <span class="mt-auto flex items-center gap-3 pt-6 font-semibold text-accent" aria-hidden="true">
+          {h.proofLink}
+          <span class="go grid size-9 place-items-center rounded-full border border-accent">
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </span>
+        </span>
+      </div>
+      <figure class="rounded-xl bg-inset p-5 sm:p-6">
+        <figcaption class="text-sm font-semibold text-muted">{h.timelineLabel}</figcaption>
+        <ol class="mt-4">
+          {
+            h.timeline.map((e, i) => (
+              <li class="grid grid-cols-[4.25rem_14px_minmax(0,1fr)] gap-x-3 pb-3.5 last:pb-0">
+                <span class="text-sm font-semibold leading-6 text-muted tabular-nums">{e.t}</span>
+                <span class="relative flex justify-center" aria-hidden="true">
+                  {i < h.timeline.length - 1 && <span class="absolute top-4 -bottom-3.5 w-px bg-line" />}
+                  <span
+                    class:list={[
+                      "relative mt-[0.375rem] size-3 rounded-full border-2",
+                      e.s === "bad" ? "border-bad bg-bad" : e.s === "ok" ? "border-ok bg-ok" : "border-muted bg-inset",
+                    ]}
+                  />
+                </span>
+                <span class:list={["text-[0.9375rem] leading-6", e.s === "bad" && "font-semibold text-bad", e.s === "ok" && "font-semibold"]}>{e.v}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </figure>
+    </article>
+
+    <ul class="mt-6 grid gap-6 md:grid-cols-2">
       {
-        CASES[lang].map((c) => (
-          <li>
-            <a href={ROUTES[c.key][lang]} class="lift flex h-full flex-col rounded-xl border border-line bg-card p-5 hover:border-accent">
-              <h3 class="text-lg font-bold">{c.title}</h3>
-              <p class="mt-3 text-[0.9375rem] text-muted">{c.problem}</p>
-              <p class="mt-3 text-[0.9375rem]">{c.result}</p>
-              <span class="mt-auto pt-4 text-[0.9375rem] font-semibold text-accent">{t.readCase}</span>
-            </a>
+        others.map((c) => (
+          <li class="card-link flex flex-col rounded-2xl border border-line bg-card p-6">
+            {c.key === "gts" ? (
+              <img
+                src="/img/gts-560.webp"
+                srcset="/img/gts-560.webp 560w, /img/gts-1120.webp 1120w"
+                sizes="(min-width: 768px) 460px, 100vw"
+                alt={h.gtsShotAlt}
+                width="560"
+                height="350"
+                loading="lazy"
+                decoding="async"
+                class="aspect-[16/9] w-full rounded-lg border border-line object-cover object-left-top"
+              />
+            ) : (
+              <div class="grid aspect-[16/9] w-full content-center rounded-lg bg-inset px-3 sm:px-4" aria-hidden="true">
+                <div class="flex items-center justify-between gap-1.5 sm:gap-2">
+                  {h.infraSteps.map((s, i) => (
+                    <>
+                      {i > 0 && (
+                        <svg class="size-4 shrink-0 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                      )}
+                      <span class="min-w-0 flex-1 rounded-lg border border-line bg-card px-1.5 py-3 text-center leading-tight">
+                        <span class="block text-[0.9375rem] font-bold">{s.k}</span>
+                        <span class="mt-1 block text-xs text-muted">{s.v}</span>
+                      </span>
+                    </>
+                  ))}
+                </div>
+              </div>
+            )}
+            <h3 class="mt-5 text-xl font-bold leading-snug">
+              <a href={ROUTES[c.key][lang]} class="stretch">{c.title}</a>
+            </h3>
+            <p class="mt-2 text-[0.9375rem] text-muted">{c.problem}</p>
+            <p class="mt-4 flex gap-2.5 text-[0.9375rem] font-semibold leading-snug">
+              <svg class="mt-0.5 size-[1.125rem] shrink-0 text-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m5 12 5 5L20 7"></path></svg>
+              <span><span class="sr-only">{t.caseSections.result}{sep}</span>{c.result}</span>
+            </p>
+            <span class="mt-auto flex items-center justify-between pt-5 text-[0.9375rem] font-semibold text-accent" aria-hidden="true">
+              {t.readCase}
+              <span class="go grid size-8 place-items-center rounded-full border border-accent">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+              </span>
+            </span>
           </li>
         ))
       }
     </ul>
   </section>
 
-  <section id="competences" aria-labelledby="t-comp" class="mt-20">
-    <h2 id="t-comp" class="text-2xl font-bold sm:text-3xl">{h.skillsTitle}</h2>
-    <div class="mt-6 overflow-hidden rounded-xl border border-line bg-card">
-      <table class="w-full border-collapse text-left text-[0.9375rem]">
-        <thead class="hidden sm:table-header-group">
-          <tr class="border-b border-line text-sm text-muted">
-            <th scope="col" class="w-[22%] px-5 py-3 font-semibold">{h.skillsCols.domain}</th>
-            <th scope="col" class="px-5 py-3 font-semibold">
-              <span class="mr-2 inline-block size-2 rounded-full bg-ok align-middle" aria-hidden="true"></span>{h.skillsCols.prod}
-            </th>
-            <th scope="col" class="px-5 py-3 font-semibold">
-              <span class="mr-2 inline-block size-2 rounded-full border-2 border-accent align-middle" aria-hidden="true"></span>{h.skillsCols.learning}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            SKILLS[lang].map((s) => (
-              <tr class="block border-b border-line px-5 py-4 last:border-b-0 sm:table-row sm:p-0">
-                <th scope="row" class="block pb-2 font-semibold sm:table-cell sm:px-5 sm:py-4 sm:align-top">{s.domain}</th>
-                <td class="block py-1 sm:table-cell sm:px-5 sm:py-4 sm:align-top">
-                  <span class="mr-1 font-semibold text-muted sm:hidden">{h.skillsCols.prod}{sep}</span>
-                  {s.prod.length ? s.prod.join(", ") : <span class="text-muted">{h.none}</span>}
-                </td>
-                <td class:list={["py-1 sm:table-cell sm:px-5 sm:py-4 sm:align-top", s.learning.length ? "block" : "hidden"]}>
-                  <span class="mr-1 font-semibold text-muted sm:hidden">{h.skillsCols.learning}{sep}</span>
-                  {s.learning.length ? s.learning.join(", ") : <span class="text-muted">-</span>}
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+  <section id="competences" aria-labelledby="t-comp" class="mt-24 sm:mt-28">
+    <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+      <h2 id="t-comp" class="text-[1.75rem] font-bold sm:text-4xl">{h.skillsTitle}</h2>
+      <p class="flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted">
+        <span class="inline-flex items-center gap-2"><span class="size-2.5 rounded-full bg-ok" aria-hidden="true"></span>{h.skillsCols.prod}</span>
+        <span class="inline-flex items-center gap-2"><span class="size-2.5 rounded-full border-[1.5px] border-dashed border-muted" aria-hidden="true"></span>{h.skillsCols.learning}</span>
+      </p>
+    </div>
+    <div class="mt-8 grid gap-x-10 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+      {
+        SKILLS[lang].map((s) => (
+          <div class="border-t border-line pt-4">
+            <h3 class="font-bold">{s.domain}</h3>
+            <ul class="mt-3 flex flex-wrap gap-2" aria-label={`${s.domain}${sep}${h.skillsCols.prod.toLowerCase()}`}>
+              {s.prod.length ? (
+                s.prod.map((x) => (
+                  <li class="inline-flex items-center gap-1.5 rounded-md bg-ok-soft px-2.5 py-1 text-sm font-medium leading-snug">
+                    <span class="size-1.5 shrink-0 rounded-full bg-ok" aria-hidden="true" />
+                    {x}
+                  </li>
+                ))
+              ) : (
+                <li class="py-1 text-sm text-muted">{h.none}</li>
+              )}
+            </ul>
+            {s.learning.length > 0 && (
+              <ul class="mt-2 flex flex-wrap gap-2" aria-label={`${s.domain}${sep}${h.skillsCols.learning.toLowerCase()}`}>
+                {s.learning.map((x) => (
+                  <li class="rounded-md border border-dashed border-muted px-2.5 py-[3px] text-sm leading-snug text-muted">{x}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
     </div>
   </section>
 
-  <section aria-labelledby="t-aussi" class="mt-20">
+  <section aria-labelledby="t-aussi" class="mt-24 sm:mt-28">
     <h2 id="t-aussi" class="text-xl font-bold">{h.moreTitle}</h2>
     <ul class="mt-4 grid gap-4 md:grid-cols-2">
       {
         MORE[lang].map((m) => (
-          <li>
-            <a href={ROUTES[m.key][lang]} class="lift block h-full rounded-xl border border-line bg-card p-5 hover:border-accent">
-              <h3 class="font-bold">{m.title}</h3>
-              <p class="mt-2 text-[0.9375rem] text-muted">{m.text}</p>
-            </a>
+          <li class="card-link flex items-start gap-4 rounded-xl border border-line p-5">
+            <div class="min-w-0 flex-1">
+              <h3 class="font-bold">
+                <a href={ROUTES[m.key][lang]} class="stretch">{m.title}</a>
+              </h3>
+              <p class="mt-1.5 text-[0.9375rem] text-muted">{m.text}</p>
+            </div>
+            <span class="go grid size-8 shrink-0 place-items-center rounded-full border border-line text-muted" aria-hidden="true">
+              <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
           </li>
         ))
       }
     </ul>
   </section>
 
-  <section id="contact" aria-labelledby="t-contact" class="mt-20 rounded-xl border border-line bg-card p-6 sm:p-8">
+  <section id="contact" aria-labelledby="t-contact" class="mt-24 rounded-2xl border border-line bg-card p-6 sm:mt-28 sm:p-10">
     <h2 id="t-contact" class="text-2xl font-bold sm:text-3xl">{h.contactTitle2}</h2>
     <p class="mt-3 max-w-[60ch] text-muted">{h.contactText}</p>
-    <div class="mt-5"><Contacts lang={lang} /></div>
+    <div class="mt-6"><Contacts lang={lang} /></div>
   </section>
 </Base>

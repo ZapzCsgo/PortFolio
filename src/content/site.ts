@@ -38,6 +38,10 @@ export const ROUTES = {
 
 export type RouteKey = keyof typeof ROUTES;
 
+// Photo de l'accueil : null tant qu'il n'y a pas de vraie photo nette (au moins 384 px de large).
+// Exemple : { src: "/img/matteo-192.webp", src2x: "/img/matteo-384.webp" }
+export const PHOTO: { src: string; src2x: string } | null = null;
+
 export const CV_PDF: Record<Lang, string> = { fr: "/cv.pdf", en: "/cv-en.pdf" };
 
 export const UI = {
