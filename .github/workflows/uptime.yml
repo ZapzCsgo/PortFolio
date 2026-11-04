@@ -1,0 +1,34 @@
+name: Disponibilité
+
+# Vérifie https://zapz.work toutes les heures. Un échec fait échouer le workflow : GitHub envoie alors un e-mail.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Pages, titre, sitemap et robots
+        run: |
+          set -eu
+          check() {
+            url="$1"; motif="$2"
+            for essai in 1 2 3; do
+              code=$(curl -sS -L -o page.html -w '%{http_code}' --max-time 15 "$url" || echo 000)
+              if [ "$code" = 200 ] && grep -q "$motif" page.html; then echo "OK $url"; return 0; fi
+              echo "essai $essai : $url -> $code"; sleep 10
+            done
+            echo "::error::$url ne répond pas comme prévu (dernier code : $code)"; return 1
+          }
+          check https://zapz.work/ "<title>Matteo Murru"
+          check https://zapz.work/en/ "<title>Matteo Murru"
+          check https://zapz.work/projets/incident-base-de-donnees/ "Postmortem"
+          check https://zapz.work/sitemap-index.xml "<sitemapindex"
+          check https://zapz.work/robots.txt "Sitemap:"
+          check https://zapz.work/cv.pdf "%PDF"

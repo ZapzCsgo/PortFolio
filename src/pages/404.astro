@@ -1,0 +1,33 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page introuvable | Matteo Murru</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <script is:inline>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body class="grid min-h-dvh place-items-center bg-bg p-6 text-fg">
+    <main class="max-w-md text-center">
+      <h1 class="text-3xl font-bold">404</h1>
+      <p class="mt-3">Cette page n'existe pas.</p>
+      <p class="mt-1 text-muted" lang="en">This page does not exist.</p>
+      <p class="mt-6 flex justify-center gap-4">
+        <a class="prose-link font-semibold" href="/">Accueil</a>
+        <a class="prose-link font-semibold" href="/en/" lang="en">Home</a>
+      </p>
+    </main>
+  </body>
+</html>

@@ -1,12 +1,34 @@
-# React + Vite
+# zapz.work
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![CI](https://github.com/ZapzCsgo/PortFolio/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ZapzCsgo/PortFolio/actions/workflows/ci.yml)
+[![Disponibilité](https://github.com/ZapzCsgo/PortFolio/actions/workflows/uptime.yml/badge.svg)](https://github.com/ZapzCsgo/PortFolio/actions/workflows/uptime.yml)
 
-Currently, two official plugins are available:
+Portfolio de Matteo Murru : alternance DevOps / Cloud / SRE à Nice. Astro statique, Tailwind CSS, français et anglais.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Commandes
 
-## Expanding the ESLint configuration
+| Commande | Rôle |
+| --- | --- |
+| `npm ci` | installe les dépendances |
+| `npm run dev` | serveur de développement |
+| `npm run lint` | `astro check` + relecture des textes (`scripts/lint-texte.mjs`) |
+| `npm run build` | build statique dans `dist/` puis tests du site construit |
+| `npm test` | liens internes, HTML valide, recherche de secrets, d'IP et de chemins privés |
+| `node scripts/check-secrets.mjs --repo` | même recherche sur les fichiers du dépôt |
+| `npm run og` | régénère les images Open Graph (`CHROME_PATH` requis) |
+| `npm run cv:pdf` | régénère `public/cv.pdf` et `public/cv-en.pdf` depuis `/cv/` (`CHROME_PATH` requis, après un build) |
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Le texte qui change souvent (phrase d'alternance, liens, e-mail) est dans `src/content/site.ts`.
+
+## Déploiement
+
+- **Vercel** : relié au dépôt, déploie chaque push (`vercel.json`). Le build lance aussi les tests de `dist/`.
+- **CI** (`.github/workflows/ci.yml`) : lint, build, tests, Lighthouse CI (`lighthouserc.json`), puis image Docker publiée sur GHCR (`ghcr.io/zapzcsgo/portfolio`) sur `main`.
+- **Supervision** (`.github/workflows/uptime.yml`) : contrôle de https://zapz.work toutes les heures.
+
+## Docker
+
+```sh
+docker build -t zapz-portfolio .
+docker run --rm -p 8080:8080 zapz-portfolio
+```

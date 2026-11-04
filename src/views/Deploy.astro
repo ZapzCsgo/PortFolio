@@ -1,0 +1,70 @@
+---
+import Base from "../layouts/Base.astro";
+import Pipeline from "../components/Pipeline.astro";
+import { CI_BADGE, CI_URL, REPO_PUBLIC, ROUTES, UI, type Lang } from "../content/site";
+import { DEPLOY } from "../content/pages";
+import { BUILD, buildDate, rich } from "../lib/build";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = DEPLOY[lang];
+const t = UI[lang];
+const h2 = "mt-12 text-2xl font-bold";
+---
+
+<Base lang={lang} route="deploy" title={d.seoTitle} description={d.description} ogType="article" wide>
+  <div class="mx-auto max-w-3xl">
+  <a href={ROUTES.home[lang]} class="text-[0.9375rem] text-muted hover:text-fg">{t.back}</a>
+  <h1 class="mt-4 text-3xl font-bold sm:text-4xl">{d.title}</h1>
+  <p class="mt-4 text-lg">{d.lead}</p>
+
+  <section aria-labelledby="t-statut" class="mt-8 rounded-xl border border-line bg-card p-5">
+    <h2 id="t-statut" class="text-lg font-bold">{d.statusTitle}</h2>
+    <div class="mt-3 flex flex-wrap items-center gap-3">
+      <span class="inline-flex overflow-hidden rounded-md border border-line text-sm font-semibold" translate="no">
+        <span class="bg-fg px-2.5 py-1 text-bg">build</span>
+        <span class="bg-ok/15 px-2.5 py-1 text-ok">{BUILD.sha}</span>
+      </span>
+      {
+        REPO_PUBLIC && (
+          <a href={CI_URL}>
+            <img src={CI_BADGE} alt={d.badgeAlt} width="120" height="20" loading="lazy" />
+          </a>
+        )
+      }
+    </div>
+    <p class="mt-3 text-[0.9375rem] text-muted">
+      {d.statusText} <code translate="no">{BUILD.sha}</code>, <time datetime={BUILD.date.toISOString()}>{buildDate(lang)}</time>.
+    </p>
+  </section>
+
+  <h2 class={h2}>{d.diagramTitle}</h2>
+  </div>
+  <Pipeline lang={lang} label={d.diagramAlt} />
+  <div class="mx-auto max-w-3xl">
+
+  <h2 class={h2}>{d.stepsTitle}</h2>
+  <ol class="mt-5 space-y-4">
+    {
+      d.steps.map((s, i) => (
+        <li class="flex gap-4 rounded-xl border border-line bg-card p-5">
+          <span class="grid size-8 shrink-0 place-items-center rounded-full bg-accent-soft font-bold text-accent" aria-hidden="true">
+            {i + 1}
+          </span>
+          <div>
+            <h3 class="font-bold">{s.title}</h3>
+            <p class="mt-1" set:html={rich(s.text)} />
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <h2 class={h2}>{d.stackTitle}</h2>
+  <ul class="mt-4 list-disc space-y-2 pl-5 marker:text-accent">
+    {d.stack.map((p) => <li>{p}</li>)}
+  </ul>
+  </div>
+</Base>

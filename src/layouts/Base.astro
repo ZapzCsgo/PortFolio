@@ -1,0 +1,174 @@
+---
+import "../styles/global.css";
+import fontUrl from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
+import "@fontsource-variable/montserrat/wght.css";
+import { NAME, ROUTES, SITE_URL, UI, type Lang, type RouteKey, EMAIL, GITHUB, LINKEDIN } from "../content/site";
+import { BUILD, buildDate } from "../lib/build";
+
+interface Props {
+  lang: Lang;
+  route: RouteKey;
+  title: string;
+  description: string;
+  ogType?: "website" | "article";
+  wide?: boolean;
+}
+
+const { lang, route, title, description, ogType = "website", wide = false } = Astro.props;
+const t = UI[lang];
+const other: Lang = lang === "fr" ? "en" : "fr";
+const path = ROUTES[route][lang];
+const canonical = new URL(path, SITE_URL).href;
+const ogImage = new URL(`/og-${lang}.png`, SITE_URL).href;
+const fullTitle = route === "home" ? title : `${title} | ${NAME}`;
+const nav = [
+  { href: `${ROUTES.home[lang]}#projets`, label: t.nav.projects, key: "projects" },
+  { href: ROUTES.deploy[lang], label: t.nav.deploy, key: "deploy" },
+  { href: ROUTES.about[lang], label: t.nav.about, key: "about" },
+  { href: ROUTES.cv[lang], label: t.nav.cv, key: "cv" },
+];
+const current = (key: string) =>
+  (key === "deploy" && route === "deploy") || (key === "about" && route === "about") || (key === "cv" && route === "cv")
+    ? "page"
+    : undefined;
+---
+
+<!doctype html>
+<html lang={lang} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr" href={new URL(ROUTES[route].fr, SITE_URL).href} />
+    <link rel="alternate" hreflang="en" href={new URL(ROUTES[route].en, SITE_URL).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(ROUTES[route].fr, SITE_URL).href} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+    <meta name="author" content={NAME} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={NAME} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${NAME}, ${lang === "fr" ? "alternance DevOps / Cloud / SRE" : "DevOps / Cloud / SRE work-study"}`} />
+    <meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_US"} />
+    <meta property="og:locale:alternate" content={lang === "fr" ? "en_US" : "fr_FR"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+    {
+      route === "home" && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: NAME,
+            url: SITE_URL,
+            email: `mailto:${EMAIL}`,
+            jobTitle: lang === "fr" ? "Étudiant à 42 Nice" : "Student at 42 Nice",
+            address: { "@type": "PostalAddress", addressLocality: "Nice", addressCountry: "FR" },
+            sameAs: [GITHUB, LINKEDIN],
+          })}
+        />
+      )
+    }
+  </head>
+  <body class="min-h-dvh bg-bg text-fg antialiased">
+    <a
+      href="#contenu"
+      class="no-print sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:font-semibold focus:text-white dark:focus:text-black"
+      >{t.skip}</a
+    >
+    <header class="no-print sticky top-0 z-40 border-b border-line bg-bg">
+      <div class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3 sm:px-6">
+        <a href={ROUTES.home[lang]} class="flex shrink-0 items-center gap-2 font-semibold tracking-tight">
+          <span class="grid size-8 place-items-center rounded-lg bg-black" aria-hidden="true">
+            <img src="/favicon-32.png" alt="" width="32" height="32" class="size-8 rounded-lg" />
+          </span>
+          <span class="hidden sm:inline">{NAME}</span>
+          <span class="sr-only sm:hidden">{NAME}</span>
+        </a>
+        <nav aria-label={t.navLabel} class="ml-auto min-w-0">
+          <ul class="flex items-center gap-0.5 text-[0.9375rem] sm:gap-1">
+            {
+              nav.map((item) => (
+                <li class={item.key === "about" ? "hidden md:block" : item.key === "projects" ? "hidden sm:block" : ""}>
+                  <a
+                    href={item.href}
+                    aria-current={current(item.key)}
+                    class="block rounded-md px-2 py-2 text-muted hover:bg-accent-soft hover:text-fg aria-[current=page]:text-fg aria-[current=page]:underline aria-[current=page]:decoration-accent aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8 sm:px-2.5"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <a
+          href={ROUTES[route][other]}
+          hreflang={other}
+          lang={other}
+          aria-label={t.langSwitchLabel}
+          class="shrink-0 rounded-md border border-line px-2 py-1.5 text-sm font-semibold hover:border-accent"
+          ><span aria-hidden="true">{other.toUpperCase()}</span></a
+        >
+        <button
+          type="button"
+          id="theme-toggle"
+          aria-label={t.themeLabel}
+          class="grid size-9 shrink-0 place-items-center rounded-md border border-line hover:border-accent"
+        >
+          <svg class="hidden size-4 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"
+            ><circle cx="12" cy="12" r="4"></circle><path
+              d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg
+          >
+          <svg class="size-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"
+            ><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg
+          >
+        </button>
+      </div>
+    </header>
+
+    <main id="contenu" class:list={["mx-auto px-4 pb-20 pt-10 sm:px-6 sm:pt-14", wide ? "max-w-5xl" : "max-w-3xl"]}>
+      <slot />
+    </main>
+
+    <footer class="no-print border-t border-line">
+      <div class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <p>
+          {t.version} <code translate="no">{BUILD.sha}</code>, {t.builtOn} <time datetime={BUILD.date.toISOString()}>{buildDate(lang)}</time>
+        </p>
+        <ul class="flex flex-wrap gap-x-4 gap-y-1">
+          <li><a class="hover:text-fg" href={ROUTES.deploy[lang]}>{t.footerDeploy}</a></li>
+          <li><a class="hover:text-fg" href={GITHUB} rel="me">GitHub</a></li>
+          <li><a class="hover:text-fg" href={LINKEDIN} rel="me">LinkedIn</a></li>
+          <li><a class="hover:text-fg" href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+        </ul>
+      </div>
+    </footer>
+    <script is:inline>
+      document.getElementById("theme-toggle").addEventListener("click", function () {
+        var n = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = n;
+        try { localStorage.setItem("theme", n); } catch (e) {}
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+---
+import Base from "../layouts/Base.astro";
+import { ROUTES, UI, type Lang, type RouteKey } from "../content/site";
+import type { CaseStudy } from "../content/projets";
+import { rich } from "../lib/build";
+
+interface Props {
+  lang: Lang;
+  route: RouteKey;
+  data: CaseStudy;
+}
+const { lang, route, data } = Astro.props;
+const s = UI[lang].caseSections;
+const t = UI[lang];
+const h2 = "mt-12 text-2xl font-bold";
+---
+
+<Base lang={lang} route={route} title={data.seoTitle} description={data.description} ogType="article">
+  <a href={ROUTES.home[lang]} class="text-[0.9375rem] text-muted hover:text-fg">{t.back}</a>
+  <h1 class="mt-4 text-3xl font-bold sm:text-4xl">{data.title}</h1>
+  <p class="mt-4 text-lg">{data.lead}</p>
+  {
+    data.link && (
+      <p class="mt-3">
+        <a class="prose-link font-semibold" href={data.link.href}>
+          {data.link.label}
+        </a>
+      </p>
+    )
+  }
+  <ul class="mt-6 flex flex-wrap gap-2" aria-label={t.stack}>
+    {data.stack.map((x) => <li class="rounded-md border border-line bg-card px-2.5 py-1 text-sm" translate="no">{x}</li>)}
+  </ul>
+
+  <h2 class={h2}>{s.context}</h2>
+  {data.context.map((p) => <p class="mt-4" set:html={rich(p)} />)}
+
+  <h2 class={h2}>{s.problem}</h2>
+  {data.problem.map((p) => <p class="mt-4" set:html={rich(p)} />)}
+
+  <h2 class={h2}>{s.done}</h2>
+  {
+    data.done.map((g) => (
+      <section class="mt-6 rounded-xl border border-line bg-card p-5 sm:p-6">
+        <h3 class="text-lg font-bold">{g.title}</h3>
+        <ul class="mt-3 list-disc space-y-2 pl-5 marker:text-accent">
+          {g.items.map((i) => <li set:html={rich(i)} />)}
+        </ul>
+      </section>
+    ))
+  }
+
+  <h2 class={h2}>{s.result}</h2>
+  <ul class="mt-4 list-disc space-y-2 pl-5 marker:text-accent">
+    {data.result.map((p) => <li set:html={rich(p)} />)}
+  </ul>
+
+  <h2 class={h2}>{s.learned}</h2>
+  <ul class="mt-4 list-disc space-y-2 pl-5 marker:text-accent">
+    {data.learned.map((p) => <li set:html={rich(p)} />)}
+  </ul>
+  <slot />
+</Base>

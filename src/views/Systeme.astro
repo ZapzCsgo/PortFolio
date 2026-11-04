@@ -1,0 +1,44 @@
+---
+import Base from "../layouts/Base.astro";
+import { ROUTES, UI, type Lang } from "../content/site";
+import { SYSTEME } from "../content/systeme";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = SYSTEME[lang];
+const t = UI[lang];
+---
+
+<Base lang={lang} route="systeme" title={d.seoTitle} description={d.description}>
+  <a href={ROUTES.home[lang]} class="text-[0.9375rem] text-muted hover:text-fg">{t.back}</a>
+  <h1 class="mt-4 text-3xl font-bold sm:text-4xl">{d.title}</h1>
+  <p class="mt-4 text-lg">{d.lead}</p>
+  {
+    d.groups.map((g) => (
+      <section class="mt-12">
+        <h2 class="text-2xl font-bold">{g.title}</h2>
+        {g.intro && <p class="mt-3 text-muted">{g.intro}</p>}
+        <ul class="mt-5 divide-y divide-line rounded-xl border border-line bg-card">
+          {g.items.map((i) => (
+            <li class="p-5">
+              <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <h3 class="font-bold" translate="no">{i.name}</h3>
+                {i.status && <span class="rounded-md bg-accent-soft px-2 py-0.5 text-sm font-semibold text-accent">{i.status}</span>}
+              </div>
+              <p class="mt-2">{i.text}</p>
+              {i.href && (
+                <p class="mt-2">
+                  <a class="prose-link text-[0.9375rem] font-semibold" href={i.href}>
+                    {i.hrefLabel}
+                  </a>
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</Base>

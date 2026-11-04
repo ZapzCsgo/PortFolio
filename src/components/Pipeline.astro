@@ -1,0 +1,117 @@
+---
+import type { Lang } from "../content/site";
+
+interface Props {
+  lang: Lang;
+  label: string;
+}
+const { lang, label } = Astro.props;
+const fr = lang === "fr";
+
+type Box = { id: string; x: number; y: number; w: number; h: number; title: string; lines: string[]; accent?: boolean };
+const T = {
+  push: { title: "git push", lines: [fr ? "branche main" : "main branch"] },
+  ci: { title: fr ? "CI GitHub Actions" : "GitHub Actions CI", lines: ["lint, build, tests", "Lighthouse CI"] },
+  build: { title: "Build", lines: [fr ? "Astro statique" : "static Astro"] },
+  image: { title: fr ? "Image Docker" : "Docker image", lines: ["nginx, GHCR"] },
+  deploy: { title: fr ? "Déploiement" : "Deployment", lines: ["Vercel", fr ? "build + tests" : "build + tests"] },
+  site: { title: "zapz.work", lines: [fr ? "en ligne" : "live"] },
+  watch: { title: "Supervision", lines: [fr ? "contrôle planifié" : "scheduled check", fr ? "toutes les heures" : "every hour"] },
+};
+
+const H: Box[] = [
+  { id: "push", x: 10, y: 135, w: 120, h: 60, ...T.push, accent: true },
+  { id: "ci", x: 170, y: 36, w: 210, h: 86, ...T.ci },
+  { id: "build", x: 420, y: 36, w: 170, h: 86, ...T.build },
+  { id: "image", x: 630, y: 36, w: 260, h: 86, ...T.image },
+  { id: "deploy", x: 170, y: 208, w: 210, h: 86, ...T.deploy },
+  { id: "site", x: 420, y: 208, w: 170, h: 86, ...T.site, accent: true },
+  { id: "watch", x: 630, y: 208, w: 260, h: 86, ...T.watch },
+];
+const HA = [
+  { d: "M130 165 H150 V79 H166" },
+  { d: "M130 165 H150 V251 H166" },
+  { d: "M380 79 H416" },
+  { d: "M590 79 H626" },
+  { d: "M380 251 H416" },
+  { d: "M630 251 H594", dashed: true },
+];
+
+const V: Box[] = [
+  { id: "push", x: 100, y: 8, w: 160, h: 50, ...T.push, accent: true },
+  { id: "ci", x: 8, y: 100, w: 166, h: 92, ...T.ci },
+  { id: "build", x: 8, y: 232, w: 166, h: 70, ...T.build },
+  { id: "image", x: 8, y: 342, w: 166, h: 70, ...T.image },
+  { id: "deploy", x: 186, y: 100, w: 166, h: 92, ...T.deploy },
+  { id: "site", x: 186, y: 232, w: 166, h: 70, ...T.site, accent: true },
+  { id: "watch", x: 186, y: 342, w: 166, h: 92, ...T.watch },
+];
+const VA = [
+  { d: "M180 58 V76 H91 V96" },
+  { d: "M180 76 H269 V96" },
+  { d: "M91 192 V228" },
+  { d: "M91 302 V338" },
+  { d: "M269 192 V228" },
+  { d: "M269 342 V306", dashed: true },
+];
+
+function textLines(b: Box, size: number) {
+  const n = 1 + b.lines.length;
+  const lh = size * 1.35;
+  const top = b.y + b.h / 2 - ((n - 1) * lh) / 2 + size * 0.35;
+  return [b.title, ...b.lines].map((s, i) => ({ s, y: top + i * lh, bold: i === 0 }));
+}
+---
+
+<figure class="mt-6">
+  {
+    [
+      { boxes: H, arrows: HA, vb: "0 0 900 330", cls: "hidden md:block", size: 16, mid: "h" },
+      { boxes: V, arrows: VA, vb: "0 0 360 442", cls: "md:hidden", size: 13, mid: "v" },
+    ].map((L) => (
+      <svg viewBox={L.vb} class:list={["h-auto w-full", L.cls]} role="img" aria-label={label} font-family="inherit">
+        <defs>
+          <marker id={`fl-${L.mid}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)" />
+          </marker>
+        </defs>
+        {L.arrows.map((a) => (
+          <path
+            d={a.d}
+            fill="none"
+            stroke="var(--accent)"
+            stroke-width="2"
+            stroke-dasharray={a.dashed ? "6 5" : undefined}
+            marker-end={`url(#fl-${L.mid})`}
+          />
+        ))}
+        {L.boxes.map((b) => (
+          <g>
+            <rect
+              x={b.x}
+              y={b.y}
+              width={b.w}
+              height={b.h}
+              rx="10"
+              fill={b.accent ? "var(--accent-soft)" : "var(--card)"}
+              stroke={b.accent ? "var(--accent)" : "var(--line)"}
+              stroke-width="1.5"
+            />
+            {textLines(b, L.size).map((l) => (
+              <text
+                x={b.x + b.w / 2}
+                y={l.y}
+                text-anchor="middle"
+                font-size={l.bold ? L.size : L.size - 2}
+                font-weight={l.bold ? 700 : 500}
+                fill={l.bold ? "var(--fg)" : "var(--muted)"}
+              >
+                {l.s}
+              </text>
+            ))}
+          </g>
+        ))}
+      </svg>
+    ))
+  }
+</figure>

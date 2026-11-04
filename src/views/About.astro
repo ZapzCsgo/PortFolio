@@ -1,0 +1,76 @@
+---
+import Base from "../layouts/Base.astro";
+import Contacts from "../components/Contacts.astro";
+import { ALTERNANCE, type Lang } from "../content/site";
+import { ABOUT } from "../content/pages";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = ABOUT[lang];
+const h2 = "mt-12 text-2xl font-bold";
+---
+
+<Base lang={lang} route="about" title={d.seoTitle} description={d.description}>
+  <div class="flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:justify-between">
+    <h1 class="text-3xl font-bold sm:text-4xl">{d.title}</h1>
+    <img
+      src="/img/matteo-192.webp"
+      srcset="/img/matteo-192.webp 1x, /img/matteo-384.webp 2x"
+      alt={d.photoAlt}
+      width="96"
+      height="96"
+      class="size-24 rounded-full border border-line object-cover"
+      fetchpriority="high"
+    />
+  </div>
+  {d.paragraphs.map((p) => <p class="mt-5">{p}</p>)}
+  <p class="mt-5 font-semibold">{ALTERNANCE[lang]}</p>
+
+  <h2 class={h2}>
+    {d.japanTitle}
+    <span lang="ja" class="ml-2 text-base font-normal text-muted" aria-hidden="true">日本</span>
+  </h2>
+  {d.japan.map((p) => <p class="mt-4">{p}</p>)}
+
+  <h2 class={h2}>{d.timelineTitle}</h2>
+  <ol class="mt-5 border-l-2 border-line">
+    {
+      d.timeline.map((e) => (
+        <li class="relative pb-5 pl-6 last:pb-0">
+          <span class="absolute -left-[7px] top-2 size-3 rounded-full border-2 border-accent bg-bg" aria-hidden="true" />
+          <span class="block text-sm font-semibold text-accent">{e.date}</span>
+          <span class="block">{e.text}</span>
+        </li>
+      ))
+    }
+  </ol>
+
+  <h2 class={h2}>{d.beforeTitle}</h2>
+  <p class="mt-4">{d.before}</p>
+
+  <h2 class={h2}>{d.certTitle}</h2>
+  <ul class="mt-4 space-y-3">
+    {
+      d.certs.map((c) => (
+        <li class="rounded-xl border border-line bg-card p-4">
+          <span class="block font-semibold">{c.name}</span>
+          <span class="block text-[0.9375rem] text-muted">{c.detail}</span>
+          {c.href && (
+            <a class="prose-link mt-1 inline-block text-[0.9375rem]" href={c.href}>
+              {c.hrefLabel}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2 class={h2}>{d.langTitle}</h2>
+  <ul class="mt-4 list-disc space-y-1 pl-5 marker:text-accent">
+    {d.langs.map((l) => <li>{l}</li>)}
+  </ul>
+
+  <div class="mt-12"><Contacts lang={lang} /></div>
+</Base>
