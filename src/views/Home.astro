@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Contacts from "../components/Contacts.astro";
-import { ALTERNANCE, NAME, ROUTES, UI, type Lang } from "../content/site";
+import { NAME, ROUTES, UI, type Lang } from "../content/site";
 import { CASES, HOME, MORE, SKILLS } from "../content/pages";
 
 interface Props {
@@ -11,35 +11,38 @@ const { lang } = Astro.props;
 const h = HOME[lang];
 const t = UI[lang];
 const sep = lang === "fr" ? "\u00a0:" : ":";
-const status =
-  lang === "fr"
-    ? [
-        { k: "GaijinToSensei", v: "en production, utilisateurs réels", href: ROUTES.gts.fr },
-        { k: "Incident du 29/10/2026", v: "base restaurée, postmortem publié", href: ROUTES.incident.fr },
-        { k: "Ce site", v: "CI, image Docker, déploiement auto", href: ROUTES.deploy.fr },
-      ]
-    : [
-        { k: "GaijinToSensei", v: "in production, real users", href: ROUTES.gts.en },
-        { k: "Incident on 29/10/2026", v: "database restored, postmortem published", href: ROUTES.incident.en },
-        { k: "This site", v: "CI, Docker image, automatic deploys", href: ROUTES.deploy.en },
-      ];
+const card = h.card.map((c) => ({ ...c, href: "href" in c ? c.href : ROUTES[c.route as "incident" | "deploy"][lang] }));
 ---
 
 <Base lang={lang} route="home" title={h.seoTitle} description={h.description} wide>
-  <section aria-labelledby="titre" class="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start">
+  <section aria-labelledby="titre" class="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start">
     <div>
-      <h1 id="titre" class="text-4xl font-bold sm:text-5xl">{NAME}</h1>
-      <p class="mt-5 max-w-[34ch] text-xl font-semibold leading-snug sm:text-2xl">{ALTERNANCE[lang]}</p>
-      <p class="mt-4 max-w-[60ch] text-muted">{h.pitch}</p>
-      <div class="mt-7">
+      <p class="font-semibold text-muted"><span class="text-fg">{NAME}</span>{h.kicker.slice(NAME.length)}</p>
+      <h1 id="titre" class="mt-3 max-w-[20ch] text-[2.125rem] font-bold leading-[1.12] sm:text-5xl">{h.headline}</h1>
+      <dl class="mt-5 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[0.9375rem]">
+        {
+          h.facts.map((f) => (
+            <>
+              <dt class="font-semibold text-muted">{f.k}</dt>
+              <dd>{f.v}</dd>
+            </>
+          ))
+        }
+      </dl>
+      <p class="mt-5 max-w-[58ch] border-l-2 border-accent pl-4">
+        {h.proof}
+        <a href={ROUTES.incident[lang]} class="ml-1 font-semibold text-accent underline underline-offset-4 hover:decoration-2">{h.proofLink}</a>
+      </p>
+      <div class="mt-6">
         <Contacts lang={lang} />
       </div>
     </div>
-    <aside class="rounded-xl border border-line bg-card p-5" aria-label={lang === "fr" ? "État" : "Status"}>
-      <ul class="divide-y divide-line">
+    <aside class="rounded-xl border border-line bg-card p-5" aria-labelledby="t-preuves">
+      <h2 id="t-preuves" class="text-sm font-semibold text-muted">{h.cardTitle}</h2>
+      <ul class="mt-3 divide-y divide-line">
         {
-          status.map((s) => (
-            <li class="py-3 first:pt-0 last:pb-0">
+          card.map((s) => (
+            <li class="py-3 first:pt-0">
               <a href={s.href} class="group flex gap-3">
                 <span class="mt-2 size-2 shrink-0 rounded-full bg-ok" aria-hidden="true" />
                 <span>
@@ -51,7 +54,27 @@ const status =
           ))
         }
       </ul>
+      <p class="mt-2 border-t border-line pt-3 text-[0.875rem]">{h.toolsProd}</p>
+      <p class="mt-1 text-[0.875rem] text-muted">{h.toolsLearning}</p>
     </aside>
+  </section>
+
+  <section id="projets" aria-labelledby="t-cas" class="mt-20">
+    <h2 id="t-cas" class="text-2xl font-bold sm:text-3xl">{h.casesTitle}</h2>
+    <ul class="mt-6 grid gap-4 md:grid-cols-3">
+      {
+        CASES[lang].map((c) => (
+          <li>
+            <a href={ROUTES[c.key][lang]} class="lift flex h-full flex-col rounded-xl border border-line bg-card p-5 hover:border-accent">
+              <h3 class="text-lg font-bold">{c.title}</h3>
+              <p class="mt-3 text-[0.9375rem] text-muted">{c.problem}</p>
+              <p class="mt-3 text-[0.9375rem]">{c.result}</p>
+              <span class="mt-auto pt-4 text-[0.9375rem] font-semibold text-accent">{t.readCase}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
   <section id="competences" aria-labelledby="t-comp" class="mt-20">
@@ -90,23 +113,8 @@ const status =
     </div>
   </section>
 
-  <section id="projets" aria-labelledby="t-cas" class="mt-20">
-    <h2 id="t-cas" class="text-2xl font-bold sm:text-3xl">{h.casesTitle}</h2>
-    <ul class="mt-6 grid gap-4 md:grid-cols-3">
-      {
-        CASES[lang].map((c) => (
-          <li>
-            <a href={ROUTES[c.key][lang]} class="lift flex h-full flex-col rounded-xl border border-line bg-card p-5 hover:border-accent">
-              <h3 class="text-lg font-bold">{c.title}</h3>
-              <p class="mt-3 text-[0.9375rem] text-muted">{c.problem}</p>
-              <p class="mt-3 text-[0.9375rem]">{c.result}</p>
-              <span class="mt-auto pt-4 text-[0.9375rem] font-semibold text-accent">{t.readCase}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-    <h2 class="mt-12 text-xl font-bold">{h.moreTitle}</h2>
+  <section aria-labelledby="t-aussi" class="mt-20">
+    <h2 id="t-aussi" class="text-xl font-bold">{h.moreTitle}</h2>
     <ul class="mt-4 grid gap-4 md:grid-cols-2">
       {
         MORE[lang].map((m) => (
@@ -121,9 +129,9 @@ const status =
     </ul>
   </section>
 
-  <section id="contact" aria-labelledby="t-contact" class="mt-20">
-    <h2 id="t-contact" class="text-2xl font-bold sm:text-3xl">{h.contactTitle}</h2>
-    <p class="mt-3 text-muted">{h.contactText}</p>
+  <section id="contact" aria-labelledby="t-contact" class="mt-20 rounded-xl border border-line bg-card p-6 sm:p-8">
+    <h2 id="t-contact" class="text-2xl font-bold sm:text-3xl">{h.contactTitle2}</h2>
+    <p class="mt-3 max-w-[60ch] text-muted">{h.contactText}</p>
     <div class="mt-5"><Contacts lang={lang} /></div>
   </section>
 </Base>

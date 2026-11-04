@@ -39,7 +39,7 @@ export const CV: Record<Lang, Cv> = {
     location: "Nice",
     profileTitle: "Profil",
     profile:
-      "Étudiant à 42 Nice, je cherche une alternance d'1 an à Nice, Sophia Antipolis ou Monaco. Je fais tourner une app en production (utilisateurs réels) : mises en prod contrôlées, supervision, incident de base réparé.",
+      "Étudiant à 42 Nice, je cherche une alternance d'1 an à Nice, Sophia Antipolis ou Monaco. Je fais tourner seul une app en production (utilisateurs réels) : mises en prod contrôlées, supervision, base restaurée après un incident.",
     skillsTitle: "Compétences",
     skills: [
       { label: "Utilisé en prod", text: "Linux (VPS, systemd, cron), Bash, Git, Vercel (CLI, edge), Cloudflare (Pages, Tunnel), PostgreSQL (Neon) avec Prisma, Redis (Upstash), Node.js / TypeScript, Python" },
@@ -113,7 +113,7 @@ export const CV: Record<Lang, Cv> = {
     location: "Nice, France",
     profileTitle: "Profile",
     profile:
-      "42 Nice student looking for a 1-year work-study contract in Nice, Sophia Antipolis or Monaco. I run an app in production with real users: checked releases, monitoring, and a database incident fixed.",
+      "42 Nice student looking for a 1-year work-study contract in Nice, Sophia Antipolis or Monaco. I run an app in production with real users on my own: checked releases, monitoring, database restored after an incident.",
     skillsTitle: "Skills",
     skills: [
       { label: "Used in production", text: "Linux (VPS, systemd, cron), Bash, Git, Vercel (CLI, edge), Cloudflare (Pages, Tunnel), PostgreSQL (Neon) with Prisma, Redis (Upstash), Node.js / TypeScript, Python" },
