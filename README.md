@@ -1,7 +1,6 @@
 # zapz.work
 
 [![CI](https://github.com/ZapzCsgo/PortFolio/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ZapzCsgo/PortFolio/actions/workflows/ci.yml)
-[![Disponibilité](https://github.com/ZapzCsgo/PortFolio/actions/workflows/uptime.yml/badge.svg)](https://github.com/ZapzCsgo/PortFolio/actions/workflows/uptime.yml)
 
 Portfolio de Matteo Murru : alternance DevOps / Cloud / SRE à Nice. Astro statique, Tailwind CSS, français et anglais.
 
@@ -24,7 +23,7 @@ Le texte qui change souvent (phrase d'alternance, liens, e-mail) est dans `src/c
 
 - **Vercel** : relié au dépôt, déploie chaque push (`vercel.json`). Le build lance aussi les tests de `dist/`.
 - **CI** (`.github/workflows/ci.yml`) : lint, build, tests, Lighthouse CI (`lighthouserc.json`), puis image Docker publiée sur GHCR (`ghcr.io/zapzcsgo/portfolio`) sur `main`.
-- **Supervision** (`.github/workflows/uptime.yml`) : contrôle de https://zapz.work toutes les heures.
+- **Supervision** (`.github/workflows/uptime.yml`) : contrôle complet de https://zapz.work lancé à la main ; la surveillance continue (toutes les 15 minutes) tourne depuis un serveur personnel.
 
 ## Docker
 

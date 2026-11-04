@@ -1,4 +1,4 @@
-// Faits centraux du site. Modifier ici la phrase d'alternance (date de début, rythme) : elle est reprise partout.
+// Faits centraux du site. Phrase d'alternance reprise partout (première recherche d'alternance, sans date de début).
 
 export type Lang = "fr" | "en";
 

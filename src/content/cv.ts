@@ -81,7 +81,14 @@ export const CV: Record<Lang, Cv> = {
     ],
     workTitle: "Expérience",
     work: [
-      { title: "Localization QA (LQA)", where: "Keywords Studios, Tokyo", when: "Juin 2026 à octobre 2026", points: [] },
+      {
+        title: "Localization QA (LQA)",
+        where: "Keywords Studios, Tokyo",
+        when: "Juin 2026 à octobre 2026",
+        points: [
+          "Tests de jeux vidéo du studio Konami : vérification du français en jeu, bugs techniques reproduits puis décrits avec précision pour les équipes de développement.",
+        ],
+      },
       { title: "Équipier polyvalent", where: "McDonald's", points: [] },
     ],
     eduTitle: "Formation",
@@ -96,7 +103,7 @@ export const CV: Record<Lang, Cv> = {
       { text: "AWS Certified Cloud Practitioner : en cours" },
     ],
     langTitle: "Langues",
-    langs: "Français, anglais, japonais (pratiqué au quotidien au Japon en 2026)",
+    langs: "Français (langue maternelle) | anglais professionnel et conversationnel | japonais JLPT N5",
     download: "Télécharger le PDF",
   },
   en: {
@@ -148,7 +155,14 @@ export const CV: Record<Lang, Cv> = {
     ],
     workTitle: "Experience",
     work: [
-      { title: "Localization QA (LQA)", where: "Keywords Studios, Tokyo", when: "June 2026 to October 2026", points: [] },
+      {
+        title: "Localization QA (LQA)",
+        where: "Keywords Studios, Tokyo",
+        when: "June 2026 to October 2026",
+        points: [
+          "Tested video games from the Konami studio: checked the French language in game, reproduced technical bugs and reported them precisely to the development teams.",
+        ],
+      },
       { title: "Crew member", where: "McDonald's", points: [] },
     ],
     eduTitle: "Education",
@@ -163,7 +177,7 @@ export const CV: Record<Lang, Cv> = {
       { text: "AWS Certified Cloud Practitioner: in progress" },
     ],
     langTitle: "Languages",
-    langs: "French, English, Japanese (used every day in Japan in 2026)",
+    langs: "French (native) | English (professional and conversational) | Japanese JLPT N5",
     download: "Download the PDF",
   },
 };

@@ -73,6 +73,11 @@ const contacts = [
             <strong>{w.title}</strong>
             {w.where && <span>, {w.where}</span>}
             {w.when && <span class="text-muted">, {w.when}</span>}
+            {w.points.length > 0 && (
+              <ul class="list-disc pl-5 marker:text-accent">
+                {w.points.map((x) => <li>{x}</li>)}
+              </ul>
+            )}
           </li>
         ))
       }
@@ -92,9 +97,16 @@ const contacts = [
     </ul>
 
     <h2 class={h2}>{c.certTitle}</h2>
-    <ul class="mt-1.5 space-y-0.5">
-      {c.certs.map((x) => <li>{x.href ? <a href={x.href}>{x.text}</a> : x.text}</li>)}
-    </ul>
+    <p class="mt-1.5">
+      {
+        c.certs.map((x, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> | </span>}
+            {x.href ? <a href={x.href}>{x.text}</a> : <span>{x.text}</span>}
+          </>
+        ))
+      }
+    </p>
 
     <h2 class={h2}>{c.langTitle}</h2>
     <p class="mt-1.5">{c.langs}</p>
@@ -118,7 +130,7 @@ const contacts = [
       --accent: #c2410c;
       --accent-soft: #fff1e6;
       color-scheme: light;
-      font-size: 11.8px;
+      font-size: 11.6px;
     }
     body {
       background: #fff;

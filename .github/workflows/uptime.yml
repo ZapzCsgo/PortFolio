@@ -1,9 +1,8 @@
 name: Disponibilité
 
-# Vérifie https://zapz.work toutes les heures. Un échec fait échouer le workflow : GitHub envoie alors un e-mail.
+# Contrôle complet de https://zapz.work, lancé à la main (dépôt privé : pas de déclenchement planifié, pour ne pas consommer de minutes).
+# La surveillance continue tourne depuis un serveur personnel.
 on:
-  schedule:
-    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:

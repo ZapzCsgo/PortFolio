@@ -186,7 +186,7 @@ export const ABOUT = {
     ],
     japanTitle: "Japon",
     japan: [
-      "J'ai vécu au Japon de mars à octobre 2026 : un échange à 42 Tokyo, puis un PVT. De juin à octobre 2026, j'ai travaillé chez Keywords Studios à Tokyo comme testeur de localisation (LQA). J'y ai utilisé le japonais au quotidien, et je veux travailler au Japon à moyen terme.",
+      "J'ai vécu au Japon de mars à octobre 2026 : un échange à 42 Tokyo, puis un PVT. De juin à octobre 2026, j'ai travaillé chez Keywords Studios à Tokyo comme testeur de localisation (LQA) sur des jeux du studio Konami : vérifier le français en jeu, reproduire les bugs techniques et les décrire avec précision pour les équipes de développement. Je veux travailler au Japon à moyen terme.",
     ],
     beforeTitle: "Avant 42",
     before: "Bac pro Commercialisation et services en restauration, puis des emplois en restauration rapide.",
@@ -196,7 +196,7 @@ export const ABOUT = {
       { date: "2025", text: "Tronc commun validé." },
       { date: "Juin 2025", text: "Certification C de CodinGame." },
       { date: "Mars 2026", text: "Échange à 42 Tokyo, puis PVT au Japon." },
-      { date: "Juin à octobre 2026", text: "Testeur de localisation (LQA) chez Keywords Studios, à Tokyo." },
+      { date: "Juin à octobre 2026", text: "Testeur de localisation (LQA) chez Keywords Studios, à Tokyo, sur des jeux Konami." },
       { date: "Octobre 2026", text: "Retour à Nice." },
       { date: "En cours", text: "Cloud-1 à 42 et préparation de la certification AWS Cloud Practitioner." },
     ],
@@ -206,7 +206,7 @@ export const ABOUT = {
       { name: "AWS Certified Cloud Practitioner", detail: "En cours" },
     ],
     langTitle: "Langues",
-    langs: ["Français", "Anglais", "Japonais, pratiqué au quotidien au Japon en 2026"],
+    langs: ["Français : langue maternelle", "Anglais : professionnel et conversationnel", "Japonais : JLPT N5"],
   },
   en: {
     title: "About",
@@ -219,7 +219,7 @@ export const ABOUT = {
     ],
     japanTitle: "Japan",
     japan: [
-      "I lived in Japan from March to October 2026: an exchange at 42 Tokyo, then a working holiday visa. From June to October 2026, I worked at Keywords Studios in Tokyo as a localization QA tester (LQA). I used Japanese every day there, and I want to work in Japan in the medium term.",
+      "I lived in Japan from March to October 2026: an exchange at 42 Tokyo, then a working holiday visa. From June to October 2026, I worked at Keywords Studios in Tokyo as a localization QA tester (LQA) on games from the Konami studio: checking the French language in game, reproducing technical bugs and reporting them precisely to the development teams. I want to work in Japan in the medium term.",
     ],
     beforeTitle: "Before 42",
     before: "A vocational high school diploma in restaurant service, then jobs in fast food.",
@@ -229,7 +229,7 @@ export const ABOUT = {
       { date: "2025", text: "Common core completed." },
       { date: "June 2025", text: "CodinGame C certification." },
       { date: "March 2026", text: "Exchange at 42 Tokyo, then working holiday in Japan." },
-      { date: "June to October 2026", text: "Localization QA tester (LQA) at Keywords Studios, Tokyo." },
+      { date: "June to October 2026", text: "Localization QA tester (LQA) at Keywords Studios, Tokyo, on Konami games." },
       { date: "October 2026", text: "Back in Nice." },
       { date: "In progress", text: "Cloud-1 at 42 and preparing the AWS Cloud Practitioner certification." },
     ],
@@ -239,7 +239,7 @@ export const ABOUT = {
       { name: "AWS Certified Cloud Practitioner", detail: "In progress" },
     ],
     langTitle: "Languages",
-    langs: ["French", "English", "Japanese, used every day in Japan in 2026"],
+    langs: ["French: native", "English: professional and conversational", "Japanese: JLPT N5"],
   },
 };
 
@@ -248,11 +248,11 @@ export const DEPLOY = {
     title: "Comment ce site est déployé",
     seoTitle: "Comment ce site est déployé : CI, Docker, Vercel et supervision",
     description:
-      "Le chemin d'un commit jusqu'à zapz.work : CI GitHub Actions (lint, build, tests, Lighthouse), image Docker sur GHCR, déploiement Vercel et contrôle de disponibilité planifié.",
+      "Le chemin d'un commit jusqu'à zapz.work : CI GitHub Actions (lint, build, tests, Lighthouse), image Docker sur GHCR, déploiement Vercel et contrôle de disponibilité.",
     lead: "Chaque push sur le dépôt est vérifié, construit, mis en ligne puis surveillé. Voici le chemin d'un commit jusqu'à zapz.work.",
     diagramTitle: "Schéma",
     diagramAlt:
-      "Schéma : un push déclenche la CI GitHub Actions (lint, build, tests, Lighthouse) puis la publication d'une image Docker sur GHCR. Le même push déclenche le build Vercel, qui relance les tests et met le site en ligne. Un contrôle planifié surveille zapz.work toutes les heures.",
+      "Schéma : un push déclenche la CI GitHub Actions (lint, build, tests, Lighthouse) puis la publication d'une image Docker sur GHCR. Le même push déclenche le build Vercel, qui relance les tests et met le site en ligne. Un contrôle lancé depuis un serveur personnel surveille zapz.work toutes les 15 minutes.",
     stepsTitle: "Étape par étape",
     steps: [
       {
@@ -273,7 +273,7 @@ export const DEPLOY = {
       },
       {
         title: "Supervision",
-        text: "Un workflow planifié vérifie zapz.work toutes les heures : code 200, titre attendu, sitemap et robots. S'il échoue, GitHub m'envoie un e-mail.",
+        text: "Un serveur personnel vérifie zapz.work toutes les 15 minutes (pages fr et en, code 200) et m'alerte en cas d'échec. Un workflow GitHub Actions plus complet (titre, sitemap, robots, CV) se lance à la main : la supervision ne consomme aucune minute de CI.",
       },
     ],
     statusTitle: "Version en ligne",
@@ -290,11 +290,11 @@ export const DEPLOY = {
     title: "How this site is deployed",
     seoTitle: "How this site is deployed: CI, Docker, Vercel and monitoring",
     description:
-      "The path from a commit to zapz.work: GitHub Actions CI (lint, build, tests, Lighthouse), a Docker image on GHCR, Vercel deployment and a scheduled uptime check.",
+      "The path from a commit to zapz.work: GitHub Actions CI (lint, build, tests, Lighthouse), a Docker image on GHCR, Vercel deployment and an uptime check.",
     lead: "Every push to the repository is checked, built, released and then monitored. Here is the path from a commit to zapz.work.",
     diagramTitle: "Diagram",
     diagramAlt:
-      "Diagram: a push triggers the GitHub Actions CI (lint, build, tests, Lighthouse) and then publishes a Docker image to GHCR. The same push triggers the Vercel build, which runs the tests again and releases the site. A scheduled check monitors zapz.work every hour.",
+      "Diagram: a push triggers the GitHub Actions CI (lint, build, tests, Lighthouse) and then publishes a Docker image to GHCR. The same push triggers the Vercel build, which runs the tests again and releases the site. A check run from a personal server monitors zapz.work every 15 minutes.",
     stepsTitle: "Step by step",
     steps: [
       {
@@ -315,7 +315,7 @@ export const DEPLOY = {
       },
       {
         title: "Monitoring",
-        text: "A scheduled workflow checks zapz.work every hour: status 200, expected title, sitemap and robots. If it fails, GitHub sends me an email.",
+        text: "A personal server checks zapz.work every 15 minutes (French and English pages, status 200) and alerts me if it fails. A fuller GitHub Actions workflow (title, sitemap, robots, resume) runs on demand: monitoring uses no CI minutes.",
       },
     ],
     statusTitle: "Live version",
