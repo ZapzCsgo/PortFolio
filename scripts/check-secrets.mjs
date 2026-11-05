@@ -28,7 +28,7 @@ const RULES = [
 ];
 
 // Faux positifs connus (versions, motifs de ce script, exemples sans danger).
-const ALLOW = [/^GITHUB_TOKEN$/, /\/etc\/nginx$/, /0\.0\.0\.0/, /127\.0\.0\.1/, /^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/];
+const ALLOW = [/^GITHUB_TOKEN$/, /^CLOUDFLARE_API_TOKEN$/, /\/etc\/nginx$/, /0\.0\.0\.0/, /127\.0\.0\.1/, /^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/];
 
 async function walk(dir) {
   const out = [];
