@@ -21,7 +21,21 @@ Le texte qui change souvent (phrase d'alternance, liens, e-mail) est dans `src/c
 
 ## Déploiement
 
-- **Vercel** : relié au dépôt, déploie chaque push (`vercel.json`). Le build lance aussi les tests de `dist/`.
+Hébergement : **Cloudflare Workers** (Worker `zapz-portfolio`, assets statiques de `dist/`), depuis le 5 novembre 2026.
+
+- `wrangler.jsonc` : Worker + assets, domaines `zapz.work` et `www.zapz.work` (domaines personnalisés du Worker).
+- `cloudflare/worker.js` : reprend l'ancien `vercel.json` et le middleware : `www` -> apex (301), http -> https,
+  redirections (`/about`, `/certifications` -> `/a-propos/`, `/ctf-blog/*` -> `/`, 308), slash final (308),
+  en-têtes de sécurité, `Vary: Accept` sur les pages, cache immuable de `/_astro/`, page 404,
+  pages en Markdown sur `Accept: text/markdown` (`lib/agent-md.js`).
+- Mettre en ligne à la main : `npm run build && npx wrangler deploy` (jeton Cloudflare dans `CLOUDFLARE_API_TOKEN`).
+  Test avant les domaines : https://zapz-portfolio.zapzonionzcsgo.workers.dev
+- CI : le job `deploy` met en ligne chaque push sur `main` dès que les secrets GitHub `CLOUDFLARE_API_TOKEN`
+  (droit « Workers Scripts : Edit ») et `CLOUDFLARE_ACCOUNT_ID` sont posés ; sans eux il est sauté.
+- Retour arrière : `npx wrangler rollback` (version précédente du Worker).
+- DNS : zone Cloudflare (serveurs de noms Cloudflare, domaine toujours enregistré chez Vercel). E-mail
+  `contact@zapz.work` par ImprovMX (MX + SPF recopiés), `studio.` et `hermes.` sur Cloudflare Pages.
+- `vercel.json` et `middleware.js` sont gardés pour un éventuel retour sur Vercel ; ils ne servent plus en production.
 - **CI** (`.github/workflows/ci.yml`) : lint, build, tests, Lighthouse CI (`lighthouserc.json`), puis image Docker publiée sur GHCR (`ghcr.io/zapzcsgo/portfolio`) sur `main`.
 - **Supervision** (`.github/workflows/uptime.yml`) : contrôle complet de https://zapz.work lancé à la main ; la surveillance continue (toutes les 15 minutes) tourne depuis un serveur personnel.
 

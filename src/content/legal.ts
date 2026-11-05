@@ -6,10 +6,10 @@ export const POSTAL_ADDRESS: string | null = null;
 export const PHONE: string | null = null;
 
 const HOST = {
-  name: "Vercel Inc.",
-  address: "440 N Barranca Ave #4133, Covina, CA 91723, USA",
-  url: "https://vercel.com",
-  privacy: "https://vercel.com/legal/privacy-notice",
+  name: "Cloudflare, Inc.",
+  address: "101 Townsend St, San Francisco, CA 94107, USA",
+  url: "https://www.cloudflare.com",
+  privacy: "https://www.cloudflare.com/privacypolicy/",
 };
 
 export type Block = { title: string; lines: (string | null)[]; link?: { href: string; label: string } };
@@ -38,7 +38,7 @@ export const LEGAL: Record<Lang, LegalPage> = {
       {
         title: "Hébergeur",
         lines: [HOST.name, HOST.address],
-        link: { href: HOST.url, label: "vercel.com" },
+        link: { href: HOST.url, label: "cloudflare.com" },
       },
       {
         title: "Contenus",
@@ -65,7 +65,7 @@ export const LEGAL: Record<Lang, LegalPage> = {
       {
         title: "Host",
         lines: [HOST.name, HOST.address],
-        link: { href: HOST.url, label: "vercel.com" },
+        link: { href: HOST.url, label: "cloudflare.com" },
       },
       {
         title: "Content",
@@ -93,9 +93,9 @@ export const PRIVACY: Record<Lang, LegalPage> = {
       {
         title: "Journaux de l'hébergeur",
         lines: [
-          "Pour afficher les pages et protéger le site, l'hébergeur Vercel reçoit à chaque visite les données techniques de la requête (adresse IP, navigateur, page demandée). Il les traite selon sa propre politique.",
+          "Pour afficher les pages et protéger le site, l'hébergeur Cloudflare reçoit à chaque visite les données techniques de la requête (adresse IP, navigateur, page demandée). Il les traite selon sa propre politique.",
         ],
-        link: { href: HOST.privacy, label: "Politique de confidentialité de Vercel" },
+        link: { href: HOST.privacy, label: "Politique de confidentialité de Cloudflare" },
       },
       {
         title: "E-mails",
@@ -133,9 +133,9 @@ export const PRIVACY: Record<Lang, LegalPage> = {
       {
         title: "Host logs",
         lines: [
-          "To serve pages and protect the site, the host Vercel receives the technical data of each request (IP address, browser, requested page). It handles them under its own policy.",
+          "To serve pages and protect the site, the host Cloudflare receives the technical data of each request (IP address, browser, requested page). It handles them under its own policy.",
         ],
-        link: { href: HOST.privacy, label: "Vercel privacy notice" },
+        link: { href: HOST.privacy, label: "Cloudflare privacy policy" },
       },
       {
         title: "Emails",

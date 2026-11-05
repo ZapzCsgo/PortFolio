@@ -1,4 +1,4 @@
-// Vercel Routing Middleware (site statique Astro).
+// Vercel Routing Middleware (site statique Astro). Plus utilisé en production depuis le 05/11/2026 : cloudflare/worker.js.
 // Négociation de contenu : une page demandée avec « Accept: text/markdown » est renvoyée en Markdown
 // (même contenu que la page HTML), une adresse inconnue reçoit un 404 en Markdown.
 // Toute autre requête continue telle quelle (rien n'est renvoyé). Vary: Accept des pages HTML : vercel.json.
