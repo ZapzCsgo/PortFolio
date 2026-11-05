@@ -21,16 +21,16 @@ export const GTS: Record<Lang, CaseStudy> = {
     title: "GaijinToSensei : une app en production",
     seoTitle: "GaijinToSensei, mise en production et exploitation",
     description:
-      "Comment je mets en production GaijinToSensei : Next.js, Neon, Prisma, Upstash, Resend et Vercel, chaîne d'agents, déploiement contrôlé avec retour arrière et supervision.",
+      "Comment je mets en production GaijinToSensei : Next.js sur Cloudflare Workers, Neon, Prisma, Upstash, Resend, chaîne d'agents, déploiement contrôlé avec retour arrière et supervision.",
     lead: "Une app pour apprendre le japonais, en production avec des utilisateurs réels.",
-    stack: ["Next.js", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Vercel", "Playwright", "Bash"],
+    stack: ["Next.js", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Cloudflare Workers", "Playwright", "Bash"],
     link: { href: "https://gajintosensei.com", label: "gajintosensei.com" },
     context: [
       "Je suis seul sur le projet. Des agents Claude Code écrivent la plupart du code. Mon travail, c'est le cadre autour : comment le code arrive en prod, comment on sait qu'il marche, et comment on répare.",
-      "L'app tourne sur Vercel, avec une base PostgreSQL serverless chez Neon (via Prisma), Redis chez Upstash pour limiter le débit et Resend pour les e-mails.",
+      "L'app tourne sur Cloudflare Workers (Next.js adapté par OpenNext), avec une base PostgreSQL serverless chez Neon (via Prisma), Redis chez Upstash pour limiter le débit et Resend pour les e-mails.",
     ],
     problem: [
-      "Beaucoup de changements par jour, plusieurs agents en parallèle, et un quota de déploiements par jour sur la plateforme.",
+      "Beaucoup de changements par jour, plusieurs agents en parallèle, et un quota de déploiements par jour sur l'hébergeur d'origine.",
       "Chaque mise en prod doit rester sûre : une version cassée ne doit pas rester en ligne, et deux déploiements ne doivent pas se marcher dessus.",
     ],
     done: [
@@ -45,11 +45,18 @@ export const GTS: Record<Lang, CaseStudy> = {
       {
         title: "Une mise en prod contrôlée",
         items: [
-          "Un script déploie l'export exact d'un commit dans une préversion, puis vérifie les pages publiques : code 200, titre, URL canonique, sitemap complet, robots.",
-          "Le build de prod est construit sans être mis en ligne, contrôlé, puis promu. La branche principale n'avance qu'en avance rapide, jamais en force.",
-          "Après la promotion, le site est revérifié. En cas d'échec, le script revient seul au déploiement précédent et envoie une alerte.",
+          "Un script construit l'export exact d'un commit et le publie comme nouvelle version du Worker, sans trafic, puis vérifie les pages publiques sur l'adresse de cette version : code 200, titre, URL canonique, sitemap complet, robots.",
+          "La version ne reçoit le trafic qu'après ces contrôles. La branche principale n'avance qu'en avance rapide, jamais en force.",
+          "Après l'activation, le site est revérifié. En cas d'échec, le script revient seul à la version précédente et envoie une alerte.",
           "Un verrou de fichier empêche deux mises en prod en même temps.",
           "Toutes les 10 minutes, une tâche planifiée vérifie que la prod n'est pas en retard sur la branche principale. Si elle l'est, elle relance une mise en prod sûre. Sinon elle n'envoie qu'une alerte.",
+        ],
+      },
+      {
+        title: "Migration de Vercel vers Cloudflare Workers",
+        items: [
+          "Le 5 novembre 2026, le compte gratuit Vercel a dépassé son quota d'usage et ses projets ont été coupés. J'ai migré l'app vers Cloudflare Workers le jour même, pour 5 $ par mois.",
+          "Devant l'app, un second Worker met en cache les pages publiques pour les visiteurs non connectés, jamais pour une session. Temps de réponse du serveur (TTFB) passé de 0,26-0,30 s à 0,07-0,09 s, LCP de l'accueil à 1,4 s.",
         ],
       },
       {
@@ -76,16 +83,16 @@ export const GTS: Record<Lang, CaseStudy> = {
     title: "GaijinToSensei: an app in production",
     seoTitle: "GaijinToSensei, shipping and running it in production",
     description:
-      "How I ship GaijinToSensei: Next.js, Neon, Prisma, Upstash, Resend and Vercel, an agent pipeline, checked deploys with automatic rollback, and monitoring.",
+      "How I ship GaijinToSensei: Next.js on Cloudflare Workers, Neon, Prisma, Upstash, Resend, an agent pipeline, checked deploys with automatic rollback, and monitoring.",
     lead: "An app to learn Japanese, in production with real users.",
-    stack: ["Next.js", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Vercel", "Playwright", "Bash"],
+    stack: ["Next.js", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Cloudflare Workers", "Playwright", "Bash"],
     link: { href: "https://gajintosensei.com", label: "gajintosensei.com" },
     context: [
       "I am alone on the project. Claude Code agents write most of the code. My job is the frame around it: how code reaches production, how we know it works, and how we fix it.",
-      "The app runs on Vercel, with a serverless PostgreSQL database on Neon (through Prisma), Redis on Upstash for rate limiting and Resend for emails.",
+      "The app runs on Cloudflare Workers (Next.js adapted by OpenNext), with a serverless PostgreSQL database on Neon (through Prisma), Redis on Upstash for rate limiting and Resend for emails.",
     ],
     problem: [
-      "Many changes a day, several agents in parallel, and a daily deployment quota on the platform.",
+      "Many changes a day, several agents in parallel, and a daily deployment quota on the original host.",
       "Every release has to stay safe: a broken version must not stay online, and two deployments must not collide.",
     ],
     done: [
@@ -100,11 +107,18 @@ export const GTS: Record<Lang, CaseStudy> = {
       {
         title: "Checked releases",
         items: [
-          "A script deploys the exact export of a commit to a preview, then checks the public pages: status 200, title, canonical URL, full sitemap, robots.",
-          "The production build is built without going live, checked, then promoted. The main branch only moves by fast-forward, never by force.",
-          "After promotion the site is checked again. If that fails, the script rolls back to the previous deployment on its own and sends an alert.",
+          "A script builds the exact export of a commit and uploads it as a new Worker version with no traffic, then checks the public pages on that version's address: status 200, title, canonical URL, full sitemap, robots.",
+          "The version only gets traffic after these checks. The main branch only moves by fast-forward, never by force.",
+          "After activation the site is checked again. If that fails, the script rolls back to the previous version on its own and sends an alert.",
           "A file lock stops two releases from running at the same time.",
           "Every 10 minutes, a scheduled job checks that production is not behind the main branch. If it is, it starts a safe release. Otherwise it only sends an alert.",
+        ],
+      },
+      {
+        title: "Migration from Vercel to Cloudflare Workers",
+        items: [
+          "On 5 November 2026, the free Vercel account went over its usage quota and its projects were shut down. I moved the app to Cloudflare Workers the same day, for $5 a month.",
+          "In front of the app, a second Worker caches public pages for signed-out visitors, never for a session. Server response time (TTFB) went from 0.26-0.30 s to 0.07-0.09 s, home page LCP 1.4 s.",
         ],
       },
       {

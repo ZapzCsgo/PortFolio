@@ -21,14 +21,17 @@ Le texte qui change souvent (phrase d'alternance, liens, e-mail) est dans `src/c
 
 ## Déploiement
 
-Hébergement : **Cloudflare Workers** (Worker `zapz-portfolio`, assets statiques de `dist/`), depuis le 5 novembre 2026.
+Hébergement : **Cloudflare Workers** (Worker `zapz-portfolio`, assets statiques de `dist/`), depuis le 5 novembre 2026
+(avant : Vercel, quitté quand le compte gratuit a dépassé son quota d'usage ; zone DNS recopiée avant la bascule, e-mail compris).
 
 - `wrangler.jsonc` : Worker + assets, domaines `zapz.work` et `www.zapz.work` (domaines personnalisés du Worker).
 - `cloudflare/worker.js` : reprend l'ancien `vercel.json` et le middleware : `www` -> apex (301), http -> https,
   redirections (`/about`, `/certifications` -> `/a-propos/`, `/ctf-blog/*` -> `/`, 308), slash final (308),
   en-têtes de sécurité, `Vary: Accept` sur les pages, cache immuable de `/_astro/`, page 404,
   pages en Markdown sur `Accept: text/markdown` (`lib/agent-md.js`).
-- Mettre en ligne à la main : `npm run build && npx wrangler deploy` (jeton Cloudflare dans `CLOUDFLARE_API_TOKEN`).
+- Mise en ligne : un script du serveur personnel part de l'export exact du commit (`git archive`), lance `npm ci`,
+  `npm run build` (build + tests), `wrangler deploy`, puis vérifie en ligne (200, redirections, 404, Markdown).
+  À la main : `npm run build && npx wrangler deploy` (jeton Cloudflare dans `CLOUDFLARE_API_TOKEN`).
   Test avant les domaines : https://zapz-portfolio.zapzonionzcsgo.workers.dev
 - CI : le job `deploy` met en ligne chaque push sur `main` dès que les secrets GitHub `CLOUDFLARE_API_TOKEN`
   (droit « Workers Scripts : Edit ») et `CLOUDFLARE_ACCOUNT_ID` sont posés ; sans eux il est sauté.

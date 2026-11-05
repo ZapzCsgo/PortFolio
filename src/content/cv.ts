@@ -42,7 +42,7 @@ export const CV: Record<Lang, Cv> = {
       "Étudiant à 42 Nice, je cherche une alternance d'1 an à Nice, Sophia Antipolis ou Monaco. Je fais tourner seul une app en production (utilisateurs réels) : mises en prod contrôlées, supervision, base restaurée après un incident.",
     skillsTitle: "Compétences",
     skills: [
-      { label: "Utilisé en prod", text: "Linux (VPS, systemd, cron), Bash, Git, Vercel (CLI, edge), Cloudflare (Pages, Tunnel), PostgreSQL (Neon) avec Prisma, Redis (Upstash), Node.js / TypeScript, Python" },
+      { label: "Utilisé en prod", text: "Linux (VPS, systemd, cron), Bash, Git, Cloudflare (Workers, Pages, Tunnel), Vercel (CLI, edge), PostgreSQL (Neon) avec Prisma, Redis (Upstash), Node.js / TypeScript, Python" },
       { label: "Exploitation en prod", text: "route de santé, alertes planifiées, déploiement avec retour arrière automatique, migrations additives, restauration point-in-time (PITR)" },
       { label: "En apprentissage", text: "Docker, Docker compose, Ansible, GitHub Actions, Lighthouse CI, AWS (Cloud Practitioner en cours), HashiCorp Vault" },
       { label: "Sécurité système et bas niveau", text: "C (certification CodinGame), C++, assembleur x86-64, format ELF, appels système" },
@@ -53,7 +53,7 @@ export const CV: Record<Lang, Cv> = {
         title: "GaijinToSensei, app d'apprentissage du japonais",
         where: "gajintosensei.com",
         points: [
-          "En production avec des utilisateurs réels : Next.js, PostgreSQL serverless (Neon) avec Prisma, Redis (Upstash), e-mails Resend, hébergement Vercel.",
+          "En production avec des utilisateurs réels : Next.js, PostgreSQL serverless (Neon) avec Prisma, Redis (Upstash), e-mails Resend, Cloudflare Workers (migré depuis Vercel, quota gratuit dépassé ; TTFB 0,26-0,30 s -> 0,07-0,09 s).",
           "Chaîne d'agents Claude Code qui codent, testent (QA Playwright), fusionnent et déploient, avec verrous anti-conflits et déploiements groupés pour tenir le quota de la plateforme.",
           "Mise en prod par script verrouillé : préversion, contrôles HTTP, promotion, nouveau contrôle, retour arrière automatique. Garde de prod planifiée toutes les 10 minutes.",
           "Supervision : route de santé (base, Redis, e-mail, stockage), erreurs serveur enregistrées en base, limitation de débit par fenêtres glissantes.",
@@ -66,7 +66,7 @@ export const CV: Record<Lang, Cv> = {
           "VPS Linux : agents de nuit en service systemd sous un utilisateur dédié sans root, exécuteur root à liste fermée, 25 tâches planifiées (garde de prod, publications, surveillance d'un bot, alertes).",
           "Hub perso exposé par un tunnel Cloudflare sans port ouvert, derrière un proxy edge sur Vercel (mot de passe PBKDF2, cookie HMAC, délai anti force brute, HSTS).",
           "5 sites statiques publiés automatiquement sur Cloudflare Pages (intégration Git ou wrangler depuis le VPS), dont MetaAOE et MetaDBD.",
-          "zapz.work : CI GitHub Actions (lint, build, tests, Lighthouse), image Docker publiée sur GHCR, déploiement Vercel, contrôle de disponibilité planifié.",
+          "zapz.work : CI GitHub Actions (lint, build, tests, Lighthouse), image Docker publiée sur GHCR, Cloudflare Workers (assets statiques, redirections et en-têtes par le Worker), mise en ligne par script, contrôle de disponibilité.",
         ],
       },
       {
@@ -116,7 +116,7 @@ export const CV: Record<Lang, Cv> = {
       "42 Nice student looking for a 1-year work-study contract in Nice, Sophia Antipolis or Monaco. I run an app in production with real users on my own: checked releases, monitoring, database restored after an incident.",
     skillsTitle: "Skills",
     skills: [
-      { label: "Used in production", text: "Linux (VPS, systemd, cron), Bash, Git, Vercel (CLI, edge), Cloudflare (Pages, Tunnel), PostgreSQL (Neon) with Prisma, Redis (Upstash), Node.js / TypeScript, Python" },
+      { label: "Used in production", text: "Linux (VPS, systemd, cron), Bash, Git, Cloudflare (Workers, Pages, Tunnel), Vercel (CLI, edge), PostgreSQL (Neon) with Prisma, Redis (Upstash), Node.js / TypeScript, Python" },
       { label: "Operations in production", text: "health route, scheduled alerts, deployments with automatic rollback, additive migrations, point-in-time restore (PITR)" },
       { label: "Learning", text: "Docker, Docker compose, Ansible, GitHub Actions, Lighthouse CI, AWS (Cloud Practitioner in progress), HashiCorp Vault" },
       { label: "Systems security and low level", text: "C (CodinGame certification), C++, x86-64 assembly, ELF format, system calls" },
@@ -127,7 +127,7 @@ export const CV: Record<Lang, Cv> = {
         title: "GaijinToSensei, a Japanese learning app",
         where: "gajintosensei.com",
         points: [
-          "In production with real users: Next.js, serverless PostgreSQL (Neon) with Prisma, Redis (Upstash), Resend emails, hosted on Vercel.",
+          "In production with real users: Next.js, serverless PostgreSQL (Neon) with Prisma, Redis (Upstash), Resend emails, Cloudflare Workers (moved from Vercel, free quota exceeded; TTFB 0.26-0.30 s -> 0.07-0.09 s).",
           "A Claude Code agent pipeline that writes code, tests (Playwright QA), merges and deploys, with locks against conflicts and batched deployments to fit the platform quota.",
           "Releases through a locked script: preview, HTTP checks, promotion, a second check, automatic rollback. A scheduled production guard every 10 minutes.",
           "Monitoring: health route (database, Redis, email, storage), server errors stored in the database, sliding-window rate limits.",
@@ -140,7 +140,7 @@ export const CV: Record<Lang, Cv> = {
           "Linux VPS: night agents as a systemd service under a dedicated non-root user, a closed-list root executor, 25 scheduled jobs (production guard, publishing, bot watchdog, alerts).",
           "Personal hub exposed through a Cloudflare tunnel with no open port, behind an edge proxy on Vercel (PBKDF2 password, HMAC cookie, brute-force delay, HSTS).",
           "5 static sites published automatically to Cloudflare Pages (Git integration or wrangler from the VPS), including MetaAOE and MetaDBD.",
-          "zapz.work: GitHub Actions CI (lint, build, tests, Lighthouse), Docker image published to GHCR, Vercel deployment, scheduled uptime check.",
+          "zapz.work: GitHub Actions CI (lint, build, tests, Lighthouse), Docker image published to GHCR, Cloudflare Workers (static assets, redirects and headers in the Worker), release script, uptime check.",
         ],
       },
       {

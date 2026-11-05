@@ -25,14 +25,14 @@ export const HOME = {
     card: [
       { k: "GaijinToSensei", v: "l'app en ligne, utilisateurs réels", href: "https://gajintosensei.com" },
       { k: "Incident du 29 octobre 2026", v: "base restaurée, ce qui a changé ensuite", route: "incident" },
-      { k: "Ce site", v: "vérifié et mis en ligne automatiquement", route: "deploy" },
+      { k: "Ce site", v: "vérifié, mis en ligne par script, surveillé", route: "deploy" },
     ],
     ctaProjects: "Voir mes projets",
     statusTitle: "zapz.work en ligne",
     pipeline: [
       { k: "git push", v: "branche main" },
       { k: "CI", v: "lint, build, tests, Lighthouse" },
-      { k: "Production", v: "Vercel relance les tests" },
+      { k: "Production", v: "Cloudflare Workers, tests relancés" },
       { k: "Supervision", v: "toutes les 15 min" },
     ],
     pipelineLabel: "Chemin d'un commit jusqu'à la prod",
@@ -80,14 +80,14 @@ export const HOME = {
     card: [
       { k: "GaijinToSensei", v: "the live app, real users", href: "https://gajintosensei.com" },
       { k: "Incident on 29 October 2026", v: "database restored, what changed next", route: "incident" },
-      { k: "This site", v: "checked and released automatically", route: "deploy" },
+      { k: "This site", v: "checked, released by script, monitored", route: "deploy" },
     ],
     ctaProjects: "See my projects",
     statusTitle: "zapz.work is live",
     pipeline: [
       { k: "git push", v: "main branch" },
       { k: "CI", v: "lint, build, tests, Lighthouse" },
-      { k: "Production", v: "Vercel runs the tests again" },
+      { k: "Production", v: "Cloudflare Workers, tests run again" },
       { k: "Monitoring", v: "every 15 min" },
     ],
     pipelineLabel: "Path from a commit to production",
@@ -136,12 +136,12 @@ export const SKILLS: Record<Lang, Skill[]> = {
     },
     {
       domain: "CI/CD",
-      prod: ["déploiement contrôlé avec retour arrière", "Vercel CLI", "Cloudflare Pages", "Git"],
+      prod: ["déploiement contrôlé avec retour arrière", "wrangler (Workers, Pages)", "Vercel CLI", "Git"],
       learning: ["GitHub Actions", "Lighthouse CI"],
     },
     {
       domain: "Cloud",
-      prod: ["Vercel (dont edge)", "Cloudflare (Pages, Tunnel)", "Neon", "Upstash"],
+      prod: ["Cloudflare (Workers, Pages, Tunnel)", "Vercel (dont edge)", "Neon", "Upstash"],
       learning: ["AWS (Cloud Practitioner en cours)", "Ansible"],
     },
     {
@@ -173,12 +173,12 @@ export const SKILLS: Record<Lang, Skill[]> = {
     },
     {
       domain: "CI/CD",
-      prod: ["checked deploys with rollback", "Vercel CLI", "Cloudflare Pages", "Git"],
+      prod: ["checked deploys with rollback", "wrangler (Workers, Pages)", "Vercel CLI", "Git"],
       learning: ["GitHub Actions", "Lighthouse CI"],
     },
     {
       domain: "Cloud",
-      prod: ["Vercel (including edge)", "Cloudflare (Pages, Tunnel)", "Neon", "Upstash"],
+      prod: ["Cloudflare (Workers, Pages, Tunnel)", "Vercel (including edge)", "Neon", "Upstash"],
       learning: ["AWS (Cloud Practitioner in progress)", "Ansible"],
     },
     {
@@ -326,18 +326,18 @@ export const ABOUT = {
 export const DEPLOY = {
   fr: {
     title: "Comment ce site est déployé",
-    seoTitle: "Comment ce site est déployé : CI, Docker, Vercel et supervision",
+    seoTitle: "Comment ce site est déployé : CI, Docker, Cloudflare Workers et supervision",
     description:
-      "Le chemin d'un commit jusqu'à zapz.work : CI GitHub Actions (lint, build, tests, Lighthouse), image Docker sur GHCR, déploiement Vercel et contrôle de disponibilité.",
-    lead: "Chaque push sur le dépôt est vérifié, construit, mis en ligne puis surveillé. Voici le chemin d'un commit jusqu'à zapz.work.",
+      "Le chemin d'un commit jusqu'à zapz.work : CI GitHub Actions (lint, build, tests, Lighthouse), image Docker sur GHCR, mise en ligne sur Cloudflare Workers et contrôle de disponibilité.",
+    lead: "Chaque version est vérifiée, construite, mise en ligne puis surveillée. Voici le chemin d'un commit jusqu'à zapz.work.",
     diagramTitle: "Schéma",
     diagramAlt:
-      "Schéma : un push déclenche la CI GitHub Actions (lint, build, tests, Lighthouse) puis la publication d'une image Docker sur GHCR. Le même push déclenche le build Vercel, qui relance les tests et met le site en ligne. Un contrôle lancé depuis un serveur personnel surveille zapz.work toutes les 15 minutes.",
+      "Schéma : un push déclenche la CI GitHub Actions (lint, build, tests, Lighthouse) puis la publication d'une image Docker sur GHCR. Un script de mise en ligne reconstruit le commit, relance les tests et publie le site sur Cloudflare Workers. Un contrôle lancé depuis un serveur personnel surveille zapz.work toutes les 15 minutes.",
     stepsTitle: "Étape par étape",
     steps: [
       {
         title: "Push",
-        text: "Je pousse sur la branche principale du dépôt GitHub. Une autre branche donne une préversion, pas la prod.",
+        text: "Je pousse sur la branche principale du dépôt GitHub. Seule cette branche part en production.",
       },
       {
         title: "CI GitHub Actions",
@@ -348,8 +348,12 @@ export const DEPLOY = {
         text: "Un build multi-étapes : Node construit le site, nginx le sert. Sur la branche principale, l'image est publiée sur GitHub Container Registry avec le commit comme étiquette.",
       },
       {
-        title: "Déploiement",
-        text: "Vercel est relié au dépôt et met en ligne chaque push. Son build relance les mêmes tests que la CI : une version qui échoue n'est pas mise en ligne.",
+        title: "Hébergement",
+        text: "Le site tourne sur Cloudflare Workers : les fichiers du build sont servis comme assets statiques du Worker, et son code gère les redirections (www vers le domaine nu, http vers https, anciennes adresses, slash final), les en-têtes de sécurité, le cache des fichiers versionnés et la page 404.",
+      },
+      {
+        title: "Mise en ligne",
+        text: "Un script lancé depuis mon serveur part de l'export exact du commit, réinstalle les dépendances, reconstruit et relance les tests, publie avec `wrangler deploy`, puis vérifie en ligne les pages, les redirections et la 404. Une version qui échoue aux tests n'est pas publiée. La CI a le même job de mise en ligne, actif dès que le jeton Cloudflare est posé dans les secrets GitHub. Retour arrière : version précédente du Worker.",
       },
       {
         title: "Supervision",
@@ -364,22 +368,23 @@ export const DEPLOY = {
       "Astro en sortie statique et Tailwind CSS. Le seul JavaScript suit le thème clair ou sombre du système.",
       "Le même contenu en français et en anglais, avec hreflang, sitemap, robots et une image Open Graph par langue.",
       "Le CV PDF est généré depuis la page CV du site, pour qu'il ne contredise jamais le site.",
+      "Migré de Vercel vers Cloudflare Workers le 5 novembre 2026, quand le compte gratuit a dépassé son quota d'usage. La zone DNS a été recopiée chez Cloudflare avant la bascule, enregistrements e-mail compris : aucun e-mail perdu.",
     ],
   },
   en: {
     title: "How this site is deployed",
-    seoTitle: "How this site is deployed: CI, Docker, Vercel and monitoring",
+    seoTitle: "How this site is deployed: CI, Docker, Cloudflare Workers and monitoring",
     description:
-      "The path from a commit to zapz.work: GitHub Actions CI (lint, build, tests, Lighthouse), a Docker image on GHCR, Vercel deployment and an uptime check.",
-    lead: "Every push to the repository is checked, built, released and then monitored. Here is the path from a commit to zapz.work.",
+      "The path from a commit to zapz.work: GitHub Actions CI (lint, build, tests, Lighthouse), a Docker image on GHCR, release on Cloudflare Workers and an uptime check.",
+    lead: "Every version is checked, built, released and then monitored. Here is the path from a commit to zapz.work.",
     diagramTitle: "Diagram",
     diagramAlt:
-      "Diagram: a push triggers the GitHub Actions CI (lint, build, tests, Lighthouse) and then publishes a Docker image to GHCR. The same push triggers the Vercel build, which runs the tests again and releases the site. A check run from a personal server monitors zapz.work every 15 minutes.",
+      "Diagram: a push triggers the GitHub Actions CI (lint, build, tests, Lighthouse) and then publishes a Docker image to GHCR. A release script rebuilds the commit, runs the tests again and publishes the site to Cloudflare Workers. A check run from a personal server monitors zapz.work every 15 minutes.",
     stepsTitle: "Step by step",
     steps: [
       {
         title: "Push",
-        text: "I push to the main branch of the GitHub repository. Any other branch gives a preview, not production.",
+        text: "I push to the main branch of the GitHub repository. Only this branch goes to production.",
       },
       {
         title: "GitHub Actions CI",
@@ -390,8 +395,12 @@ export const DEPLOY = {
         text: "A multi-stage build: Node builds the site, nginx serves it. On the main branch, the image is published to GitHub Container Registry, tagged with the commit.",
       },
       {
-        title: "Deployment",
-        text: "Vercel is linked to the repository and releases every push. Its build runs the same tests as the CI: a version that fails is not released.",
+        title: "Hosting",
+        text: "The site runs on Cloudflare Workers: the build files are served as the Worker's static assets, and its code handles redirects (www to the bare domain, http to https, old URLs, trailing slash), security headers, caching of versioned files and the 404 page.",
+      },
+      {
+        title: "Release",
+        text: "A script run from my server starts from the exact export of the commit, reinstalls dependencies, rebuilds and runs the tests again, publishes with `wrangler deploy`, then checks the pages, redirects and 404 online. A version that fails the tests is not published. The CI has the same release job, active once the Cloudflare token is set in the GitHub secrets. Rollback: the previous Worker version.",
       },
       {
         title: "Monitoring",
@@ -406,6 +415,7 @@ export const DEPLOY = {
       "Astro with static output and Tailwind CSS. The only JavaScript follows the system light or dark theme.",
       "The same content in French and English, with hreflang, sitemap, robots and one Open Graph image per language.",
       "The PDF resume is generated from the site's resume page, so it never contradicts the site.",
+      "Moved from Vercel to Cloudflare Workers on 5 November 2026, when the free account went over its usage quota. The DNS zone was copied to Cloudflare before the switch, email records included: no email was lost.",
     ],
   },
 };
