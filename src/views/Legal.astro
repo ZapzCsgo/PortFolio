@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import { type Lang } from "../content/site";
+import { LEGAL, PRIVACY } from "../content/legal";
+
+interface Props {
+  lang: Lang;
+  kind: "legal" | "privacy";
+}
+const { lang, kind } = Astro.props;
+const d = (kind === "legal" ? LEGAL : PRIVACY)[lang];
+---
+
+<Base lang={lang} route={kind} title={d.seoTitle} description={d.description}>
+  <h1 class="text-3xl font-bold sm:text-4xl">{d.title}</h1>
+  <p class="mt-2 text-sm text-muted">{d.updated}</p>
+  {
+    d.blocks.map((b) => (
+      <section class="mt-10">
+        <h2 class="text-xl font-bold">{b.title}</h2>
+        {b.lines.filter((l): l is string => Boolean(l)).map((l) => <p class="mt-3">{l}</p>)}
+        {b.link && (
+          <p class="mt-3">
+            <a class="prose-link" href={b.link.href} rel="noopener">{b.link.label}</a>
+          </p>
+        )}
+      </section>
+    ))
+  }
+</Base>

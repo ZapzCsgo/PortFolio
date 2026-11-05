@@ -34,6 +34,8 @@ export const ROUTES = {
   deploy: { fr: "/comment-ce-site-est-deploye/", en: "/en/how-this-site-is-deployed/" },
   about: { fr: "/a-propos/", en: "/en/about/" },
   cv: { fr: "/cv/", en: "/en/cv/" },
+  legal: { fr: "/mentions-legales/", en: "/en/legal-notice/" },
+  privacy: { fr: "/confidentialite/", en: "/en/privacy/" },
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
@@ -51,13 +53,14 @@ export const UI = {
     navLabel: "Navigation principale",
     langSwitch: "English",
     langSwitchLabel: "Read this page in English",
-    themeLabel: "Basculer le thème clair ou sombre",
     cvPdf: "CV (PDF)",
     email: "E-mail",
     back: "Retour à l'accueil",
     version: "Version",
     builtOn: "construite le",
     footerDeploy: "Comment ce site est déployé",
+    footerLegal: "Mentions légales",
+    footerPrivacy: "Confidentialité",
     caseSections: {
       context: "Contexte",
       problem: "Problème",
@@ -74,13 +77,14 @@ export const UI = {
     navLabel: "Main navigation",
     langSwitch: "Français",
     langSwitchLabel: "Lire cette page en français",
-    themeLabel: "Toggle light or dark theme",
     cvPdf: "Resume (PDF)",
     email: "Email",
     back: "Back to home",
     version: "Version",
     builtOn: "built on",
     footerDeploy: "How this site is deployed",
+    footerLegal: "Legal notice",
+    footerPrivacy: "Privacy",
     caseSections: {
       context: "Context",
       problem: "Problem",

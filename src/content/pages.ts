@@ -361,7 +361,7 @@ export const DEPLOY = {
     badgeAlt: "Statut de la CI GitHub Actions",
     stackTitle: "Le site",
     stack: [
-      "Astro en sortie statique et Tailwind CSS. Le seul JavaScript sert au bouton de thème clair ou sombre.",
+      "Astro en sortie statique et Tailwind CSS. Le seul JavaScript suit le thème clair ou sombre du système.",
       "Le même contenu en français et en anglais, avec hreflang, sitemap, robots et une image Open Graph par langue.",
       "Le CV PDF est généré depuis la page CV du site, pour qu'il ne contredise jamais le site.",
     ],
@@ -403,7 +403,7 @@ export const DEPLOY = {
     badgeAlt: "GitHub Actions CI status",
     stackTitle: "The site",
     stack: [
-      "Astro with static output and Tailwind CSS. The only JavaScript runs the light or dark theme button.",
+      "Astro with static output and Tailwind CSS. The only JavaScript follows the system light or dark theme.",
       "The same content in French and English, with hreflang, sitemap, robots and one Open Graph image per language.",
       "The PDF resume is generated from the site's resume page, so it never contradicts the site.",
     ],
