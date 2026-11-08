@@ -10,7 +10,7 @@ export const LINKEDIN = "https://www.linkedin.com/in/matteo-murru-775720274/";
 export const REPO = "https://github.com/ZapzCsgo/PortFolio";
 
 // Passer à true quand le dépôt est public : le badge GitHub Actions s'affiche alors sur la page de déploiement.
-export const REPO_PUBLIC = false;
+export const REPO_PUBLIC = true;
 export const CI_BADGE = `${REPO}/actions/workflows/ci.yml/badge.svg?branch=main`;
 export const CI_URL = `${REPO}/actions/workflows/ci.yml`;
 
