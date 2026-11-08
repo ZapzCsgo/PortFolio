@@ -14,6 +14,10 @@ export const REPO_PUBLIC = false;
 export const CI_BADGE = `${REPO}/actions/workflows/ci.yml/badge.svg?branch=main`;
 export const CI_URL = `${REPO}/actions/workflows/ci.yml`;
 
+// Projet vitrine IA agentique. Passer à true quand le dépôt est public : le lien s'affiche alors sur la page Agents IA.
+export const SRA_REPO = "https://github.com/ZapzCsgo/steam-roblox-agents";
+export const SRA_PUBLIC = false;
+
 export const ALTERNANCE: Record<Lang, string> = {
   fr: "Étudiant à 42 Nice, je cherche une alternance d'1 an en DevOps / Cloud / SRE à Nice, Sophia Antipolis ou Monaco.",
   en: "I study at 42 Nice and I am looking for a 1-year work-study contract (alternance) in DevOps / Cloud / SRE in Nice, Sophia Antipolis or Monaco.",
@@ -29,6 +33,7 @@ export const ROUTES = {
   home: { fr: "/", en: "/en/" },
   gts: { fr: "/projets/gaijintosensei/", en: "/en/projects/gaijintosensei/" },
   incident: { fr: "/projets/incident-base-de-donnees/", en: "/en/projects/database-incident/" },
+  agents: { fr: "/projets/agents-ia/", en: "/en/projects/ai-agents/" },
   infra: { fr: "/projets/infra-perso/", en: "/en/projects/personal-infra/" },
   systeme: { fr: "/projets/systeme/", en: "/en/projects/systems/" },
   deploy: { fr: "/comment-ce-site-est-deploye/", en: "/en/how-this-site-is-deployed/" },

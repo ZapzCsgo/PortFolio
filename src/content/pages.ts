@@ -21,6 +21,8 @@ export const HOME = {
     proof:
       "Je fais tourner seul une app en ligne avec de vrais utilisateurs : je la mets en production, je la surveille, et je l'ai remise en état le jour où sa base de données a été vidée par erreur.",
     proofLink: "Lire le postmortem",
+    also: "Je regarde aussi les stages en IA agentique : des agents écrivent déjà 479 des 724 commits de mon app.",
+    alsoLink: "Comment je les encadre",
     cardTitle: "À vérifier en un clic",
     card: [
       { k: "GaijinToSensei", v: "l'app en ligne, utilisateurs réels", href: "https://gajintosensei.com" },
@@ -76,6 +78,8 @@ export const HOME = {
     proof:
       "I run an app with real users on my own: I release it to production, I monitor it, and I brought it back the day its database was wiped by mistake.",
     proofLink: "Read the postmortem",
+    also: "I am also open to agentic AI internships: agents already wrote 479 of the 724 commits of my app.",
+    alsoLink: "How I keep them in check",
     cardTitle: "Check it in one click",
     card: [
       { k: "GaijinToSensei", v: "the live app, real users", href: "https://gajintosensei.com" },
@@ -155,6 +159,11 @@ export const SKILLS: Record<Lang, Skill[]> = {
       learning: ["contrôle de disponibilité de ce site"],
     },
     {
+      domain: "IA agentique",
+      prod: ["Claude Code, 3 agents en parallèle", "Hermes Agent sur VPS", "skills réutilisables"],
+      learning: ["LangGraph", "Pydantic", "évaluation sur jeu de cas"],
+    },
+    {
       domain: "Scripts et langages",
       prod: ["Bash", "TypeScript / Node.js", "Python"],
       learning: ["C (certification CodinGame)", "C++", "NASM"],
@@ -192,6 +201,11 @@ export const SKILLS: Record<Lang, Skill[]> = {
       learning: ["uptime check for this site"],
     },
     {
+      domain: "Agentic AI",
+      prod: ["Claude Code, 3 agents in parallel", "Hermes Agent on a VPS", "reusable skills"],
+      learning: ["LangGraph", "Pydantic", "evaluation on a test set"],
+    },
+    {
       domain: "Scripts and languages",
       prod: ["Bash", "TypeScript / Node.js", "Python"],
       learning: ["C (CodinGame certification)", "C++", "NASM"],
@@ -205,7 +219,7 @@ export const CASES = {
     {
       key: "gts" as const,
       title: "GaijinToSensei en production",
-      problem: "Plusieurs agents livrent en parallèle, avec un quota de déploiements par jour.",
+      problem: "3 agents livrent en parallèle (479 des 724 commits), avec un quota de déploiements par jour.",
       result: "Mise en prod contrôlée, retour arrière automatique, garde de prod toutes les 10 minutes.",
     },
     {
@@ -225,7 +239,7 @@ export const CASES = {
     {
       key: "gts" as const,
       title: "GaijinToSensei in production",
-      problem: "Several agents ship in parallel, under a daily deployment quota.",
+      problem: "3 agents ship in parallel (479 of the 724 commits), under a daily deployment quota.",
       result: "Checked releases, automatic rollback, a production guard every 10 minutes.",
     },
     {
@@ -245,10 +259,12 @@ export const CASES = {
 
 export const MORE = {
   fr: [
+    { key: "agents" as const, title: "Agents IA", text: "3 agents Claude Code sur mon app, et un système multi-agents LangGraph évalué sur 21 cas." },
     { key: "systeme" as const, title: "Système et projets 42", text: "Cloud-1, ft_strace, libasm, Docker et Vault, et deux apps Overwolf." },
     { key: "deploy" as const, title: "Comment ce site est déployé", text: "Push, CI, image Docker, déploiement et supervision." },
   ],
   en: [
+    { key: "agents" as const, title: "AI agents", text: "3 Claude Code agents on my app, and a LangGraph multi-agent system evaluated on 21 cases." },
     { key: "systeme" as const, title: "Systems and 42 projects", text: "Cloud-1, ft_strace, libasm, Docker and Vault, and two Overwolf apps." },
     { key: "deploy" as const, title: "How this site is deployed", text: "Push, CI, Docker image, deployment and monitoring." },
   ],
@@ -266,7 +282,7 @@ export const ABOUT = {
     ],
     japanTitle: "Japon",
     japan: [
-      "J'ai vécu au Japon de mars à octobre 2026 : un échange à 42 Tokyo, puis un PVT. De juin à octobre 2026, j'ai travaillé chez Keywords Studios à Tokyo comme testeur de localisation (LQA) sur des jeux du studio Konami : vérifier le français en jeu, reproduire les bugs techniques et les décrire avec précision pour les équipes de développement. Je veux travailler au Japon à moyen terme.",
+      "J'ai vécu au Japon de mars à octobre 2026, pour un échange à 42 Tokyo. De juin à octobre 2026, j'ai travaillé chez Keywords Studios à Tokyo comme testeur de localisation (LQA) sur des jeux du studio Konami : vérifier le français en jeu, reproduire les bugs techniques et les décrire avec précision pour les équipes de développement. Je veux travailler au Japon à moyen terme.",
     ],
     beforeTitle: "Avant 42",
     before: "Bac pro Commercialisation et services en restauration, puis des emplois en restauration rapide.",
@@ -275,7 +291,7 @@ export const ABOUT = {
       { date: "Janvier 2025", text: "Entrée à 42 Nice." },
       { date: "2025", text: "Tronc commun validé." },
       { date: "Juin 2025", text: "Certification C de CodinGame." },
-      { date: "Mars 2026", text: "Échange à 42 Tokyo, puis PVT au Japon." },
+      { date: "Mars 2026", text: "Échange à 42 Tokyo." },
       { date: "Juin à octobre 2026", text: "Testeur de localisation (LQA) chez Keywords Studios, à Tokyo, sur des jeux Konami." },
       { date: "Octobre 2026", text: "Retour à Nice." },
       { date: "En cours", text: "Cloud-1 à 42 et préparation de la certification AWS Cloud Practitioner." },
@@ -299,7 +315,7 @@ export const ABOUT = {
     ],
     japanTitle: "Japan",
     japan: [
-      "I lived in Japan from March to October 2026: an exchange at 42 Tokyo, then a working holiday visa. From June to October 2026, I worked at Keywords Studios in Tokyo as a localization QA tester (LQA) on games from the Konami studio: checking the French language in game, reproducing technical bugs and reporting them precisely to the development teams. I want to work in Japan in the medium term.",
+      "I lived in Japan from March to October 2026, for an exchange at 42 Tokyo. From June to October 2026, I worked at Keywords Studios in Tokyo as a localization QA tester (LQA) on games from the Konami studio: checking the French language in game, reproducing technical bugs and reporting them precisely to the development teams. I want to work in Japan in the medium term.",
     ],
     beforeTitle: "Before 42",
     before: "A vocational high school diploma in restaurant service, then jobs in fast food.",
@@ -308,7 +324,7 @@ export const ABOUT = {
       { date: "January 2025", text: "Joined 42 Nice." },
       { date: "2025", text: "Common core completed." },
       { date: "June 2025", text: "CodinGame C certification." },
-      { date: "March 2026", text: "Exchange at 42 Tokyo, then working holiday in Japan." },
+      { date: "March 2026", text: "Exchange at 42 Tokyo." },
       { date: "June to October 2026", text: "Localization QA tester (LQA) at Keywords Studios, Tokyo, on Konami games." },
       { date: "October 2026", text: "Back in Nice." },
       { date: "In progress", text: "Cloud-1 at 42 and preparing the AWS Cloud Practitioner certification." },

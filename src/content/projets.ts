@@ -1,6 +1,6 @@
 // Études de cas. Faits vérifiés dans le code, les journaux et l'historique git uniquement.
 // Le texte entre accents graves `ainsi` est rendu en <code>.
-import type { Lang } from "./site";
+import { SRA_PUBLIC, SRA_REPO, type Lang } from "./site";
 
 export interface CaseStudy {
   title: string;
@@ -74,7 +74,7 @@ export const GTS: Record<Lang, CaseStudy> = {
       "Les nouveautés partent groupées, ce qui tient dans le quota. Un déploiement qui échoue aux contrôles ne reste pas en ligne.",
     ],
     learned: [
-      "Les garde-fous comptent plus que la vitesse. Un agent rapide sans garde-fou finit par casser la prod.",
+      "Un agent rapide sans garde-fou a fini par casser ma prod. Je préfère une mise en prod un peu plus lente, mais vérifiée à chaque étape.",
       "Une étape de déploiement doit pouvoir être annulée sans moi.",
       "Une route de santé simple, appelée souvent, dit plus qu'un tableau de bord qu'on ne regarde pas.",
     ],
@@ -136,7 +136,7 @@ export const GTS: Record<Lang, CaseStudy> = {
       "New features ship in batches, which fits the quota. A deployment that fails the checks does not stay online.",
     ],
     learned: [
-      "Guardrails matter more than speed. A fast agent without guardrails ends up breaking production.",
+      "A fast agent without guardrails ended up breaking my production. I now prefer a slightly slower release that is checked at every step.",
       "Any deployment step must be reversible without me.",
       "A simple health route, called often, tells more than a dashboard nobody looks at.",
     ],
@@ -179,6 +179,7 @@ export const INFRA: Record<Lang, CaseStudy> = {
           "Le hub tourne sur mon PC. Il sort par un tunnel Cloudflare : aucun port entrant n'est ouvert.",
           "Devant, un proxy edge sur Vercel fait l'authentification : mot de passe haché (PBKDF2), comparaison à temps constant, cookie signé (HMAC), délai contre la force brute, en-têtes HSTS et anti-iframe, page hors index.",
           "L'adresse du tunnel est lue dans une configuration edge. Quand le tunnel change, il n'y a rien à redéployer. S'il est coupé, le proxy répond une erreur 503 propre.",
+          "Le 5 novembre 2026, le proxy a été coupé avec le compte gratuit Vercel, qui avait dépassé son quota. Le hub reste fermé tant que je n'ai pas migré le proxy sur Cloudflare.",
         ],
       },
       {
@@ -233,6 +234,7 @@ export const INFRA: Record<Lang, CaseStudy> = {
           "The hub runs on my PC. It goes out through a Cloudflare tunnel: no inbound port is open.",
           "In front of it, an edge proxy on Vercel handles authentication: hashed password (PBKDF2), constant-time comparison, signed cookie (HMAC), brute-force delay, HSTS and anti-framing headers, noindex.",
           "The tunnel address is read from an edge configuration store. When the tunnel changes, nothing needs to be redeployed. If it is down, the proxy returns a clean 503.",
+          "On 5 November 2026, the proxy went down with the free Vercel account, which had gone over its quota. The hub stays closed until I move the proxy to Cloudflare.",
         ],
       },
       {
@@ -253,3 +255,116 @@ export const INFRA: Record<Lang, CaseStudy> = {
     ],
   },
 };
+
+// Page « Agents IA » (cible secondaire : IA agentique). Chiffres GtS vérifiés par git (724 commits, 479 avec un
+// trailer Co-Authored-By Claude ; branches w1, w2, w3). Aucun pourcentage d'évaluation de steam-roblox-agents tant que
+// l'évaluation n'a pas été relancée avec de vrais modèles et une baseline.
+export const AGENTS: Record<Lang, CaseStudy> = {
+  fr: {
+    title: "Agents IA : les faire livrer sans leur confier la prod",
+    seoTitle: "Agents IA : chaîne d'agents Claude Code sur GaijinToSensei et système multi-agents LangGraph",
+    description:
+      "Comment je fais travailler des agents IA : 3 agents Claude Code en parallèle sur GaijinToSensei (479 des 724 commits), garde-fous ajoutés après un incident de prod, et steam-roblox-agents, un système multi-agents LangGraph avec un agent critique et une évaluation sur 21 cas.",
+    lead: "Des agents Claude Code écrivent la plupart du code de mon app. Moi, je décide de ce qu'ils ont le droit de faire, et je vérifie ce qu'ils livrent.",
+    stack: ["Claude Code", "LangGraph", "Python", "Pydantic", "Playwright", "Hermes Agent", "Bash", "Git"],
+    context: [
+      "Sur GaijinToSensei, 479 des 724 commits sont co-signés par un agent Claude Code (ligne `Co-Authored-By` dans l'historique git). Trois agents travaillent en même temps, chacun sur sa branche : `w1`, `w2`, `w3`.",
+      "Sur mon VPS, j'ai installé et je fais tourner Hermes Agent, un agent open source. Je ne l'ai pas écrit. Je l'ai configuré : il lance des sous-agents, gère 25 tâches planifiées, et quand il se trompe, je corrige la consigne (skill) qui l'a induit en erreur.",
+    ],
+    problem: [
+      "Un agent va vite et ne doute jamais. Le 29 octobre 2026, une migration lancée par un agent a visé la base de production au lieu d'une base jetable, et l'a vidée.",
+      "Il me faut donc deux choses : des limites que l'agent ne peut pas contourner, et un moyen de mesurer si ce qu'il produit est juste.",
+    ],
+    done: [
+      {
+        title: "Trois agents en parallèle sur GaijinToSensei",
+        items: [
+          "Chaque agent a sa branche. Des verrous évitent les conflits entre agents.",
+          "Avant une fusion, l'agent lance la QA automatisée avec Playwright. La branche principale n'avance qu'en avance rapide, jamais en force.",
+          "Les fusions partent ensemble dans un seul déploiement, par le script de mise en prod contrôlée (préversion, contrôles, retour arrière automatique).",
+        ],
+      },
+      {
+        title: "Des garde-fous dans le code, après l'incident",
+        items: [
+          "La base a été restaurée par point-in-time restore. J'ai écrit un postmortem sans reproche.",
+          "Les agents n'ont plus aucun droit destructif sur la prod. Le script de mise en prod refuse une migration qui contient DROP, RENAME, TRUNCATE ou ALTER COLUMN, et n'applique jamais de migration lui-même.",
+          "La règle est dans le script, pas dans une consigne : un agent peut ignorer une phrase de son prompt, pas un script qui refuse.",
+        ],
+      },
+      {
+        title: "steam-roblox-agents : un système multi-agents évalué",
+        items: [
+          "Un graphe LangGraph qui dit si un jeu Steam en tendance mérite une adaptation Roblox. Un agent collecte les données Steam, un autre cherche les clones déjà sur Roblox, un analyste note le jeu (sortie structurée Pydantic), et un agent critique renvoie la note à l'analyste quand elle ne tient pas, deux fois au plus.",
+          "Le score final est calculé par du code, pas par le modèle. Chaque décision garde ses sources (URL, outil, heure de lecture) dans un journal JSONL.",
+          "Une évaluation sur 21 cas passés mesure les verdicts. Les tests et la CI tournent hors ligne, avec un modèle scripté et des réponses enregistrées : aucun appel payant.",
+        ],
+      },
+    ],
+    result: [
+      "L'app est en production avec des utilisateurs réels, alors que la majorité de son code vient d'agents.",
+      "Depuis l'incident, une migration destructive est bloquée par le script avant d'atteindre la prod.",
+    ],
+    learned: [
+      "Signer chaque commit d'agent me permet de dire précisément ce que j'ai écrit et ce que j'ai fait écrire.",
+      "Sans jeu de cas, je ne sais pas si un agent s'améliore ou s'il change seulement d'avis.",
+      "Le plus long n'est pas de lancer un agent. C'est de vérifier ce qu'il a fait.",
+    ],
+  },
+  en: {
+    title: "AI agents: letting them ship without handing them production",
+    seoTitle: "AI agents: a Claude Code agent pipeline on GaijinToSensei and a LangGraph multi-agent system",
+    description:
+      "How I work with AI agents: 3 Claude Code agents in parallel on GaijinToSensei (479 of 724 commits), guardrails added after a production incident, and steam-roblox-agents, a LangGraph multi-agent system with a critic agent and an evaluation on 21 cases.",
+    lead: "Claude Code agents write most of the code of my app. I decide what they are allowed to do, and I check what they ship.",
+    stack: ["Claude Code", "LangGraph", "Python", "Pydantic", "Playwright", "Hermes Agent", "Bash", "Git"],
+    context: [
+      "On GaijinToSensei, 479 of the 724 commits are co-signed by a Claude Code agent (a `Co-Authored-By` line in the git history). Three agents work at the same time, each on its own branch: `w1`, `w2`, `w3`.",
+      "On my VPS, I installed and run Hermes Agent, an open source agent. I did not write it. I configured it: it starts sub-agents, runs 25 scheduled jobs, and when it gets something wrong, I fix the instruction (skill) that misled it.",
+    ],
+    problem: [
+      "An agent is fast and never doubts itself. On 29 October 2026, a migration started by an agent hit the production database instead of a throwaway one, and wiped it.",
+      "So I need two things: limits the agent cannot get around, and a way to measure whether what it produces is right.",
+    ],
+    done: [
+      {
+        title: "Three agents in parallel on GaijinToSensei",
+        items: [
+          "Each agent has its own branch. Locks prevent conflicts between agents.",
+          "Before a merge, the agent runs the automated Playwright QA. The main branch only moves by fast-forward, never by force.",
+          "Merges ship together in a single deployment, through the checked release script (preview, checks, automatic rollback).",
+        ],
+      },
+      {
+        title: "Guardrails in code, after the incident",
+        items: [
+          "The database was restored with point-in-time restore. I wrote a blameless postmortem.",
+          "Agents no longer have any destructive rights on production. The release script rejects a migration that contains DROP, RENAME, TRUNCATE or ALTER COLUMN, and never applies a migration itself.",
+          "The rule lives in the script, not in an instruction: an agent can ignore a line of its prompt, not a script that says no.",
+        ],
+      },
+      {
+        title: "steam-roblox-agents: an evaluated multi-agent system",
+        items: [
+          "A LangGraph graph that decides whether a trending Steam game is worth a Roblox adaptation. One agent collects Steam data, another looks for clones already on Roblox, an analyst scores the game (Pydantic structured output), and a critic agent sends the score back to the analyst when it does not hold up, at most twice.",
+          "The final score is computed by code, not by the model. Every decision keeps its sources (URL, tool, time of reading) in a JSONL log.",
+          "An evaluation on 21 past cases measures the verdicts. Tests and CI run offline, with a scripted model and recorded responses: no paid calls.",
+        ],
+      },
+    ],
+    result: [
+      "The app is in production with real users, while most of its code comes from agents.",
+      "Since the incident, a destructive migration is blocked by the script before it reaches production.",
+    ],
+    learned: [
+      "Signing every agent commit lets me say exactly what I wrote and what I had written for me.",
+      "Without a set of test cases, I cannot tell whether an agent got better or just changed its mind.",
+      "Starting an agent is the quick part. Checking what it did takes longer.",
+    ],
+  },
+};
+
+if (SRA_PUBLIC) {
+  AGENTS.fr.link = { href: SRA_REPO, label: "Code de steam-roblox-agents sur GitHub" };
+  AGENTS.en.link = { href: SRA_REPO, label: "steam-roblox-agents code on GitHub" };
+}

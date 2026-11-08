@@ -52,7 +52,6 @@ export const SYSTEME: Record<Lang, SystemPage> = {
             hrefLabel: "Code sur GitHub",
           },
           { name: "ft_ls", text: "Réécrire la commande ls en C." },
-          { name: "AntiDebug", text: "Un bac à sable de techniques anti-débogage pour Windows x86_64, en C++." },
         ],
       },
       {
@@ -66,7 +65,7 @@ export const SYSTEME: Record<Lang, SystemPage> = {
       },
       {
         title: "Apps Overwolf : MetaAOE et MetaDBD",
-        intro: "Deux apps pour Age of Empires II et Dead by Daylight. Je les cite pour leur livraison, pas pour leurs fonctionnalités.",
+        intro: "Deux apps pour Age of Empires (IV et II) et Dead by Daylight. Je les cite pour leur livraison, pas pour leurs fonctionnalités.",
         items: [
           {
             name: "MetaAOE",
@@ -118,7 +117,6 @@ export const SYSTEME: Record<Lang, SystemPage> = {
             hrefLabel: "Code on GitHub",
           },
           { name: "ft_ls", text: "Rewrite the ls command in C." },
-          { name: "AntiDebug", text: "A sandbox of anti-debugging techniques for Windows x86_64, in C++." },
         ],
       },
       {
@@ -132,7 +130,7 @@ export const SYSTEME: Record<Lang, SystemPage> = {
       },
       {
         title: "Overwolf apps: MetaAOE and MetaDBD",
-        intro: "Two apps for Age of Empires II and Dead by Daylight. I list them for how they ship, not for their features.",
+        intro: "Two apps for Age of Empires (IV and II) and Dead by Daylight. I list them for how they ship, not for their features.",
         items: [
           {
             name: "MetaAOE",
