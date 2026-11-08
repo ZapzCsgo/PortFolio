@@ -1,0 +1,136 @@
+---
+// Page Agents IA : chiffres clés, schémas animés sobrement, chronologie de l'incident. Texte en colonne de lecture,
+// schémas sur toute la largeur.
+import Base from "../layouts/Base.astro";
+import FlowDiagram from "../components/FlowDiagram.astro";
+import { ROUTES, UI, type Lang } from "../content/site";
+import { AGENTS } from "../content/projets";
+import { AGENTS_VISUALS } from "../content/agents";
+import { gtsChain, sraGraph } from "../content/diagrams";
+import { rich } from "../lib/build";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = AGENTS[lang];
+const v = AGENTS_VISUALS[lang];
+const t = UI[lang];
+const s = t.caseSections;
+const [chain, guard, sra] = d.done;
+const col = "max-w-2xl";
+const h2 = "text-2xl font-bold";
+const h3 = "text-xl font-bold";
+const list = "mt-4 list-disc space-y-2 pl-5 marker:text-accent";
+---
+
+<Base lang={lang} route="agents" title={d.seoTitle} description={d.description} ogType="article" wide>
+  <div class={col}>
+    <a href={ROUTES.home[lang]} class="text-[0.9375rem] text-muted hover:text-fg">{t.back}</a>
+    <h1 class="mt-4 text-3xl font-bold sm:text-4xl">{d.title}</h1>
+    <p class="mt-4 text-lg">{d.lead}</p>
+    {
+      d.link && (
+        <p class="mt-3">
+          <a class="prose-link font-semibold" href={d.link.href}>
+            {d.link.label}
+          </a>
+        </p>
+      )
+    }
+    <ul class="mt-6 flex flex-wrap gap-2" aria-label={t.stack}>
+      {d.stack.map((x) => <li class="rounded-md border border-line bg-card px-2.5 py-1 text-sm" translate="no">{x}</li>)}
+    </ul>
+  </div>
+
+  <dl class="mt-10 grid grid-cols-2 overflow-hidden rounded-xl border border-line bg-card md:grid-cols-4">
+    {
+      v.stats.map((x, i) => (
+        <div
+          class:list={[
+            "flex flex-col gap-1 border-line p-4 sm:p-5",
+            i % 2 === 1 && "border-l",
+            i >= 2 && "border-t md:border-t-0",
+            i === 2 && "md:border-l",
+          ]}
+        >
+          <dt class="order-2 text-sm leading-snug text-muted">{x.label}</dt>
+          <dd class="order-1 text-2xl font-bold tabular-nums sm:text-3xl">
+            {x.value}
+            {x.sub && <span class="text-lg font-semibold text-muted sm:text-xl"> {x.sub}</span>}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div class="mt-12 grid gap-10 md:grid-cols-2">
+    <section>
+      <h2 class={h2}>{s.context}</h2>
+      {d.context.map((p) => <p class="mt-3" set:html={rich(p)} />)}
+    </section>
+    <section>
+      <h2 class={h2}>{s.problem}</h2>
+      {d.problem.map((p) => <p class="mt-3" set:html={rich(p)} />)}
+    </section>
+  </div>
+
+  <h2 class:list={[h2, "mt-14"]}>{s.done}</h2>
+
+  <section class="mt-6">
+    <h3 class={h3}>{chain.title}</h3>
+    <FlowDiagram id="gts" label={v.chainLabel} diagram={gtsChain(lang)} />
+    <ul class:list={[list, col]}>{chain.items.map((i) => <li set:html={rich(i)} />)}</ul>
+  </section>
+
+  <section class="mt-12">
+    <h3 class={h3}>{guard.title}</h3>
+    <figure class="mt-6">
+      <figcaption class="text-sm font-semibold text-muted">{v.timelineLabel}</figcaption>
+      <ol class="mt-4 grid gap-4 md:grid-cols-5 md:gap-3">
+        {
+          v.timeline.map((e, i) => (
+            <li class="relative pl-7 md:pl-0 md:pt-7">
+              <span
+                class:list={[
+                  "absolute left-0 top-1.5 size-3.5 rounded-full border-2 md:top-0",
+                  e.bad ? "border-bad bg-bad" : "border-ok bg-ok-soft",
+                ]}
+                aria-hidden="true"
+              />
+              {i < v.timeline.length - 1 && (
+                <span
+                  class="absolute left-[6px] top-6 -bottom-3 w-0.5 bg-line md:-right-1.5 md:bottom-auto md:left-5 md:top-[6px] md:h-0.5 md:w-auto"
+                  aria-hidden="true"
+                />
+              )}
+              <p class:list={["text-sm font-semibold tabular-nums", e.bad ? "text-bad" : "text-ok"]}>{e.phase}</p>
+              <p class="font-semibold leading-snug">{e.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </figure>
+    <ul class:list={[list, col]}>{guard.items.map((i) => <li set:html={rich(i)} />)}</ul>
+    <p class="mt-4">
+      <a class="prose-link font-semibold" href={ROUTES.incident[lang]}>{v.postmortem}</a>
+    </p>
+  </section>
+
+  <section class="mt-12">
+    <h3 class={h3}>{sra.title}</h3>
+    <FlowDiagram id="sra" label={v.graphLabel} diagram={sraGraph(lang)} />
+    <ul class:list={[list, col]}>{sra.items.map((i) => <li set:html={rich(i)} />)}</ul>
+  </section>
+
+  <div class="mt-14 grid gap-10 md:grid-cols-2">
+    <section>
+      <h2 class={h2}>{s.result}</h2>
+      <ul class={list}>{d.result.map((p) => <li set:html={rich(p)} />)}</ul>
+    </section>
+    <section>
+      <h2 class={h2}>{s.learned}</h2>
+      <ul class={list}>{d.learned.map((p) => <li set:html={rich(p)} />)}</ul>
+    </section>
+  </div>
+</Base>

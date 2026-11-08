@@ -256,59 +256,59 @@ export const INFRA: Record<Lang, CaseStudy> = {
   },
 };
 
-// Page « Agents IA » (cible secondaire : IA agentique). Chiffres GtS vérifiés par git (724 commits, 479 avec un
-// trailer Co-Authored-By Claude ; branches w1, w2, w3). Aucun pourcentage d'évaluation de steam-roblox-agents tant que
-// l'évaluation n'a pas été relancée avec de vrais modèles et une baseline.
+// Page « Agents IA » (cible secondaire : IA agentique). Chiffres GtS vérifiés par git (724 commits sur la branche
+// principale, 479 avec un trailer Co-Authored-By Claude ; branches w1, w2, w3). steam-roblox-agents : 21 cas dans
+// eval/cases.yaml, max_revisions = 2. Aucun pourcentage d'évaluation tant que l'évaluation n'a pas été relancée avec de
+// vrais modèles et une baseline. Schémas, chiffres clés et chronologie : content/agents.ts et content/diagrams.ts.
 export const AGENTS: Record<Lang, CaseStudy> = {
   fr: {
     title: "Agents IA : les faire livrer sans leur confier la prod",
     seoTitle: "Agents IA : chaîne d'agents Claude Code sur GaijinToSensei et système multi-agents LangGraph",
     description:
       "Comment je fais travailler des agents IA : 3 agents Claude Code en parallèle sur GaijinToSensei (479 des 724 commits), garde-fous ajoutés après un incident de prod, et steam-roblox-agents, un système multi-agents LangGraph avec un agent critique et une évaluation sur 21 cas.",
-    lead: "Des agents Claude Code écrivent la plupart du code de mon app. Moi, je décide de ce qu'ils ont le droit de faire, et je vérifie ce qu'ils livrent.",
+    lead: "Des agents Claude Code écrivent la plupart du code de mon app. Je décide de ce qu'ils ont le droit de faire et je vérifie ce qu'ils livrent.",
     stack: ["Claude Code", "LangGraph", "Python", "Pydantic", "Playwright", "Hermes Agent", "Bash", "Git"],
     context: [
-      "Sur GaijinToSensei, 479 des 724 commits sont co-signés par un agent Claude Code (ligne `Co-Authored-By` dans l'historique git). Trois agents travaillent en même temps, chacun sur sa branche : `w1`, `w2`, `w3`.",
-      "Sur mon VPS, j'ai installé et je fais tourner Hermes Agent, un agent open source. Je ne l'ai pas écrit. Je l'ai configuré : il lance des sous-agents, gère 25 tâches planifiées, et quand il se trompe, je corrige la consigne (skill) qui l'a induit en erreur.",
+      "Sur GaijinToSensei, **479 des 724** commits portent la ligne `Co-Authored-By` d'un agent Claude Code.",
+      "Sur mon VPS, Hermes Agent (open source) lance des sous-agents et **25** tâches planifiées. Je l'ai **configuré, pas écrit**. S'il se trompe, je corrige la consigne (skill) en cause.",
     ],
     problem: [
-      "Un agent va vite et ne doute jamais. Le 29 octobre 2026, une migration lancée par un agent a visé la base de production au lieu d'une base jetable, et l'a vidée.",
-      "Il me faut donc deux choses : des limites que l'agent ne peut pas contourner, et un moyen de mesurer si ce qu'il produit est juste.",
+      "Un agent va vite et ne doute jamais. Le **29 octobre 2026**, une migration lancée par un agent a vidé la base de prod.",
+      "Il me faut des limites qu'il ne peut pas contourner, et une mesure de ce qu'il produit.",
     ],
     done: [
       {
         title: "Trois agents en parallèle sur GaijinToSensei",
         items: [
-          "Chaque agent a sa branche. Des verrous évitent les conflits entre agents.",
-          "Avant une fusion, l'agent lance la QA automatisée avec Playwright. La branche principale n'avance qu'en avance rapide, jamais en force.",
-          "Les fusions partent ensemble dans un seul déploiement, par le script de mise en prod contrôlée (préversion, contrôles, retour arrière automatique).",
+          "Chaque agent a sa branche (`w1`, `w2`, `w3`). Des verrous évitent les conflits.",
+          "La QA Playwright passe avant chaque fusion. Les fusions partent ensemble, en un seul déploiement.",
         ],
       },
       {
         title: "Des garde-fous dans le code, après l'incident",
         items: [
-          "La base a été restaurée par point-in-time restore. J'ai écrit un postmortem sans reproche.",
-          "Les agents n'ont plus aucun droit destructif sur la prod. Le script de mise en prod refuse une migration qui contient DROP, RENAME, TRUNCATE ou ALTER COLUMN, et n'applique jamais de migration lui-même.",
-          "La règle est dans le script, pas dans une consigne : un agent peut ignorer une phrase de son prompt, pas un script qui refuse.",
+          "Le script refuse toute migration avec DROP, RENAME, TRUNCATE ou ALTER COLUMN, et n'en applique jamais lui-même.",
+          "La règle est dans le script, pas dans le prompt : un agent peut ignorer une consigne, pas un script qui refuse.",
         ],
       },
       {
         title: "steam-roblox-agents : un système multi-agents évalué",
         items: [
-          "Un graphe LangGraph qui dit si un jeu Steam en tendance mérite une adaptation Roblox. Un agent collecte les données Steam, un autre cherche les clones déjà sur Roblox, un analyste note le jeu (sortie structurée Pydantic), et un agent critique renvoie la note à l'analyste quand elle ne tient pas, deux fois au plus.",
-          "Le score final est calculé par du code, pas par le modèle. Chaque décision garde ses sources (URL, outil, heure de lecture) dans un journal JSONL.",
-          "Une évaluation sur 21 cas passés mesure les verdicts. Les tests et la CI tournent hors ligne, avec un modèle scripté et des réponses enregistrées : aucun appel payant.",
+          "Un graphe LangGraph qui dit si un jeu Steam en tendance mérite une adaptation Roblox.",
+          "Le critique renvoie à l'analyste une note qui ne tient pas, **2 fois** au plus.",
+          "Le score final vient du code, pas du modèle. Chaque source (URL, outil, heure) est journalisée.",
+          "**21 cas** passés servent d'évaluation. Tests et CI tournent hors ligne, sans appel payant.",
         ],
       },
     ],
     result: [
-      "L'app est en production avec des utilisateurs réels, alors que la majorité de son code vient d'agents.",
-      "Depuis l'incident, une migration destructive est bloquée par le script avant d'atteindre la prod.",
+      "L'app tourne en prod avec de vrais utilisateurs, et la majorité de son code vient d'agents.",
+      "Depuis l'incident, une migration destructive s'arrête au script, avant la prod.",
     ],
     learned: [
-      "Signer chaque commit d'agent me permet de dire précisément ce que j'ai écrit et ce que j'ai fait écrire.",
-      "Sans jeu de cas, je ne sais pas si un agent s'améliore ou s'il change seulement d'avis.",
-      "Le plus long n'est pas de lancer un agent. C'est de vérifier ce qu'il a fait.",
+      "Signer chaque commit d'agent me dit précisément ce que j'ai écrit et ce que j'ai fait écrire.",
+      "Sans jeu de cas, je ne sais pas si un agent progresse ou change seulement d'avis.",
+      "Lancer un agent est rapide. Vérifier ce qu'il a fait prend plus longtemps.",
     ],
   },
   en: {
@@ -316,50 +316,49 @@ export const AGENTS: Record<Lang, CaseStudy> = {
     seoTitle: "AI agents: a Claude Code agent pipeline on GaijinToSensei and a LangGraph multi-agent system",
     description:
       "How I work with AI agents: 3 Claude Code agents in parallel on GaijinToSensei (479 of 724 commits), guardrails added after a production incident, and steam-roblox-agents, a LangGraph multi-agent system with a critic agent and an evaluation on 21 cases.",
-    lead: "Claude Code agents write most of the code of my app. I decide what they are allowed to do, and I check what they ship.",
+    lead: "Claude Code agents write most of the code of my app. I decide what they are allowed to do and I check what they ship.",
     stack: ["Claude Code", "LangGraph", "Python", "Pydantic", "Playwright", "Hermes Agent", "Bash", "Git"],
     context: [
-      "On GaijinToSensei, 479 of the 724 commits are co-signed by a Claude Code agent (a `Co-Authored-By` line in the git history). Three agents work at the same time, each on its own branch: `w1`, `w2`, `w3`.",
-      "On my VPS, I installed and run Hermes Agent, an open source agent. I did not write it. I configured it: it starts sub-agents, runs 25 scheduled jobs, and when it gets something wrong, I fix the instruction (skill) that misled it.",
+      "On GaijinToSensei, **479 of the 724** commits carry a Claude Code agent's `Co-Authored-By` line.",
+      "On my VPS, Hermes Agent (open source) starts sub-agents and runs **25** scheduled jobs. I **configured it, I did not write it**. When it gets something wrong, I fix the instruction (skill) behind it.",
     ],
     problem: [
-      "An agent is fast and never doubts itself. On 29 October 2026, a migration started by an agent hit the production database instead of a throwaway one, and wiped it.",
-      "So I need two things: limits the agent cannot get around, and a way to measure whether what it produces is right.",
+      "An agent is fast and never doubts itself. On **29 October 2026**, a migration started by an agent wiped the production database.",
+      "I need limits it cannot get around, and a way to measure what it produces.",
     ],
     done: [
       {
         title: "Three agents in parallel on GaijinToSensei",
         items: [
-          "Each agent has its own branch. Locks prevent conflicts between agents.",
-          "Before a merge, the agent runs the automated Playwright QA. The main branch only moves by fast-forward, never by force.",
-          "Merges ship together in a single deployment, through the checked release script (preview, checks, automatic rollback).",
+          "Each agent has its own branch (`w1`, `w2`, `w3`). Locks prevent conflicts.",
+          "Playwright QA runs before every merge. Merges ship together, in a single deployment.",
         ],
       },
       {
         title: "Guardrails in code, after the incident",
         items: [
-          "The database was restored with point-in-time restore. I wrote a blameless postmortem.",
-          "Agents no longer have any destructive rights on production. The release script rejects a migration that contains DROP, RENAME, TRUNCATE or ALTER COLUMN, and never applies a migration itself.",
-          "The rule lives in the script, not in an instruction: an agent can ignore a line of its prompt, not a script that says no.",
+          "The script rejects any migration with DROP, RENAME, TRUNCATE or ALTER COLUMN, and never applies one itself.",
+          "The rule lives in the script, not in the prompt: an agent can ignore an instruction, not a script that says no.",
         ],
       },
       {
         title: "steam-roblox-agents: an evaluated multi-agent system",
         items: [
-          "A LangGraph graph that decides whether a trending Steam game is worth a Roblox adaptation. One agent collects Steam data, another looks for clones already on Roblox, an analyst scores the game (Pydantic structured output), and a critic agent sends the score back to the analyst when it does not hold up, at most twice.",
-          "The final score is computed by code, not by the model. Every decision keeps its sources (URL, tool, time of reading) in a JSONL log.",
-          "An evaluation on 21 past cases measures the verdicts. Tests and CI run offline, with a scripted model and recorded responses: no paid calls.",
+          "A LangGraph graph that decides whether a trending Steam game is worth a Roblox adaptation.",
+          "The critic sends a score that does not hold up back to the analyst, **twice** at most.",
+          "Code computes the final score, not the model. Every source (URL, tool, time) is logged.",
+          "**21 past cases** make up the evaluation. Tests and CI run offline, with no paid calls.",
         ],
       },
     ],
     result: [
-      "The app is in production with real users, while most of its code comes from agents.",
-      "Since the incident, a destructive migration is blocked by the script before it reaches production.",
+      "The app is in production with real users, and most of its code comes from agents.",
+      "Since the incident, a destructive migration stops at the script, before production.",
     ],
     learned: [
-      "Signing every agent commit lets me say exactly what I wrote and what I had written for me.",
-      "Without a set of test cases, I cannot tell whether an agent got better or just changed its mind.",
-      "Starting an agent is the quick part. Checking what it did takes longer.",
+      "Signing every agent commit tells me exactly what I wrote and what I had written for me.",
+      "Without test cases, I cannot tell whether an agent got better or just changed its mind.",
+      "Starting an agent is quick. Checking what it did takes longer.",
     ],
   },
 };

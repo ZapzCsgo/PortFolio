@@ -1,0 +1,114 @@
+---
+// Schéma SVG inline, deux mises en page : horizontale (md et plus) et verticale (mobile).
+// Motion : petits points qui suivent les flèches (offset-path), en pause hors écran, absents en reduced motion.
+import type { Diagram, Layout, FlowBox } from "../content/diagrams";
+
+interface Props {
+  id: string;
+  label: string;
+  diagram: Diagram;
+}
+const { id, label, diagram } = Astro.props;
+
+function textLines(b: FlowBox, size: number) {
+  const titles = Array.isArray(b.title) ? b.title : [b.title];
+  const all = [...titles.map((s) => ({ s, bold: true })), ...(b.lines ?? []).map((s) => ({ s, bold: false }))];
+  const lh = size * 1.35;
+  const top = b.y + b.h / 2 - ((all.length - 1) * lh) / 2 + size * 0.35;
+  return all.map((l, i) => ({ ...l, y: top + i * lh }));
+}
+
+const fill = (b: FlowBox) =>
+  b.kind === "accent" ? "var(--accent-soft)" : b.kind === "bad" ? "var(--bad-soft)" : b.kind === "soft" ? "var(--inset)" : "var(--card)";
+const stroke = (b: FlowBox) => (b.kind === "accent" ? "var(--accent)" : b.kind === "bad" ? "var(--bad)" : "var(--line)");
+const lineColor = (k?: string) => (k === "bad" ? "var(--bad)" : k === "muted" ? "var(--muted)" : "var(--accent)");
+
+const layouts: { L: Layout; cls: string; mid: string }[] = [
+  { L: diagram.h, cls: "hidden md:block", mid: `${id}-h` },
+  { L: diagram.v, cls: "md:hidden", mid: `${id}-v` },
+];
+// Chaque point a une fenêtre [début, fin] en % de la période : @keyframes fd-<début>-<fin> dans global.css.
+---
+
+<figure class="flow-diagram mt-6" data-flow>
+  {
+    layouts.map(({ L, cls, mid }) => (
+      <svg viewBox={L.vb} class:list={["h-auto w-full", cls]} role="img" aria-label={label} font-family="inherit">
+        <defs>
+          {["accent", "bad", "muted"].map((k) => (
+            <marker id={`${mid}-${k}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill={lineColor(k)} />
+            </marker>
+          ))}
+        </defs>
+        {L.arrows.map((a) => (
+          <path
+            d={a.d}
+            fill="none"
+            stroke={lineColor(a.kind)}
+            stroke-width={a.kind === "muted" ? 1.25 : 2}
+            stroke-dasharray={a.dashed ? "5 5" : undefined}
+            marker-end={a.end === "none" ? undefined : `url(#${mid}-${a.kind ?? "accent"})`}
+          />
+        ))}
+        {L.boxes.map((b) => (
+          <g>
+            <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="10" fill={fill(b)} stroke={stroke(b)} stroke-width="1.5" stroke-dasharray={b.kind === "soft" ? "5 4" : undefined} />
+            {textLines(b, L.size).map((l) => (
+              <text
+                x={b.x + b.w / 2}
+                y={l.y}
+                text-anchor="middle"
+                font-size={l.bold ? L.size : L.size - 2}
+                font-weight={l.bold ? 700 : 500}
+                fill={l.bold ? (b.kind === "bad" ? "var(--bad)" : "var(--fg)") : "var(--muted)"}
+              >
+                {l.s}
+              </text>
+            ))}
+          </g>
+        ))}
+        {(L.blocks ?? []).map((p) => (
+          <g>
+            <circle cx={p.x} cy={p.y} r="10" fill="var(--card)" stroke="var(--bad)" stroke-width="2" />
+            <path d={`M${p.x - 4} ${p.y - 4} L${p.x + 4} ${p.y + 4} M${p.x + 4} ${p.y - 4} L${p.x - 4} ${p.y + 4}`} stroke="var(--bad)" stroke-width="2.25" stroke-linecap="round" />
+          </g>
+        ))}
+        {(L.labels ?? []).map((t) => (
+          <text
+            x={t.x}
+            y={t.y}
+            text-anchor={t.anchor ?? "middle"}
+            font-size={L.size - 2}
+            font-weight="700"
+            fill={t.kind === "bad" ? "var(--bad)" : t.kind === "accent" ? "var(--accent)" : "var(--muted)"}
+          >
+            {t.text}
+          </text>
+        ))}
+        {L.arrows.flatMap((a) =>
+          (a.dots ?? []).map(([s, e]) => (
+            <circle
+              class="flow-dot"
+              r="4.5"
+              fill={a.kind === "bad" ? "var(--bad)" : "var(--accent)"}
+              style={`offset-path:path('${a.d}');animation-name:fd-${s}-${e}`}
+            />
+          )),
+        )}
+      </svg>
+    ))
+  }
+  <slot />
+</figure>
+
+<script>
+  // Les points ne bougent que quand le schéma est à l'écran.
+  const figs = document.querySelectorAll<HTMLElement>("[data-flow]");
+  if ("IntersectionObserver" in window && matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) e.target.classList.toggle("is-on", e.isIntersecting);
+    });
+    figs.forEach((f) => io.observe(f));
+  }
+</script>

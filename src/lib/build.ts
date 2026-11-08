@@ -27,7 +27,9 @@ export function buildDate(lang: "fr" | "en"): string {
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-// Échappe le texte puis rend `ceci` en <code>.
+// Échappe le texte puis rend `ceci` en <code> et **ceci** en <strong>.
 export function rich(s: string): string {
-  return esc(s).replace(/`([^`]+)`/g, '<code translate="no">$1</code>');
+  return esc(s)
+    .replace(/`([^`]+)`/g, '<code translate="no">$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
 }
