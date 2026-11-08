@@ -16,7 +16,7 @@ export const CI_URL = `${REPO}/actions/workflows/ci.yml`;
 
 // Projet vitrine IA agentique. Passer à true quand le dépôt est public : le lien s'affiche alors sur la page Agents IA.
 export const SRA_REPO = "https://github.com/ZapzCsgo/steam-roblox-agents";
-export const SRA_PUBLIC = false;
+export const SRA_PUBLIC = true;
 
 export const ALTERNANCE: Record<Lang, string> = {
   fr: "Étudiant à 42 Nice, je cherche une alternance d'1 an en DevOps / Cloud / SRE à Nice, Sophia Antipolis ou Monaco.",

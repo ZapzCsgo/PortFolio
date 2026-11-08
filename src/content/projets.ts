@@ -258,8 +258,8 @@ export const INFRA: Record<Lang, CaseStudy> = {
 
 // Page « Agents IA » (cible secondaire : IA agentique). Chiffres GtS vérifiés par git (724 commits sur la branche
 // principale, 479 avec un trailer Co-Authored-By Claude ; branches w1, w2, w3). steam-roblox-agents : 21 cas dans
-// eval/cases.yaml, max_revisions = 2. Aucun pourcentage d'évaluation tant que l'évaluation n'a pas été relancée avec de
-// vrais modèles et une baseline. Schémas, chiffres clés et chronologie : content/agents.ts et content/diagrams.ts.
+// eval/cases.yaml, max_revisions = 2. Pourcentages d'évaluation donnés par Matteo (08/11/2026) : 61,9 % Sonnet 5.5,
+// 42,9 % GPT-6 Sol, 33,3 % règle naïve ; aucun autre pourcentage. Schémas, chiffres clés et chronologie : content/agents.ts et content/diagrams.ts.
 export const AGENTS: Record<Lang, CaseStudy> = {
   fr: {
     title: "Agents IA : les faire livrer sans leur confier la prod",
@@ -297,7 +297,8 @@ export const AGENTS: Record<Lang, CaseStudy> = {
           "Un graphe LangGraph qui dit si un jeu Steam en tendance mérite une adaptation Roblox.",
           "Le critique renvoie à l'analyste une note qui ne tient pas, **2 fois** au plus.",
           "Le score final vient du code, pas du modèle. Chaque source (URL, outil, heure) est journalisée.",
-          "**21 cas** passés servent d'évaluation. Tests et CI tournent hors ligne, sans appel payant.",
+          "Sur **21 cas** passés, verdict exact : **61,9 %** avec Claude Sonnet 5.5, **42,9 %** avec GPT-6 Sol, contre **33,3 %** pour une règle naïve (pic de joueurs Steam seul).",
+          "Les réponses des modèles sont enregistrées et rejouées en CI, sans appel payant. Ces 21 cas ont aussi servi à régler la grille : le chiffre reste indicatif.",
         ],
       },
     ],
@@ -347,7 +348,8 @@ export const AGENTS: Record<Lang, CaseStudy> = {
           "A LangGraph graph that decides whether a trending Steam game is worth a Roblox adaptation.",
           "The critic sends a score that does not hold up back to the analyst, **twice** at most.",
           "Code computes the final score, not the model. Every source (URL, tool, time) is logged.",
-          "**21 past cases** make up the evaluation. Tests and CI run offline, with no paid calls.",
+          "On **21 past cases**, exact verdict: **61.9%** with Claude Sonnet 5.5, **42.9%** with GPT-6 Sol, against **33.3%** for a naive rule (Steam player peak alone).",
+          "Model responses are recorded and replayed in CI, with no paid calls. The same 21 cases were also used to tune the grid, so the figure is only indicative.",
         ],
       },
     ],
