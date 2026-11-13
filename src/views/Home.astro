@@ -2,7 +2,8 @@
 import Base from "../layouts/Base.astro";
 import Contacts from "../components/Contacts.astro";
 import { CV_PDF, EMAIL, GITHUB, LINKEDIN, NAME, PHOTO, ROUTES, UI, type Lang } from "../content/site";
-import { CASES, HOME, MORE, SKILLS } from "../content/pages";
+import { FEATURED, HOME, MORE, PROJECTS, SKILLS } from "../content/pages";
+import { GTS } from "../content/projets";
 
 interface Props {
   lang: Lang;
@@ -10,15 +11,16 @@ interface Props {
 const { lang } = Astro.props;
 const h = HOME[lang];
 const t = UI[lang];
+const f = FEATURED[lang];
 const sep = lang === "fr" ? "\u00a0: " : ": ";
-const featured = CASES[lang].find((c) => c.key === "incident")!;
-const others = CASES[lang].filter((c) => c.key !== "incident");
-const gtsLive = h.card[0];
+const gtsLink = GTS[lang].link!;
 const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9375rem] font-medium text-muted hover:text-fg";
+const arrow = "M5 12h14M13 6l6 6-6 6";
+const ext = "M7 17 17 7M8 7h9v9";
 ---
 
 <Base lang={lang} route="home" title={h.seoTitle} description={h.description} wide>
-  <!-- Premier écran : le titre, puis la preuve, puis les actions. Le schéma à droite reste discret. -->
+  <!-- Premier écran : qui, quoi, stage de 6 mois, où, dispo, une preuve, puis les actions. -->
   <section aria-labelledby="titre" class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-center lg:gap-16">
     <div>
       <div class="flex items-center gap-3">
@@ -37,7 +39,10 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
         }
         <p class="text-[0.9375rem] font-medium text-muted"><span class="font-semibold text-fg">{NAME}</span>{h.kicker.slice(NAME.length)}</p>
       </div>
-      <h1 id="titre" class="mt-4 max-w-[17ch] text-[2.375rem] font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-[3.5rem]">{h.headline}</h1>
+      <h1 id="titre" class="mt-4 max-w-[17ch] text-balance text-[2.375rem] font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-[3.5rem]">
+        {h.headline}
+        <span class="mt-2 block text-[1.625rem] leading-tight tracking-[-0.02em] font-bold sm:text-[2.25rem]">{h.seeking}</span>
+      </h1>
       <dl class="mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-[0.9375rem]">
         {
           h.facts.map((f) => (
@@ -50,7 +55,7 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
       </dl>
       <p class="mt-6 max-w-[56ch] text-[1.0625rem] leading-relaxed sm:text-lg">
         {h.proof}
-        <a href={ROUTES.incident[lang]} class="ml-1 font-semibold text-accent underline underline-offset-4 hover:decoration-2">{h.proofLink}</a>
+        <a href={ROUTES.gts[lang]} class="ml-1 font-semibold text-accent underline underline-offset-4 hover:decoration-2">{h.proofLink}</a>
       </p>
       <p class="mt-3 max-w-[56ch] text-[0.9375rem] leading-relaxed text-muted">
         {h.also}
@@ -59,12 +64,12 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
       <div class="mt-8 grid grid-cols-[1fr_auto] gap-3 sm:flex sm:flex-wrap sm:items-center">
         <a
           href="#projets"
-          class="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-accent px-5 text-base sm:px-6 font-bold text-white hover:brightness-110 dark:text-black"
+          class="inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-accent px-4 text-[0.9375rem] font-bold text-white hover:brightness-110 sm:px-6 sm:text-base dark:text-black"
         >
           {h.ctaProjects}
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
         </a>
-        <a href={CV_PDF[lang]} class="inline-flex min-h-12 items-center gap-2 rounded-lg border border-line bg-card px-5 text-base font-semibold hover:border-accent">
+        <a href={CV_PDF[lang]} class="inline-flex min-h-12 items-center gap-2 whitespace-nowrap rounded-lg border border-line bg-card px-4 text-[0.9375rem] font-semibold hover:border-accent sm:px-5 sm:text-base">
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"
             ><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M12 12v6M9 15l3 3 3-3"></path></svg
           >
@@ -113,8 +118,8 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
           </a>
         </li>
         <li>
-          <a href={gtsLive.href} class="inline-block py-1 text-muted underline-offset-4 hover:text-fg hover:underline">
-            {gtsLive.k}, {gtsLive.v}
+          <a href={gtsLink.href} class="inline-block py-1 text-muted underline-offset-4 hover:text-fg hover:underline">
+            GaijinToSensei, {h.liveLabel}
             <svg class="ml-0.5 inline size-3.5 align-[-2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
           </a>
         </li>
@@ -125,57 +130,58 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
   <section id="projets" aria-labelledby="t-cas" class="mt-24 sm:mt-28">
     <h2 id="t-cas" class="text-[1.75rem] font-bold sm:text-4xl">{h.casesTitle}</h2>
 
-    <article class="card-link mt-8 grid gap-8 rounded-2xl border border-line bg-card p-6 sm:p-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+    <article class="card-link mt-8 grid gap-8 rounded-2xl border border-line bg-card p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       <div class="flex flex-col">
         <h3 class="text-2xl font-bold leading-tight sm:text-[1.875rem]">
-          <a href={ROUTES.incident[lang]} class="stretch">{featured.title}</a>
+          <a href={ROUTES.gts[lang]} class="stretch">{f.title}</a>
         </h3>
-        <p class="mt-4 text-muted">{featured.problem}</p>
-        <p class="mt-5 flex gap-3 rounded-lg bg-ok-soft px-4 py-3 font-semibold leading-snug">
-          <svg class="mt-0.5 size-5 shrink-0 text-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m5 12 5 5L20 7"></path></svg>
-          <span><span class="sr-only">{t.caseSections.result}{sep}</span>{featured.result}</span>
-        </p>
-        <span class="mt-auto flex items-center gap-3 pt-6 font-semibold text-accent" aria-hidden="true">
-          {h.proofLink}
-          <span class="go grid size-9 place-items-center rounded-full border border-accent">
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-          </span>
-        </span>
-      </div>
-      <figure class="rounded-xl bg-inset p-5 sm:p-6">
-        <figcaption class="text-sm font-semibold text-muted">{h.timelineLabel}</figcaption>
-        <ol class="mt-4">
+        <p class="mt-3 text-muted">{h.featuredLead}</p>
+        <dl class="mt-5 space-y-3">
           {
-            h.timeline.map((e, i) => (
-              <li class="grid grid-cols-[4.25rem_14px_minmax(0,1fr)] gap-x-3 pb-3.5 last:pb-0">
-                <span class="text-sm font-semibold leading-6 text-muted tabular-nums">{e.t}</span>
-                <span class="relative flex justify-center" aria-hidden="true">
-                  {i < h.timeline.length - 1 && <span class="absolute top-4 -bottom-3.5 w-px bg-line" />}
-                  <span
-                    class:list={[
-                      "relative mt-[0.375rem] size-3 rounded-full border-2",
-                      e.s === "bad" ? "border-bad bg-bad" : e.s === "ok" ? "border-ok bg-ok" : "border-muted bg-inset",
-                    ]}
-                  />
-                </span>
-                <span class:list={["text-[0.9375rem] leading-6", e.s === "bad" && "font-semibold text-bad", e.s === "ok" && "font-semibold"]}>{e.v}</span>
-              </li>
+            f.facets.map((x) => (
+              <div class="grid grid-cols-[4.5rem_minmax(0,1fr)] items-baseline gap-3">
+                <dt class="rounded-md bg-inset px-2 py-0.5 text-center text-sm font-bold">{x.k}</dt>
+                <dd class="text-[0.9375rem] leading-snug">{x.v}</dd>
+              </div>
             ))
           }
-        </ol>
-      </figure>
+        </dl>
+        <div class="mt-auto flex flex-wrap items-center justify-between gap-4 pt-6">
+          <span class="flex items-center gap-3 font-semibold text-accent" aria-hidden="true">
+            {t.readCase}
+            <span class="go grid size-9 place-items-center rounded-full border border-accent">
+              <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d={arrow}></path></svg>
+            </span>
+          </span>
+          <a href={gtsLink.href} class="relative z-10 inline-flex min-h-11 items-center gap-1 text-[0.9375rem] font-medium text-muted underline underline-offset-4 hover:text-fg">
+            {gtsLink.label}
+            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d={ext}></path></svg>
+          </a>
+        </div>
+      </div>
+      <img
+        src="/img/gts-560.webp"
+        srcset="/img/gts-560.webp 560w, /img/gts-1120.webp 1120w"
+        sizes="(min-width: 1024px) 480px, 100vw"
+        alt={h.gtsShotAlt}
+        width="560"
+        height="350"
+        loading="lazy"
+        decoding="async"
+        class="aspect-[16/10] w-full self-center rounded-xl border border-line object-cover object-left-top"
+      />
     </article>
 
     <ul class="mt-6 grid gap-6 md:grid-cols-2">
       {
-        others.map((c) => (
+        PROJECTS[lang].map((c) => (
           <li class="card-link flex flex-col rounded-2xl border border-line bg-card p-6">
-            {c.key === "gts" ? (
+            {c.img ? (
               <img
-                src="/img/gts-560.webp"
-                srcset="/img/gts-560.webp 560w, /img/gts-1120.webp 1120w"
+                src={`/img/${c.img}-560.webp`}
+                srcset={`/img/${c.img}-560.webp 560w, /img/${c.img}-1120.webp 1120w`}
                 sizes="(min-width: 768px) 460px, 100vw"
-                alt={h.gtsShotAlt}
+                alt={h.metaaoeShotAlt}
                 width="560"
                 height="350"
                 loading="lazy"
@@ -185,11 +191,11 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
             ) : (
               <div class="grid aspect-[16/9] w-full content-center rounded-lg bg-inset px-3 sm:px-4" aria-hidden="true">
                 <div class="flex items-center justify-between gap-1.5 sm:gap-2">
-                  {h.infraSteps.map((s, i) => (
+                  {c.steps!.map((s, i) => (
                     <>
                       {i > 0 && (
                         <svg class="size-4 shrink-0 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M5 12h14M13 6l6 6-6 6" />
+                          <path d={arrow} />
                         </svg>
                       )}
                       <span class="min-w-0 flex-1 rounded-lg border border-line bg-card px-1.5 py-3 text-center leading-tight">
@@ -201,18 +207,19 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
                 </div>
               </div>
             )}
-            <h3 class="mt-5 text-xl font-bold leading-snug">
-              <a href={ROUTES[c.key][lang]} class="stretch">{c.title}</a>
+            <p class="mt-5 text-xs font-bold uppercase tracking-wider text-muted">{c.tags}</p>
+            <h3 class="mt-1 text-xl font-bold leading-snug">
+              <a href={c.href} class="stretch">{c.title}</a>
             </h3>
-            <p class="mt-2 text-[0.9375rem] text-muted">{c.problem}</p>
+            <p class="mt-2 text-[0.9375rem] text-muted">{c.text}</p>
             <p class="mt-4 flex gap-2.5 text-[0.9375rem] font-semibold leading-snug">
               <svg class="mt-0.5 size-[1.125rem] shrink-0 text-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m5 12 5 5L20 7"></path></svg>
               <span><span class="sr-only">{t.caseSections.result}{sep}</span>{c.result}</span>
             </p>
             <span class="mt-auto flex items-center justify-between pt-5 text-[0.9375rem] font-semibold text-accent" aria-hidden="true">
-              {t.readCase}
+              {c.external ? h.liveSite : t.readCase}
               <span class="go grid size-8 place-items-center rounded-full border border-accent">
-                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d={c.external ? ext : arrow}></path></svg>
               </span>
             </span>
           </li>
@@ -229,7 +236,7 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
         <span class="inline-flex items-center gap-2"><span class="size-2.5 rounded-full border-[1.5px] border-dashed border-muted" aria-hidden="true"></span>{h.skillsCols.learning}</span>
       </p>
     </div>
-    <div class="mt-8 grid gap-x-10 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-8 grid gap-x-10 gap-y-9 md:grid-cols-2">
       {
         SKILLS[lang].map((s) => (
           <div class="border-t border-line pt-4">
@@ -261,7 +268,7 @@ const quiet = "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-[0.9
 
   <section aria-labelledby="t-aussi" class="mt-24 sm:mt-28">
     <h2 id="t-aussi" class="text-xl font-bold">{h.moreTitle}</h2>
-    <ul class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <ul class="mt-4 grid gap-4 md:grid-cols-2">
       {
         MORE[lang].map((m) => (
           <li class="card-link flex items-start gap-4 rounded-xl border border-line p-5">

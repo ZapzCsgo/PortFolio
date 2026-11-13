@@ -8,7 +8,7 @@ const OUT = process.argv[2] || "captures";
 const PORT = 4398;
 const PAGES = {
   accueil: "/",
-  postmortem: "/projets/incident-base-de-donnees/",
+  agents: "/projets/agents-ia/",
   deploiement: "/comment-ce-site-est-deploye/",
   gts: "/projets/gaijintosensei/",
   infra: "/projets/infra-perso/",

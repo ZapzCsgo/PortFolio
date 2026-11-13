@@ -1,122 +1,95 @@
 // Textes de l'accueil, de la page À propos et de la page de déploiement.
+// Positionnement (13/11/2026) : développeur IA, web et DevOps, stage de 6 mois, Nice / Côte d'Azur ou télétravail.
 import type { Lang } from "./site";
 
 export const CODINGAME_URL = "https://www.codingame.com/certification/0TQ0d16-UFHPrM7xRGxGDw";
 
 export const HOME = {
   fr: {
-    seoTitle: "Matteo Murru, alternance DevOps / Cloud / SRE à Nice",
+    seoTitle: "Matteo Murru, développeur IA, web et DevOps : stage de 6 mois à Nice ou en télétravail",
     description:
-      "Étudiant à 42 Nice, je cherche une alternance DevOps / Cloud / SRE à Nice. Je mets en production, j'automatise, je surveille et je répare une app avec des utilisateurs réels.",
-    pitch:
-      "Je fais tourner une app en production avec des utilisateurs réels. Je l'automatise, je la surveille, et je l'ai déjà réparée après un incident de base de données.",
+      "Étudiant à 42 Nice, je cherche un stage de 6 mois en IA, web ou DevOps, à Nice / Côte d'Azur ou en télétravail, dès début décembre 2026. Je construis et fais tourner de vrais produits avec des agents IA.",
     photoAlt: "Photo de Matteo Murru",
     kicker: "Matteo Murru, étudiant à 42 Nice",
-    headline: "Je cherche une alternance DevOps\u00a0/ Cloud\u00a0/ SRE d'1\u00a0an.",
+    headline: "Développeur IA, web et\u00a0DevOps.",
+    seeking: "Je cherche un\u00a0stage de 6\u00a0mois.",
     facts: [
-      { k: "Où", v: "Nice, Sophia Antipolis ou Monaco" },
-      { k: "École", v: "42 Nice, vers le titre RNCP niveau 7" },
+      { k: "Où", v: "Nice / Côte d'Azur ou télétravail" },
+      { k: "Dispo", v: "début décembre 2026" },
+      { k: "École", v: "42 Nice, titre RNCP niveau\u00a07 en cours" },
       { k: "Langues", v: "anglais professionnel, japonais JLPT\u00a0N5" },
     ],
     proof:
-      "Je fais tourner seul une app en ligne avec de vrais utilisateurs : je la mets en production, je la surveille, et je l'ai remise en état le jour où sa base de données a été vidée par erreur.",
-    proofLink: "Lire le postmortem",
-    also: "Je regarde aussi les stages en IA agentique : des agents écrivent déjà 479 des 724 commits de mon app.",
-    alsoLink: "Comment je les encadre",
-    cardTitle: "À vérifier en un clic",
-    card: [
-      { k: "GaijinToSensei", v: "l'app en ligne, utilisateurs réels", href: "https://gajintosensei.com" },
-      { k: "Incident du 29 octobre 2026", v: "base restaurée, ce qui a changé ensuite", route: "incident" },
-      { k: "Ce site", v: "vérifié, mis en ligne par script, surveillé", route: "deploy" },
-    ],
+      "Je construis de vrais produits avec des agents IA, de l'idée à la prod. Mon app GaijinToSensei est en ligne avec des utilisateurs réels, en 3\u00a0langues : 3 agents Claude Code y ont écrit 479 des 724\u00a0commits.",
+    proofLink: "Voir le projet",
+    also: "Rien ne part en prod sans tests par branche, préversion contrôlée et retour arrière automatique.",
+    alsoLink: "Mes garde-fous",
     ctaProjects: "Voir mes projets",
-    statusTitle: "zapz.work en ligne",
+    statusTitle: "Comment je livre",
     pipeline: [
-      { k: "git push", v: "branche main" },
-      { k: "CI", v: "lint, build, tests, Lighthouse" },
-      { k: "Production", v: "Cloudflare Workers, tests relancés" },
-      { k: "Supervision", v: "toutes les 15 min" },
+      { k: "Idée", v: "découpée en tâches" },
+      { k: "Agents", v: "Claude Code, une branche chacun" },
+      { k: "Tests", v: "Playwright avant chaque fusion" },
+      { k: "Préversion", v: "contrôles avant le trafic" },
+      { k: "Prod", v: "retour arrière automatique" },
     ],
-    pipelineLabel: "Chemin d'un commit jusqu'à la prod",
-    timelineLabel: "Chronologie de l'incident, heures UTC",
-    timeline: [
-      { t: "03:54", v: "base de prod vidée", s: "bad" },
-      { t: "03:55", v: "agent arrêté, chaîne en pause", s: "" },
-      { t: "Ensuite", v: "restauration PITR", s: "ok" },
-      { t: "05:13", v: "correctif des pages", s: "" },
-      { t: "11:10", v: "fonctionnalité remise en ligne", s: "ok" },
-    ],
+    pipelineLabel: "Chemin d'une idée jusqu'à la prod",
+    liveLabel: "en ligne",
     gtsShotAlt: "Page d'accueil de gajintosensei.com",
-    infraSteps: [
-      { k: "VPS", v: "systemd, cron" },
-      { k: "Tunnel", v: "aucun port ouvert" },
-      { k: "5 sites", v: "publiés seuls" },
-    ],
+    metaaoeShotAlt: "Accueil de l'app MetaAOE : profil, Elo, dernières parties classées",
+    featuredLead: "App web pour apprendre le japonais. En production avec des utilisateurs réels, en français, anglais et japonais.",
+    facetsLabel: "Ce que montre le projet",
     skillsTitle: "Compétences",
-    skillsCols: { domain: "Domaine", prod: "Utilisé en prod", learning: "En apprentissage" },
+    skillsCols: { domain: "Domaine", prod: "Pratiqué sur mes projets", learning: "En apprentissage" },
     none: "Pas encore en prod",
-    casesTitle: "Ce que j'ai mis en production",
-    moreTitle: "Aussi",
-    contactTitle: "Contact",
-    contactTitle2: "Vous recrutez un alternant DevOps, Cloud ou SRE ?",
-    contactText: "Écrivez-moi, pour un entretien comme pour une question sur l'alternance. Le CV tient sur une page.",
+    casesTitle: "Ce que je construis",
+    moreTitle: "Pour aller plus loin",
+    liveSite: "Ouvrir le site",
+    contactTitle2: "Vous cherchez un stagiaire en IA, web ou DevOps ?",
+    contactText: "Stage de 6 mois, à Nice / Côte d'Azur ou en télétravail, dès début décembre 2026. Le CV tient sur une page.",
   },
   en: {
-    seoTitle: "Matteo Murru, DevOps / Cloud / SRE work-study in Nice",
+    seoTitle: "Matteo Murru, AI, web and DevOps developer: 6-month internship in Nice or remote",
     description:
-      "42 Nice student looking for a DevOps / Cloud / SRE work-study contract in Nice. I ship, automate, monitor and fix an app with real users.",
-    pitch:
-      "I run an app in production with real users. I automate it, I monitor it, and I have already fixed it after a database incident.",
+      "42 Nice student looking for a 6-month internship in AI, web or DevOps, in Nice / the French Riviera or remote, from early December 2026. I build and run real products with AI agents.",
     photoAlt: "Photo of Matteo Murru",
     kicker: "Matteo Murru, student at 42 Nice",
-    headline: "I am looking for a 1-year DevOps\u00a0/ Cloud\u00a0/ SRE work\u2011study contract.",
+    headline: "AI, web and DevOps\u00a0developer.",
+    seeking: "Looking for a\u00a06\u2011month internship.",
     facts: [
-      { k: "Where", v: "Nice, Sophia Antipolis or Monaco" },
-      { k: "School", v: "42 Nice, towards an RNCP level 7 degree" },
+      { k: "Where", v: "Nice / French Riviera or remote" },
+      { k: "Available", v: "early December 2026" },
+      { k: "School", v: "42 Nice, RNCP level\u00a07 degree in progress" },
       { k: "Languages", v: "professional English, Japanese JLPT\u00a0N5" },
     ],
     proof:
-      "I run an app with real users on my own: I release it to production, I monitor it, and I brought it back the day its database was wiped by mistake.",
-    proofLink: "Read the postmortem",
-    also: "I am also open to agentic AI internships: agents already wrote 479 of the 724 commits of my app.",
-    alsoLink: "How I keep them in check",
-    cardTitle: "Check it in one click",
-    card: [
-      { k: "GaijinToSensei", v: "the live app, real users", href: "https://gajintosensei.com" },
-      { k: "Incident on 29 October 2026", v: "database restored, what changed next", route: "incident" },
-      { k: "This site", v: "checked, released by script, monitored", route: "deploy" },
-    ],
+      "I build real products with AI agents, from the idea to production. My app GaijinToSensei is live with real users, in 3 languages: 3 Claude Code agents wrote 479 of its 724 commits.",
+    proofLink: "See the project",
+    also: "Nothing reaches production without per-branch tests, a checked preview and automatic rollback.",
+    alsoLink: "My guardrails",
     ctaProjects: "See my projects",
-    statusTitle: "zapz.work is live",
+    statusTitle: "How I ship",
     pipeline: [
-      { k: "git push", v: "main branch" },
-      { k: "CI", v: "lint, build, tests, Lighthouse" },
-      { k: "Production", v: "Cloudflare Workers, tests run again" },
-      { k: "Monitoring", v: "every 15 min" },
+      { k: "Idea", v: "split into tasks" },
+      { k: "Agents", v: "Claude Code, one branch each" },
+      { k: "Tests", v: "Playwright before every merge" },
+      { k: "Preview", v: "checks before any traffic" },
+      { k: "Production", v: "automatic rollback" },
     ],
-    pipelineLabel: "Path from a commit to production",
-    timelineLabel: "Incident timeline, UTC times",
-    timeline: [
-      { t: "03:54", v: "production database wiped", s: "bad" },
-      { t: "03:55", v: "agent stopped, pipeline paused", s: "" },
-      { t: "Then", v: "PITR restore", s: "ok" },
-      { t: "05:13", v: "app page fix", s: "" },
-      { t: "11:10", v: "feature released again", s: "ok" },
-    ],
+    pipelineLabel: "Path from an idea to production",
+    liveLabel: "live",
     gtsShotAlt: "Home page of gajintosensei.com",
-    infraSteps: [
-      { k: "VPS", v: "systemd, cron" },
-      { k: "Tunnel", v: "no open port" },
-      { k: "5 sites", v: "publish themselves" },
-    ],
+    metaaoeShotAlt: "MetaAOE app home: profile, Elo, latest ranked games",
+    featuredLead: "A web app to learn Japanese. In production with real users, in French, English and Japanese.",
+    facetsLabel: "What the project shows",
     skillsTitle: "Skills",
-    skillsCols: { domain: "Area", prod: "Used in production", learning: "Learning" },
+    skillsCols: { domain: "Area", prod: "Used in my projects", learning: "Learning" },
     none: "Not in production yet",
-    casesTitle: "What I run in production",
-    moreTitle: "Also",
-    contactTitle: "Contact",
-    contactTitle2: "Hiring a DevOps, Cloud or SRE work-study student?",
-    contactText: "Email me, for an interview or a question about the contract. The resume fits on one page.",
+    casesTitle: "What I build",
+    moreTitle: "Go further",
+    liveSite: "Open the site",
+    contactTitle2: "Looking for an AI, web or DevOps intern?",
+    contactText: "6-month internship, in Nice / the French Riviera or remote, from early December 2026. The resume fits on one page.",
   },
 } as const;
 
@@ -129,144 +102,191 @@ export interface Skill {
 export const SKILLS: Record<Lang, Skill[]> = {
   fr: [
     {
-      domain: "Linux et système",
-      prod: ["VPS Linux", "systemd", "cron", "utilisateurs et droits", "verrous de fichiers"],
-      learning: ["appels système", "format ELF", "assembleur x86-64"],
-    },
-    {
-      domain: "Conteneurs",
-      prod: [],
-      learning: ["Docker", "Docker compose", "HashiCorp Vault", "image de ce site sur GHCR"],
-    },
-    {
-      domain: "CI/CD",
-      prod: ["déploiement contrôlé avec retour arrière", "wrangler (Workers, Pages)", "Vercel CLI", "Git"],
-      learning: ["GitHub Actions", "Lighthouse CI"],
-    },
-    {
-      domain: "Cloud",
-      prod: ["Cloudflare (Workers, Pages, Tunnel)", "Vercel (dont edge)", "Neon", "Upstash"],
-      learning: ["AWS (Cloud Practitioner en cours)", "Ansible"],
-    },
-    {
-      domain: "Bases de données",
-      prod: ["PostgreSQL", "Prisma", "migrations additives", "restauration PITR", "Redis"],
-      learning: [],
-    },
-    {
-      domain: "Supervision",
-      prod: ["route de santé", "erreurs serveur en base", "garde de prod planifiée", "alertes"],
-      learning: ["contrôle de disponibilité de ce site"],
-    },
-    {
-      domain: "IA agentique",
-      prod: ["Claude Code, 3 agents en parallèle", "Hermes Agent sur VPS", "skills réutilisables"],
+      domain: "IA et agents",
+      prod: ["Claude Code, 3 agents en parallèle", "skills d'agents", "MCP", "Codex, OpenCode, Gemini CLI", "Hermes Agent sur VPS", "modèles Claude et GPT"],
       learning: ["LangGraph", "Pydantic", "évaluation sur jeu de cas"],
     },
     {
-      domain: "Scripts et langages",
-      prod: ["Bash", "TypeScript / Node.js", "Python"],
-      learning: ["C (certification CodinGame)", "C++", "NASM"],
+      domain: "Web et produit",
+      prod: ["TypeScript", "Next.js", "React", "Node.js", "PostgreSQL", "Prisma", "Redis", "comptes OIDC", "Astro", "sites en 3 langues", "SEO technique"],
+      learning: ["roblox-ts", "Rojo"],
+    },
+    {
+      domain: "DevOps et prod",
+      prod: ["Linux (VPS, systemd, cron)", "Bash", "Git", "Cloudflare (Workers, Pages, Tunnel)", "Vercel", "déploiement avec retour arrière", "supervision et alertes", "restauration PITR"],
+      learning: ["Docker", "Docker compose", "Ansible", "GitHub Actions", "AWS (Cloud Practitioner en cours)", "HashiCorp Vault"],
+    },
+    {
+      domain: "Qualité",
+      prod: ["Playwright avant fusion", "tests par branche", "préversion contrôlée", "migrations additives", "route de santé"],
+      learning: ["pytest", "Lighthouse CI", "C, C++, assembleur x86-64 (42)"],
     },
   ],
   en: [
     {
-      domain: "Linux and systems",
-      prod: ["Linux VPS", "systemd", "cron", "users and permissions", "file locks"],
-      learning: ["system calls", "ELF format", "x86-64 assembly"],
-    },
-    {
-      domain: "Containers",
-      prod: [],
-      learning: ["Docker", "Docker compose", "HashiCorp Vault", "this site's image on GHCR"],
-    },
-    {
-      domain: "CI/CD",
-      prod: ["checked deploys with rollback", "wrangler (Workers, Pages)", "Vercel CLI", "Git"],
-      learning: ["GitHub Actions", "Lighthouse CI"],
-    },
-    {
-      domain: "Cloud",
-      prod: ["Cloudflare (Workers, Pages, Tunnel)", "Vercel (including edge)", "Neon", "Upstash"],
-      learning: ["AWS (Cloud Practitioner in progress)", "Ansible"],
-    },
-    {
-      domain: "Databases",
-      prod: ["PostgreSQL", "Prisma", "additive migrations", "PITR restore", "Redis"],
-      learning: [],
-    },
-    {
-      domain: "Monitoring",
-      prod: ["health route", "server errors stored in the database", "scheduled production guard", "alerts"],
-      learning: ["uptime check for this site"],
-    },
-    {
-      domain: "Agentic AI",
-      prod: ["Claude Code, 3 agents in parallel", "Hermes Agent on a VPS", "reusable skills"],
+      domain: "AI and agents",
+      prod: ["Claude Code, 3 agents in parallel", "agent skills", "MCP", "Codex, OpenCode, Gemini CLI", "Hermes Agent on a VPS", "Claude and GPT models"],
       learning: ["LangGraph", "Pydantic", "evaluation on a test set"],
     },
     {
-      domain: "Scripts and languages",
-      prod: ["Bash", "TypeScript / Node.js", "Python"],
-      learning: ["C (CodinGame certification)", "C++", "NASM"],
+      domain: "Web and product",
+      prod: ["TypeScript", "Next.js", "React", "Node.js", "PostgreSQL", "Prisma", "Redis", "OIDC accounts", "Astro", "sites in 3 languages", "technical SEO"],
+      learning: ["roblox-ts", "Rojo"],
+    },
+    {
+      domain: "DevOps and production",
+      prod: ["Linux (VPS, systemd, cron)", "Bash", "Git", "Cloudflare (Workers, Pages, Tunnel)", "Vercel", "deploys with rollback", "monitoring and alerts", "PITR restore"],
+      learning: ["Docker", "Docker compose", "Ansible", "GitHub Actions", "AWS (Cloud Practitioner in progress)", "HashiCorp Vault"],
+    },
+    {
+      domain: "Quality",
+      prod: ["Playwright before merge", "per-branch tests", "checked preview", "additive migrations", "health route"],
+      learning: ["pytest", "Lighthouse CI", "C, C++, x86-64 assembly (42)"],
     },
   ],
 };
 
-// Cartes des 3 études de cas sur l'accueil.
-export const CASES = {
+// Projet vedette (GaijinToSensei) : trois facettes à égalité.
+export const FEATURED = {
+  fr: {
+    title: "GaijinToSensei",
+    facets: [
+      { k: "IA", v: "3 agents Claude Code en parallèle, une branche chacun : 479 des 724 commits." },
+      { k: "Web", v: "Next.js, TypeScript, PostgreSQL avec Prisma, Redis." },
+      { k: "DevOps", v: "Cloudflare Workers, préversion contrôlée, retour arrière automatique, garde de prod toutes les 10 minutes." },
+    ],
+  },
+  en: {
+    title: "GaijinToSensei",
+    facets: [
+      { k: "AI", v: "3 Claude Code agents in parallel, one branch each: 479 of the 724 commits." },
+      { k: "Web", v: "Next.js, TypeScript, PostgreSQL with Prisma, Redis." },
+      { k: "DevOps", v: "Cloudflare Workers, checked preview, automatic rollback, a production guard every 10 minutes." },
+    ],
+  },
+};
+
+export interface ProjectCard {
+  title: string;
+  tags: string;
+  text: string;
+  result: string;
+  href: string;
+  external?: boolean;
+  img?: "metaaoe";
+  steps?: { k: string; v: string }[];
+}
+
+// Cartes de l'accueil, dans l'ordre d'affichage. Zapz Forge : code non public, pas de lien externe.
+export const PROJECTS: Record<Lang, ProjectCard[]> = {
   fr: [
     {
-      key: "gts" as const,
-      title: "GaijinToSensei en production",
-      problem: "3 agents livrent en parallèle (479 des 724 commits), avec un quota de déploiements par jour.",
-      result: "Mise en prod contrôlée, retour arrière automatique, garde de prod toutes les 10 minutes.",
+      title: "Zapz Forge, mon atelier d'agents pour jeux Roblox",
+      tags: "IA",
+      text: "Claude Code, Codex, OpenCode et Gemini CLI travaillent sur un même jeu, reliés à Roblox Studio et Blender par MCP.",
+      result: "24 skills écrits pour les agents, dont une barre de qualité qui les oblige à se noter sur 10 face à de vrais jeux.",
+      href: "/projets/agents-ia/#zapz-forge",
+      steps: [
+        { k: "4 agents", v: "un même jeu" },
+        { k: "MCP", v: "Studio, Blender" },
+        { k: "24 skills", v: "barre de qualité" },
+      ],
     },
     {
-      key: "incident" as const,
-      title: "Postmortem : base de prod vidée",
-      problem: "Une commande de migration a vidé la base de production le 29 octobre 2026.",
-      result: "Base restaurée par point-in-time restore, commandes destructives interdites sur la prod.",
+      title: "MetaAOE, app Overwolf et site pour Age of Empires",
+      tags: "Web · IA",
+      text: "Stats, build orders et overlay en jeu pour AoE IV et II, site avec comptes utilisateurs (OIDC) pour partager ses builds. Codée la nuit par des agents.",
+      result: "En ligne. En cours de QA chez Overwolf pour leur store.",
+      href: "https://metaaoe.app",
+      external: true,
+      img: "metaaoe",
     },
     {
-      key: "infra" as const,
-      title: "Mon infra perso",
-      problem: "Faire tourner des agents et des tâches la nuit sans exposer ma machine.",
-      result: "VPS en systemd et cron, hub derrière un tunnel sans port ouvert, 5 sites publiés seuls.",
+      title: "Automatisations sur VPS",
+      tags: "IA · DevOps",
+      text: "Hermes Agent, que j'ai configuré et que j'exploite : une usine à vidéos courtes qui programme des posts YouTube, Instagram et TikTok, une boucle SEO, des réponses aux commentaires.",
+      result: "25 tâches planifiées, garde de prod toutes les 10 minutes avec alertes Telegram.",
+      href: "/projets/infra-perso/",
+      steps: [
+        { k: "25 tâches", v: "planifiées" },
+        { k: "SEO", v: "1 amélioration / jour" },
+        { k: "Alertes", v: "Telegram" },
+      ],
+    },
+    {
+      title: "steam-roblox-agents, système multi-agents",
+      tags: "IA",
+      text: "Un graphe LangGraph en Python dit si un jeu Steam en tendance mérite une adaptation Roblox. Un agent critique renvoie la note quand elle ne tient pas.",
+      result: "61,9 % de verdicts exacts sur 21 cas, contre 33,3 % pour une règle naïve.",
+      href: "/projets/agents-ia/#steam-roblox-agents",
+      steps: [
+        { k: "Collecte", v: "Steam, Roblox" },
+        { k: "Critique", v: "renvoie la note" },
+        { k: "21 cas", v: "évalués" },
+      ],
     },
   ],
   en: [
     {
-      key: "gts" as const,
-      title: "GaijinToSensei in production",
-      problem: "3 agents ship in parallel (479 of the 724 commits), under a daily deployment quota.",
-      result: "Checked releases, automatic rollback, a production guard every 10 minutes.",
+      title: "Zapz Forge, my agent workshop for Roblox games",
+      tags: "AI",
+      text: "Claude Code, Codex, OpenCode and Gemini CLI work on the same game, connected to Roblox Studio and Blender through MCP.",
+      result: "24 skills written for the agents, including a quality bar that makes them score themselves out of 10 against real games.",
+      href: "/en/projects/ai-agents/#zapz-forge",
+      steps: [
+        { k: "4 agents", v: "one game" },
+        { k: "MCP", v: "Studio, Blender" },
+        { k: "24 skills", v: "quality bar" },
+      ],
     },
     {
-      key: "incident" as const,
-      title: "Postmortem: production database wiped",
-      problem: "A migration command wiped the production database on 29 October 2026.",
-      result: "Database restored with point-in-time restore, destructive commands banned on production.",
+      title: "MetaAOE, an Overwolf app and site for Age of Empires",
+      tags: "Web · AI",
+      text: "Stats, build orders and an in-game overlay for AoE IV and II, and a site with user accounts (OIDC) to share builds. Built at night by agents.",
+      result: "Live. Going through Overwolf QA for their store.",
+      href: "https://metaaoe.app",
+      external: true,
+      img: "metaaoe",
     },
     {
-      key: "infra" as const,
-      title: "My personal infrastructure",
-      problem: "Run agents and jobs at night without exposing my machine.",
-      result: "VPS with systemd and cron, a hub behind a tunnel with no open port, 5 sites that publish themselves.",
+      title: "Automations on a VPS",
+      tags: "AI · DevOps",
+      text: "Hermes Agent, which I configured and run: a short video factory that schedules YouTube, Instagram and TikTok posts, an SEO loop, replies to comments.",
+      result: "25 scheduled jobs, a production guard every 10 minutes with Telegram alerts.",
+      href: "/en/projects/personal-infra/",
+      steps: [
+        { k: "25 jobs", v: "scheduled" },
+        { k: "SEO", v: "1 change / day" },
+        { k: "Alerts", v: "Telegram" },
+      ],
+    },
+    {
+      title: "steam-roblox-agents, a multi-agent system",
+      tags: "AI",
+      text: "A LangGraph graph in Python decides whether a trending Steam game is worth a Roblox adaptation. A critic agent sends back a score that does not hold up.",
+      result: "61.9% exact verdicts on 21 cases, against 33.3% for a naive rule.",
+      href: "/en/projects/ai-agents/#steam-roblox-agents",
+      steps: [
+        { k: "Collect", v: "Steam, Roblox" },
+        { k: "Critic", v: "sends score back" },
+        { k: "21 cases", v: "evaluated" },
+      ],
     },
   ],
 };
 
 export const MORE = {
   fr: [
-    { key: "agents" as const, title: "Agents IA", text: "3 agents Claude Code sur mon app, et un système multi-agents LangGraph évalué sur 21 cas." },
-    { key: "systeme" as const, title: "Système et projets 42", text: "Cloud-1, ft_strace, libasm, Docker et Vault, et deux apps Overwolf." },
-    { key: "deploy" as const, title: "Comment ce site est déployé", text: "Push, CI, image Docker, déploiement et supervision." },
+    { key: "agents" as const, title: "Agents IA et garde-fous", text: "Comment je fais livrer des agents sans leur confier la prod." },
+    { key: "infra" as const, title: "Infra perso", text: "VPS en systemd et cron, hub sans port ouvert, 5 sites publiés seuls." },
+    { key: "systeme" as const, title: "Système et projets 42", text: "Cloud-1, ft_transcendence, ft_strace, libasm." },
+    { key: "deploy" as const, title: "Comment ce site est déployé", text: "Push, CI, image Docker, Cloudflare Workers, supervision." },
   ],
   en: [
-    { key: "agents" as const, title: "AI agents", text: "3 Claude Code agents on my app, and a LangGraph multi-agent system evaluated on 21 cases." },
-    { key: "systeme" as const, title: "Systems and 42 projects", text: "Cloud-1, ft_strace, libasm, Docker and Vault, and two Overwolf apps." },
-    { key: "deploy" as const, title: "How this site is deployed", text: "Push, CI, Docker image, deployment and monitoring." },
+    { key: "agents" as const, title: "AI agents and guardrails", text: "How I let agents ship without handing them production." },
+    { key: "infra" as const, title: "Personal infrastructure", text: "VPS with systemd and cron, a hub with no open port, 5 sites that publish themselves." },
+    { key: "systeme" as const, title: "Systems and 42 projects", text: "Cloud-1, ft_transcendence, ft_strace, libasm." },
+    { key: "deploy" as const, title: "How this site is deployed", text: "Push, CI, Docker image, Cloudflare Workers, monitoring." },
   ],
 };
 
@@ -274,11 +294,11 @@ export const ABOUT = {
   fr: {
     title: "À propos",
     seoTitle: "À propos de Matteo Murru",
-    description: "Matteo Murru, étudiant à 42 Nice, branche Unix et bas niveau. A vécu au Japon en 2026. Cherche une alternance DevOps / Cloud / SRE à Nice.",
+    description: "Matteo Murru, étudiant à 42 Nice. Développeur IA, web et DevOps, cherche un stage de 6 mois à Nice / Côte d'Azur ou en télétravail, dès début décembre 2026.",
     photoAlt: "Photo de Matteo Murru",
     paragraphs: [
-      "Je m'appelle Matteo Murru et j'habite à Nice. J'étudie à 42 Nice : j'ai fini le tronc commun, je suis la branche Unix et bas niveau et je vise le titre RNCP niveau 7 de 42.",
-      "J'ai appris l'exploitation en faisant tourner mes propres projets : une app en production, un VPS qui travaille la nuit, des sites publiés automatiquement. Je veux maintenant le faire au sein d'une équipe.",
+      "Je m'appelle Matteo Murru et j'habite à Nice. J'étudie à 42 Nice : j'ai validé le tronc commun et je prépare le titre RNCP niveau 7 de 42.",
+      "Je construis des produits avec des agents IA. J'utilise Claude Code tous les jours : je découpe le besoin en tâches, je les confie à plusieurs agents en parallèle, puis je relis, je teste et je mets en ligne. J'ai appris le web et la prod sur mes propres projets, et je veux maintenant le faire au sein d'une équipe.",
     ],
     japanTitle: "Japon",
     japan: [
@@ -294,7 +314,7 @@ export const ABOUT = {
       { date: "Mars 2026", text: "Échange à 42 Tokyo." },
       { date: "Juin à octobre 2026", text: "Testeur de localisation (LQA) chez Keywords Studios, à Tokyo, sur des jeux Konami." },
       { date: "Octobre 2026", text: "Retour à Nice." },
-      { date: "En cours", text: "Cloud-1 à 42 et préparation de la certification AWS Cloud Practitioner." },
+      { date: "Décembre 2026", text: "Disponible pour un stage de 6 mois." },
     ],
     certTitle: "Certifications",
     certs: [
@@ -307,11 +327,11 @@ export const ABOUT = {
   en: {
     title: "About",
     seoTitle: "About Matteo Murru",
-    description: "Matteo Murru, 42 Nice student, Unix and low-level branch. Lived in Japan in 2026. Looking for a DevOps / Cloud / SRE work-study contract in Nice.",
+    description: "Matteo Murru, 42 Nice student. AI, web and DevOps developer, looking for a 6-month internship in Nice / the French Riviera or remote, from early December 2026.",
     photoAlt: "Photo of Matteo Murru",
     paragraphs: [
-      "My name is Matteo Murru and I live in Nice. I study at 42 Nice: I finished the common core, I follow the Unix and low-level branch and I am working towards 42's RNCP level 7 degree (master's level).",
-      "I learned operations by running my own projects: an app in production, a VPS that works at night, sites that publish themselves. Now I want to do it as part of a team.",
+      "My name is Matteo Murru and I live in Nice. I study at 42 Nice: I completed the common core and I am working towards 42's RNCP level 7 degree (master's level).",
+      "I build products with AI agents. I use Claude Code every day: I split the need into tasks, hand them to several agents in parallel, then I review, test and ship. I learned web and production work on my own projects, and now I want to do it as part of a team.",
     ],
     japanTitle: "Japan",
     japan: [
@@ -327,7 +347,7 @@ export const ABOUT = {
       { date: "March 2026", text: "Exchange at 42 Tokyo." },
       { date: "June to October 2026", text: "Localization QA tester (LQA) at Keywords Studios, Tokyo, on Konami games." },
       { date: "October 2026", text: "Back in Nice." },
-      { date: "In progress", text: "Cloud-1 at 42 and preparing the AWS Cloud Practitioner certification." },
+      { date: "December 2026", text: "Available for a 6-month internship." },
     ],
     certTitle: "Certifications",
     certs: [

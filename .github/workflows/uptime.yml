@@ -27,7 +27,7 @@ jobs:
           }
           check https://zapz.work/ "<title>Matteo Murru"
           check https://zapz.work/en/ "<title>Matteo Murru"
-          check https://zapz.work/projets/incident-base-de-donnees/ "Postmortem"
+          check https://zapz.work/projets/agents-ia/ "Agents IA"
           check https://zapz.work/sitemap-index.xml "<sitemapindex"
           check https://zapz.work/robots.txt "Sitemap:"
           check https://zapz.work/cv.pdf "%PDF"

@@ -18,6 +18,11 @@ const REDIRECTS = [
   [/^\/certifications\/?$/, '/a-propos/'],
   [/^\/ctf-blog(\/.*)?$/, '/'],
 ];
+// Pages retirées (301) : l'ancien postmortem renvoie vers la page Agents IA, qui décrit les garde-fous.
+const MOVED = [
+  [/^\/projets\/incident-base-de-donnees\/?$/, '/projets/agents-ia/'],
+  [/^\/en\/projects\/database-incident\/?$/, '/en/projects/ai-agents/'],
+];
 // pages = ni /_astro/, ni fichier avec extension (même motif que le matcher du middleware Vercel)
 const isPage = (p) => !p.startsWith('/_astro/') && !/\.[a-zA-Z0-9]+$/.test(p);
 
@@ -39,6 +44,7 @@ export default {
     const path = url.pathname;
     if (url.hostname === 'www.' + APEX) return redirect(`https://${APEX}${path}${url.search}`, 301);
     if (url.protocol === 'http:' && url.hostname === APEX) return redirect(`https://${APEX}${path}${url.search}`, 308);
+    for (const [re, to] of MOVED) if (re.test(path)) return redirect(to + url.search, 301);
     for (const [re, to] of REDIRECTS) if (re.test(path)) return redirect(to + url.search, 308);
     if (isPage(path) && !path.endsWith('/')) return redirect(path + '/' + url.search, 308);
 

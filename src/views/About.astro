@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Contacts from "../components/Contacts.astro";
-import { ALTERNANCE, type Lang } from "../content/site";
+import { RECHERCHE, type Lang } from "../content/site";
 import { ABOUT } from "../content/pages";
 
 interface Props {
@@ -26,7 +26,7 @@ const h2 = "mt-12 text-2xl font-bold";
     />
   </div>
   {d.paragraphs.map((p) => <p class="mt-5">{p}</p>)}
-  <p class="mt-5 font-semibold">{ALTERNANCE[lang]}</p>
+  <p class="mt-5 font-semibold">{RECHERCHE[lang]}</p>
 
   <h2 class={h2}>
     {d.japanTitle}

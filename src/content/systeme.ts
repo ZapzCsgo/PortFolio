@@ -65,11 +65,12 @@ export const SYSTEME: Record<Lang, SystemPage> = {
       },
       {
         title: "Apps Overwolf : MetaAOE et MetaDBD",
-        intro: "Deux apps pour Age of Empires (IV et II) et Dead by Daylight. Je les cite pour leur livraison, pas pour leurs fonctionnalités.",
+        intro: "Deux apps pour Age of Empires (IV et II) et Dead by Daylight, codées la nuit par des agents.",
         items: [
           {
             name: "MetaAOE",
-            text: "Une boucle d'agents sur le VPS avance la nuit sur une branche dédiée. La branche principale n'avance qu'en avance rapide. Le site est publié sur Cloudflare Pages à chaque push.",
+            status: "En cours de QA chez Overwolf",
+            text: "Stats, build orders et overlay en jeu, et un site avec comptes utilisateurs (OIDC) pour partager ses builds. Une boucle d'agents sur le VPS avance la nuit sur une branche dédiée, la branche principale n'avance qu'en avance rapide, et le site est publié sur Cloudflare Pages à chaque push. Partenariat prévu avec le Discord Age of Empires France une fois l'app validée.",
             href: "https://metaaoe.app",
             hrefLabel: "metaaoe.app",
           },
@@ -130,11 +131,12 @@ export const SYSTEME: Record<Lang, SystemPage> = {
       },
       {
         title: "Overwolf apps: MetaAOE and MetaDBD",
-        intro: "Two apps for Age of Empires (IV and II) and Dead by Daylight. I list them for how they ship, not for their features.",
+        intro: "Two apps for Age of Empires (IV and II) and Dead by Daylight, built at night by agents.",
         items: [
           {
             name: "MetaAOE",
-            text: "An agent loop on the VPS moves forward at night on a dedicated branch. The main branch only moves by fast-forward. The site is published to Cloudflare Pages on every push.",
+            status: "Going through Overwolf QA",
+            text: "Stats, build orders and an in-game overlay, and a site with user accounts (OIDC) to share builds. An agent loop on the VPS moves forward at night on a dedicated branch, the main branch only moves by fast-forward, and the site is published to Cloudflare Pages on every push. A partnership with the Age of Empires France Discord is planned once the app is approved.",
             href: "https://metaaoe.app",
             hrefLabel: "metaaoe.app",
           },

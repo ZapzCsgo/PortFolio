@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import fontUrl from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
 import "@fontsource-variable/montserrat/wght.css";
-import { NAME, ROUTES, SITE_URL, UI, type Lang, type RouteKey, EMAIL, GITHUB, LINKEDIN } from "../content/site";
+import { NAME, ROLE, ROUTES, SITE_URL, UI, type Lang, type RouteKey, EMAIL, GITHUB, LINKEDIN } from "../content/site";
 import { BUILD, buildDate } from "../lib/build";
 
 interface Props {
@@ -59,7 +59,7 @@ const current = (key: string) =>
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${NAME}, ${lang === "fr" ? "alternance DevOps / Cloud / SRE" : "DevOps / Cloud / SRE work-study"}`} />
+    <meta property="og:image:alt" content={`${NAME}, ${ROLE[lang]}`} />
     <meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_US"} />
     <meta property="og:locale:alternate" content={lang === "fr" ? "en_US" : "fr_FR"} />
     <meta name="twitter:card" content="summary_large_image" />

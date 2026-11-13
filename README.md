@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/ZapzCsgo/PortFolio/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ZapzCsgo/PortFolio/actions/workflows/ci.yml)
 
-Portfolio de Matteo Murru : alternance DevOps / Cloud / SRE à Nice. Astro statique, Tailwind CSS, français et anglais.
+Portfolio de Matteo Murru : développeur IA, web et DevOps, stage de 6 mois à Nice / Côte d'Azur ou en télétravail. Astro statique, Tailwind CSS, français et anglais.
 
 ## Commandes
 
@@ -17,7 +17,7 @@ Portfolio de Matteo Murru : alternance DevOps / Cloud / SRE à Nice. Astro stati
 | `npm run og` | régénère les images Open Graph (`CHROME_PATH` requis) |
 | `npm run cv:pdf` | régénère `public/cv.pdf` et `public/cv-en.pdf` depuis `/cv/` (`CHROME_PATH` requis, après un build) |
 
-Le texte qui change souvent (phrase d'alternance, liens, e-mail) est dans `src/content/site.ts`.
+Le texte qui change souvent (phrase de recherche de stage, liens, e-mail) est dans `src/content/site.ts`.
 
 ## Déploiement
 

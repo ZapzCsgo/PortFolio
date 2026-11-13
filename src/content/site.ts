@@ -1,4 +1,4 @@
-// Faits centraux du site. Phrase d'alternance reprise partout (première recherche d'alternance, sans date de début).
+// Faits centraux du site. Recherche : stage de 6 mois (décision de Matteo, 13/11/2026).
 
 export type Lang = "fr" | "en";
 
@@ -18,21 +18,20 @@ export const CI_URL = `${REPO}/actions/workflows/ci.yml`;
 export const SRA_REPO = "https://github.com/ZapzCsgo/steam-roblox-agents";
 export const SRA_PUBLIC = true;
 
-export const ALTERNANCE: Record<Lang, string> = {
-  fr: "Étudiant à 42 Nice, je cherche une alternance d'1 an en DevOps / Cloud / SRE à Nice, Sophia Antipolis ou Monaco.",
-  en: "I study at 42 Nice and I am looking for a 1-year work-study contract (alternance) in DevOps / Cloud / SRE in Nice, Sophia Antipolis or Monaco.",
+export const RECHERCHE: Record<Lang, string> = {
+  fr: "Étudiant à 42 Nice, je cherche un stage de 6 mois en développement IA, web ou DevOps, à Nice / Côte d'Azur ou en télétravail, disponible début décembre 2026.",
+  en: "I study at 42 Nice and I am looking for a 6-month internship in AI, web or DevOps development, in Nice / the French Riviera or remote, available from early December 2026.",
 };
 
 export const ROLE: Record<Lang, string> = {
-  fr: "Alternance DevOps / Cloud / SRE",
-  en: "DevOps / Cloud / SRE work-study",
+  fr: "Développeur IA, web et DevOps, stage de 6 mois",
+  en: "AI, web and DevOps developer, 6-month internship",
 };
 
 // Correspondance des pages fr <-> en (hreflang et bouton de langue).
 export const ROUTES = {
   home: { fr: "/", en: "/en/" },
   gts: { fr: "/projets/gaijintosensei/", en: "/en/projects/gaijintosensei/" },
-  incident: { fr: "/projets/incident-base-de-donnees/", en: "/en/projects/database-incident/" },
   agents: { fr: "/projets/agents-ia/", en: "/en/projects/ai-agents/" },
   infra: { fr: "/projets/infra-perso/", en: "/en/projects/personal-infra/" },
   systeme: { fr: "/projets/systeme/", en: "/en/projects/systems/" },

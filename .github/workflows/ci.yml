@@ -110,5 +110,6 @@ jobs:
           docker run -d --name site -p 8080:8080 ghcr.io/zapzcsgo/portfolio:${{ github.sha }}
           for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8080/ >/dev/null && break; sleep 1; done
           curl -fsS http://127.0.0.1:8080/ | grep -q "Matteo Murru"
-          curl -fsS http://127.0.0.1:8080/projets/incident-base-de-donnees/ | grep -q "Postmortem"
+          curl -fsS http://127.0.0.1:8080/projets/agents-ia/ | grep -q "Agents IA"
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/projets/incident-base-de-donnees/)" = 301
           test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/nexiste-pas/)" = 404

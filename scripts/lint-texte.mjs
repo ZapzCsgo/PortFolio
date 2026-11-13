@@ -7,6 +7,7 @@ const BANNED = [
   ["tiret cadratin", /\u2014/],
   ["jargon", /\b(passionn[ée]e?s?|innovant[es]*|innovation|synergie|disruptif|passionate|innovative|synergy|cutting[- ]edge|game[- ]changer|leverage|seamless)\b/i],
   ["date périmée", /\b(actuellement|currently)\b/i],
+  ["sujet retiré (incident, alternance)", /postmortem|base de prod vidée|wiped|29 octobre 2026|29 October 2026|29\/10\/2026|\balternance\b|work-study/i],
   ["sujet retiré", /cheat engine|anti-?cheat|game hacking|AgeOfMoney|trenches|Voie de la Pierre|Counter-Strike|\bCS2\b/i],
 ];
 

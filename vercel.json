@@ -29,6 +29,10 @@
     { "source": "/about", "destination": "/a-propos/", "permanent": true },
     { "source": "/certifications", "destination": "/a-propos/", "permanent": true },
     { "source": "/ctf-blog", "destination": "/", "permanent": true },
-    { "source": "/ctf-blog/:path*", "destination": "/", "permanent": true }
+    { "source": "/ctf-blog/:path*", "destination": "/", "permanent": true },
+    { "source": "/projets/incident-base-de-donnees", "destination": "/projets/agents-ia/", "statusCode": 301 },
+    { "source": "/projets/incident-base-de-donnees/", "destination": "/projets/agents-ia/", "statusCode": 301 },
+    { "source": "/en/projects/database-incident", "destination": "/en/projects/ai-agents/", "statusCode": 301 },
+    { "source": "/en/projects/database-incident/", "destination": "/en/projects/ai-agents/", "statusCode": 301 }
   ]
 }

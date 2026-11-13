@@ -22,8 +22,8 @@ export const GTS: Record<Lang, CaseStudy> = {
     seoTitle: "GaijinToSensei, mise en production et exploitation",
     description:
       "Comment je mets en production GaijinToSensei : Next.js sur Cloudflare Workers, Neon, Prisma, Upstash, Resend, chaîne d'agents, déploiement contrôlé avec retour arrière et supervision.",
-    lead: "Une app pour apprendre le japonais, en production avec des utilisateurs réels.",
-    stack: ["Next.js", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Cloudflare Workers", "Playwright", "Bash"],
+    lead: "Une app web pour apprendre le japonais, en production avec des utilisateurs réels, en français, anglais et japonais.",
+    stack: ["Next.js", "TypeScript", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Cloudflare Workers", "Playwright", "Bash"],
     link: { href: "https://gajintosensei.com", label: "gajintosensei.com" },
     context: [
       "Je suis seul sur le projet. Des agents Claude Code écrivent la plupart du code. Mon travail, c'est le cadre autour : comment le code arrive en prod, comment on sait qu'il marche, et comment on répare.",
@@ -65,7 +65,8 @@ export const GTS: Record<Lang, CaseStudy> = {
           "Une route de santé vérifie la base, Redis, l'envoi d'e-mails et le stockage, avec un délai maximum par service et un cache court pour ne pas les surcharger.",
           "Les erreurs serveur sont enregistrées en base et visibles dans une page Santé de l'outil d'administration.",
           "Limitation de débit par fenêtres glissantes sur la connexion, le chat, les signalements et le support.",
-          "Depuis l'incident du 29 octobre 2026, les migrations de base sont additives uniquement. Le script refuse tout DROP, RENAME, TRUNCATE ou ALTER COLUMN, et n'applique jamais de migration lui-même.",
+          "Les migrations de base sont additives uniquement. Le script refuse tout DROP, RENAME, TRUNCATE ou ALTER COLUMN, et n'applique jamais de migration lui-même.",
+          "Les agents n'ont aucun droit destructif sur la base de prod, et la base se restaure à un instant précis (PITR).",
         ],
       },
     ],
@@ -74,7 +75,7 @@ export const GTS: Record<Lang, CaseStudy> = {
       "Les nouveautés partent groupées, ce qui tient dans le quota. Un déploiement qui échoue aux contrôles ne reste pas en ligne.",
     ],
     learned: [
-      "Un agent rapide sans garde-fou a fini par casser ma prod. Je préfère une mise en prod un peu plus lente, mais vérifiée à chaque étape.",
+      "Un agent va vite et ne doute jamais. Je préfère une mise en prod un peu plus lente, mais vérifiée à chaque étape.",
       "Une étape de déploiement doit pouvoir être annulée sans moi.",
       "Une route de santé simple, appelée souvent, dit plus qu'un tableau de bord qu'on ne regarde pas.",
     ],
@@ -84,8 +85,8 @@ export const GTS: Record<Lang, CaseStudy> = {
     seoTitle: "GaijinToSensei, shipping and running it in production",
     description:
       "How I ship GaijinToSensei: Next.js on Cloudflare Workers, Neon, Prisma, Upstash, Resend, an agent pipeline, checked deploys with automatic rollback, and monitoring.",
-    lead: "An app to learn Japanese, in production with real users.",
-    stack: ["Next.js", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Cloudflare Workers", "Playwright", "Bash"],
+    lead: "A web app to learn Japanese, in production with real users, in French, English and Japanese.",
+    stack: ["Next.js", "TypeScript", "PostgreSQL (Neon)", "Prisma", "Upstash Redis", "Resend", "Cloudflare Workers", "Playwright", "Bash"],
     link: { href: "https://gajintosensei.com", label: "gajintosensei.com" },
     context: [
       "I am alone on the project. Claude Code agents write most of the code. My job is the frame around it: how code reaches production, how we know it works, and how we fix it.",
@@ -127,7 +128,8 @@ export const GTS: Record<Lang, CaseStudy> = {
           "A health route checks the database, Redis, email sending and storage, with a timeout per service and a short cache so it does not overload them.",
           "Server errors are stored in the database and shown on a Health page in the admin tool.",
           "Sliding-window rate limits on login, chat, reports and support.",
-          "Since the 29 October 2026 incident, database migrations are additive only. The script rejects any DROP, RENAME, TRUNCATE or ALTER COLUMN, and never applies a migration itself.",
+          "Database migrations are additive only. The script rejects any DROP, RENAME, TRUNCATE or ALTER COLUMN, and never applies a migration itself.",
+          "Agents have no destructive rights on the production database, and the database can be restored to a point in time (PITR).",
         ],
       },
     ],
@@ -136,7 +138,7 @@ export const GTS: Record<Lang, CaseStudy> = {
       "New features ship in batches, which fits the quota. A deployment that fails the checks does not stay online.",
     ],
     learned: [
-      "A fast agent without guardrails ended up breaking my production. I now prefer a slightly slower release that is checked at every step.",
+      "An agent is fast and never doubts itself. I prefer a slightly slower release that is checked at every step.",
       "Any deployment step must be reversible without me.",
       "A simple health route, called often, tells more than a dashboard nobody looks at.",
     ],
@@ -145,11 +147,11 @@ export const GTS: Record<Lang, CaseStudy> = {
 
 export const INFRA: Record<Lang, CaseStudy> = {
   fr: {
-    title: "Mon infra perso",
-    seoTitle: "Infra perso : VPS, tâches planifiées, tunnel et sites statiques",
+    title: "Automatisations et infra perso",
+    seoTitle: "Automatisations et infra perso : VPS, 25 tâches planifiées, tunnel et sites statiques",
     description:
       "Un VPS Linux qui fait tourner des agents et des tâches de nuit, un hub exposé par un tunnel Cloudflare derrière un proxy edge sur Vercel, des sites publiés sur Cloudflare Pages.",
-    lead: "Un VPS qui travaille la nuit, un hub perso qui n'ouvre aucun port, et des sites publiés tout seuls.",
+    lead: "Un VPS qui travaille la nuit (vidéos, SEO, garde de prod), un hub perso qui n'ouvre aucun port, et des sites publiés tout seuls.",
     stack: ["Linux", "systemd", "cron", "Bash", "Node.js", "Cloudflare Tunnel", "Vercel Edge", "Cloudflare Pages", "wrangler"],
     context: [
       "Je fais tourner plusieurs projets en même temps : GaijinToSensei, deux apps Overwolf et leurs sites. J'ai besoin que du travail avance quand je ne suis pas devant l'écran.",
@@ -170,7 +172,9 @@ export const INFRA: Record<Lang, CaseStudy> = {
       {
         title: "Des tâches planifiées",
         items: [
-          "25 tâches planifiées, dont 14 qui n'utilisent aucune IA : la garde de prod de GaijinToSensei toutes les 10 minutes, la publication du site MetaDBD toutes les 15 minutes, la surveillance d'un bot Discord toutes les 2 minutes, l'envoi des nouvelles pages aux moteurs de recherche (IndexNow) et des alertes.",
+          "25 tâches planifiées, lancées par Hermes Agent (open source, que j'ai configuré et que j'exploite) ou par cron.",
+          "Une usine à vidéos courtes produit et programme des posts sur YouTube, Instagram et TikTok. Une boucle SEO met en ligne une amélioration mesurée par jour. D'autres tâches répondent aux commentaires.",
+          "14 tâches n'utilisent aucune IA : la garde de prod de GaijinToSensei toutes les 10 minutes avec alertes Telegram, la publication du site MetaDBD toutes les 15 minutes, la surveillance d'un bot Discord toutes les 2 minutes, l'envoi des nouvelles pages aux moteurs de recherche (IndexNow).",
         ],
       },
       {
@@ -200,11 +204,11 @@ export const INFRA: Record<Lang, CaseStudy> = {
     ],
   },
   en: {
-    title: "My personal infrastructure",
-    seoTitle: "Personal infrastructure: VPS, scheduled jobs, tunnel and static sites",
+    title: "Automations and personal infrastructure",
+    seoTitle: "Automations and personal infrastructure: VPS, 25 scheduled jobs, tunnel and static sites",
     description:
       "A Linux VPS that runs agents and night jobs, a hub exposed through a Cloudflare tunnel behind an edge proxy on Vercel, and sites published to Cloudflare Pages.",
-    lead: "A VPS that works at night, a personal hub that opens no port, and sites that publish themselves.",
+    lead: "A VPS that works at night (videos, SEO, production guard), a personal hub that opens no port, and sites that publish themselves.",
     stack: ["Linux", "systemd", "cron", "Bash", "Node.js", "Cloudflare Tunnel", "Vercel Edge", "Cloudflare Pages", "wrangler"],
     context: [
       "I run several projects at once: GaijinToSensei, two Overwolf apps and their sites. I need work to move forward when I am not at the screen.",
@@ -225,7 +229,9 @@ export const INFRA: Record<Lang, CaseStudy> = {
       {
         title: "Scheduled jobs",
         items: [
-          "25 scheduled jobs, 14 of them without any AI: the GaijinToSensei production guard every 10 minutes, publishing the MetaDBD site every 15 minutes, watching a Discord bot every 2 minutes, sending new pages to search engines (IndexNow) and alerts.",
+          "25 scheduled jobs, run by Hermes Agent (open source, which I configured and run) or by cron.",
+          "A short video factory produces and schedules posts on YouTube, Instagram and TikTok. An SEO loop ships one measured improvement a day. Other jobs reply to comments.",
+          "14 jobs use no AI at all: the GaijinToSensei production guard every 10 minutes with Telegram alerts, publishing the MetaDBD site every 15 minutes, watching a Discord bot every 2 minutes, sending new pages to search engines (IndexNow).",
         ],
       },
       {
@@ -256,24 +262,24 @@ export const INFRA: Record<Lang, CaseStudy> = {
   },
 };
 
-// Page « Agents IA » (cible secondaire : IA agentique). Chiffres GtS vérifiés par git (724 commits sur la branche
-// principale, 479 avec un trailer Co-Authored-By Claude ; branches w1, w2, w3). steam-roblox-agents : 21 cas dans
-// eval/cases.yaml, max_revisions = 2. Pourcentages d'évaluation donnés par Matteo (08/11/2026) : 61,9 % Sonnet 5.5,
-// 42,9 % GPT-6 Sol, 33,3 % règle naïve ; aucun autre pourcentage. Schémas, chiffres clés et chronologie : content/agents.ts et content/diagrams.ts.
+// Page « Agents IA ». Chiffres GtS vérifiés par git (724 commits sur la branche principale, 479 avec un trailer
+// Co-Authored-By Claude ; branches w1, w2, w3). steam-roblox-agents : 21 cas dans eval/cases.yaml, max_revisions = 2,
+// pourcentages donnés par Matteo (08/11/2026). Zapz Forge et automatisations VPS : faits confirmés par Matteo (13/11/2026),
+// code de Zapz Forge non public (aucun lien). Schémas et chiffres clés : content/agents.ts et content/diagrams.ts.
 export const AGENTS: Record<Lang, CaseStudy> = {
   fr: {
     title: "Agents IA : les faire livrer sans leur confier la prod",
-    seoTitle: "Agents IA : chaîne d'agents Claude Code sur GaijinToSensei et système multi-agents LangGraph",
+    seoTitle: "Agents IA : Claude Code sur GaijinToSensei, Zapz Forge, automatisations et système multi-agents LangGraph",
     description:
-      "Comment je fais travailler des agents IA : 3 agents Claude Code en parallèle sur GaijinToSensei (479 des 724 commits), garde-fous ajoutés après un incident de prod, et steam-roblox-agents, un système multi-agents LangGraph avec un agent critique et une évaluation sur 21 cas.",
+      "Comment je fais travailler des agents IA : 3 agents Claude Code en parallèle sur GaijinToSensei (479 des 724 commits) avec des garde-fous dans le code, Zapz Forge (4 agents de code reliés à Roblox Studio et Blender par MCP), 25 tâches planifiées sur un VPS, et steam-roblox-agents évalué sur 21 cas.",
     lead: "Des agents Claude Code écrivent la plupart du code de mon app. Je décide de ce qu'ils ont le droit de faire et je vérifie ce qu'ils livrent.",
-    stack: ["Claude Code", "LangGraph", "Python", "Pydantic", "Playwright", "Hermes Agent", "Bash", "Git"],
+    stack: ["Claude Code", "Codex", "OpenCode", "Gemini CLI", "MCP", "LangGraph", "Python", "Pydantic", "Playwright", "Hermes Agent"],
     context: [
       "Sur GaijinToSensei, **479 des 724** commits portent la ligne `Co-Authored-By` d'un agent Claude Code.",
       "Sur mon VPS, Hermes Agent (open source) lance des sous-agents et **25** tâches planifiées. Je l'ai **configuré, pas écrit**. S'il se trompe, je corrige la consigne (skill) en cause.",
     ],
     problem: [
-      "Un agent va vite et ne doute jamais. Le **29 octobre 2026**, une migration lancée par un agent a vidé la base de prod.",
+      "Un agent va vite et ne doute jamais. Il peut casser une prod aussi vite qu'il livre une fonctionnalité.",
       "Il me faut des limites qu'il ne peut pas contourner, et une mesure de ce qu'il produit.",
     ],
     done: [
@@ -281,14 +287,34 @@ export const AGENTS: Record<Lang, CaseStudy> = {
         title: "Trois agents en parallèle sur GaijinToSensei",
         items: [
           "Chaque agent a sa branche (`w1`, `w2`, `w3`). Des verrous évitent les conflits.",
-          "La QA Playwright passe avant chaque fusion. Les fusions partent ensemble, en un seul déploiement.",
+          "Les tests Playwright passent sur chaque branche avant la fusion. Les fusions partent ensemble, en un seul déploiement.",
         ],
       },
       {
-        title: "Des garde-fous dans le code, après l'incident",
+        title: "Des garde-fous dans le code",
         items: [
-          "Le script refuse toute migration avec DROP, RENAME, TRUNCATE ou ALTER COLUMN, et n'en applique jamais lui-même.",
+          "Chaque version part d'abord en préversion, sans trafic, et passe des contrôles HTTP. En cas d'échec après la mise en ligne, le script revient seul à la version précédente.",
+          "Les agents n'ont aucun droit destructif sur la prod. Le script refuse toute migration avec DROP, RENAME, TRUNCATE ou ALTER COLUMN, et n'en applique jamais lui-même.",
+          "La base de prod se restaure à un instant précis (PITR).",
           "La règle est dans le script, pas dans le prompt : un agent peut ignorer une consigne, pas un script qui refuse.",
+        ],
+      },
+      {
+        title: "Zapz Forge : un atelier d'agents pour jeux Roblox",
+        items: [
+          "Claude Code, Codex, OpenCode et Gemini CLI travaillent sur un même jeu, reliés à Roblox Studio et Blender par MCP.",
+          "La doc Roblox est indexée en local, et une banque d'assets se consulte par recherche sémantique.",
+          "J'ai écrit **24 skills** pour les agents : code roblox-ts, game design, équilibrage, UI, playtest, performance, mise en ligne.",
+          "Un skill « barre de qualité » oblige l'agent à se noter sur 10 face à de vrais jeux avant de me montrer son travail.",
+          "Sauvegarde automatique : un commit toutes les 5 minutes, plus des archives. Le code n'est pas public.",
+        ],
+      },
+      {
+        title: "Automatisations sur VPS",
+        items: [
+          "**25** tâches planifiées, dont une usine à vidéos courtes qui produit et programme des posts sur YouTube, Instagram et TikTok.",
+          "Une boucle SEO met en ligne une amélioration mesurée par jour. D'autres tâches répondent aux commentaires.",
+          "Une garde de prod vérifie GaijinToSensei toutes les **10 minutes** et m'alerte sur Telegram.",
         ],
       },
       {
@@ -297,14 +323,14 @@ export const AGENTS: Record<Lang, CaseStudy> = {
           "Un graphe LangGraph qui dit si un jeu Steam en tendance mérite une adaptation Roblox.",
           "Le critique renvoie à l'analyste une note qui ne tient pas, **2 fois** au plus.",
           "Le score final vient du code, pas du modèle. Chaque source (URL, outil, heure) est journalisée.",
-          "Sur **21 cas** passés, verdict exact : **61,9 %** avec Claude Sonnet 5.5, **42,9 %** avec GPT-6 Sol, contre **33,3 %** pour une règle naïve (pic de joueurs Steam seul).",
+          "Sur **21 cas** passés, verdict exact : **61,9 %** avec Claude Sonnet 5.5, **42,9 %** avec GPT-6 Sol, contre **33,3 %** pour une règle naïve (pic de joueurs Steam seul).",
           "Les réponses des modèles sont enregistrées et rejouées en CI, sans appel payant. Ces 21 cas ont aussi servi à régler la grille : le chiffre reste indicatif.",
         ],
       },
     ],
     result: [
       "L'app tourne en prod avec de vrais utilisateurs, et la majorité de son code vient d'agents.",
-      "Depuis l'incident, une migration destructive s'arrête au script, avant la prod.",
+      "Une migration destructive s'arrête au script, avant la prod.",
     ],
     learned: [
       "Signer chaque commit d'agent me dit précisément ce que j'ai écrit et ce que j'ai fait écrire.",
@@ -314,17 +340,17 @@ export const AGENTS: Record<Lang, CaseStudy> = {
   },
   en: {
     title: "AI agents: letting them ship without handing them production",
-    seoTitle: "AI agents: a Claude Code agent pipeline on GaijinToSensei and a LangGraph multi-agent system",
+    seoTitle: "AI agents: Claude Code on GaijinToSensei, Zapz Forge, automations and a LangGraph multi-agent system",
     description:
-      "How I work with AI agents: 3 Claude Code agents in parallel on GaijinToSensei (479 of 724 commits), guardrails added after a production incident, and steam-roblox-agents, a LangGraph multi-agent system with a critic agent and an evaluation on 21 cases.",
+      "How I work with AI agents: 3 Claude Code agents in parallel on GaijinToSensei (479 of 724 commits) with guardrails in code, Zapz Forge (4 coding agents connected to Roblox Studio and Blender through MCP), 25 scheduled jobs on a VPS, and steam-roblox-agents evaluated on 21 cases.",
     lead: "Claude Code agents write most of the code of my app. I decide what they are allowed to do and I check what they ship.",
-    stack: ["Claude Code", "LangGraph", "Python", "Pydantic", "Playwright", "Hermes Agent", "Bash", "Git"],
+    stack: ["Claude Code", "Codex", "OpenCode", "Gemini CLI", "MCP", "LangGraph", "Python", "Pydantic", "Playwright", "Hermes Agent"],
     context: [
       "On GaijinToSensei, **479 of the 724** commits carry a Claude Code agent's `Co-Authored-By` line.",
       "On my VPS, Hermes Agent (open source) starts sub-agents and runs **25** scheduled jobs. I **configured it, I did not write it**. When it gets something wrong, I fix the instruction (skill) behind it.",
     ],
     problem: [
-      "An agent is fast and never doubts itself. On **29 October 2026**, a migration started by an agent wiped the production database.",
+      "An agent is fast and never doubts itself. It can break production as fast as it ships a feature.",
       "I need limits it cannot get around, and a way to measure what it produces.",
     ],
     done: [
@@ -332,14 +358,34 @@ export const AGENTS: Record<Lang, CaseStudy> = {
         title: "Three agents in parallel on GaijinToSensei",
         items: [
           "Each agent has its own branch (`w1`, `w2`, `w3`). Locks prevent conflicts.",
-          "Playwright QA runs before every merge. Merges ship together, in a single deployment.",
+          "Playwright tests run on every branch before the merge. Merges ship together, in a single deployment.",
         ],
       },
       {
-        title: "Guardrails in code, after the incident",
+        title: "Guardrails in code",
         items: [
-          "The script rejects any migration with DROP, RENAME, TRUNCATE or ALTER COLUMN, and never applies one itself.",
+          "Every version first goes to a preview with no traffic and passes HTTP checks. If a check fails after release, the script rolls back to the previous version on its own.",
+          "Agents have no destructive rights on production. The script rejects any migration with DROP, RENAME, TRUNCATE or ALTER COLUMN, and never applies one itself.",
+          "The production database can be restored to a point in time (PITR).",
           "The rule lives in the script, not in the prompt: an agent can ignore an instruction, not a script that says no.",
+        ],
+      },
+      {
+        title: "Zapz Forge: an agent workshop for Roblox games",
+        items: [
+          "Claude Code, Codex, OpenCode and Gemini CLI work on the same game, connected to Roblox Studio and Blender through MCP.",
+          "The Roblox docs are indexed locally, and an asset bank is searched by semantic search.",
+          "I wrote **24 skills** for the agents: roblox-ts code, game design, balancing, UI, playtesting, performance, release.",
+          "A \"quality bar\" skill makes the agent score itself out of 10 against real games before it shows me its work.",
+          "Automatic backup: a commit every 5 minutes, plus archives. The code is not public.",
+        ],
+      },
+      {
+        title: "Automations on a VPS",
+        items: [
+          "**25** scheduled jobs, including a short video factory that produces and schedules posts on YouTube, Instagram and TikTok.",
+          "An SEO loop ships one measured improvement a day. Other jobs reply to comments.",
+          "A production guard checks GaijinToSensei every **10 minutes** and alerts me on Telegram.",
         ],
       },
       {
@@ -355,7 +401,7 @@ export const AGENTS: Record<Lang, CaseStudy> = {
     ],
     result: [
       "The app is in production with real users, and most of its code comes from agents.",
-      "Since the incident, a destructive migration stops at the script, before production.",
+      "A destructive migration stops at the script, before production.",
     ],
     learned: [
       "Signing every agent commit tells me exactly what I wrote and what I had written for me.",

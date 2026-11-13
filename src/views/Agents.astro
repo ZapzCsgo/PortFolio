@@ -1,5 +1,5 @@
 ---
-// Page Agents IA : chiffres clés, schémas animés sobrement, chronologie de l'incident. Texte en colonne de lecture,
+// Page Agents IA : chiffres clés, schémas animés sobrement, garde-fous, Zapz Forge, automatisations. Texte en colonne de lecture,
 // schémas sur toute la largeur.
 import Base from "../layouts/Base.astro";
 import FlowDiagram from "../components/FlowDiagram.astro";
@@ -17,7 +17,7 @@ const d = AGENTS[lang];
 const v = AGENTS_VISUALS[lang];
 const t = UI[lang];
 const s = t.caseSections;
-const [chain, guard, sra] = d.done;
+const [chain, guard, forge, auto, sra] = d.done;
 const col = "max-w-2xl";
 const h2 = "text-2xl font-bold";
 const h3 = "text-xl font-bold";
@@ -83,41 +83,25 @@ const list = "mt-4 list-disc space-y-2 pl-5 marker:text-accent";
     <ul class:list={[list, col]}>{chain.items.map((i) => <li set:html={rich(i)} />)}</ul>
   </section>
 
-  <section class="mt-12">
+  <section id="garde-fous" class="mt-12">
     <h3 class={h3}>{guard.title}</h3>
-    <figure class="mt-6">
-      <figcaption class="text-sm font-semibold text-muted">{v.timelineLabel}</figcaption>
-      <ol class="mt-4 grid gap-4 md:grid-cols-5 md:gap-3">
-        {
-          v.timeline.map((e, i) => (
-            <li class="relative pl-7 md:pl-0 md:pt-7">
-              <span
-                class:list={[
-                  "absolute left-0 top-1.5 size-3.5 rounded-full border-2 md:top-0",
-                  e.bad ? "border-bad bg-bad" : "border-ok bg-ok-soft",
-                ]}
-                aria-hidden="true"
-              />
-              {i < v.timeline.length - 1 && (
-                <span
-                  class="absolute left-[6px] top-6 -bottom-3 w-0.5 bg-line md:-right-1.5 md:bottom-auto md:left-5 md:top-[6px] md:h-0.5 md:w-auto"
-                  aria-hidden="true"
-                />
-              )}
-              <p class:list={["text-sm font-semibold tabular-nums", e.bad ? "text-bad" : "text-ok"]}>{e.phase}</p>
-              <p class="font-semibold leading-snug">{e.text}</p>
-            </li>
-          ))
-        }
-      </ol>
-    </figure>
     <ul class:list={[list, col]}>{guard.items.map((i) => <li set:html={rich(i)} />)}</ul>
+  </section>
+
+  <section id="zapz-forge" class="mt-12 scroll-mt-20">
+    <h3 class={h3}>{forge.title}</h3>
+    <ul class:list={[list, col]}>{forge.items.map((i) => <li set:html={rich(i)} />)}</ul>
+  </section>
+
+  <section id="automatisations" class="mt-12 scroll-mt-20">
+    <h3 class={h3}>{auto.title}</h3>
+    <ul class:list={[list, col]}>{auto.items.map((i) => <li set:html={rich(i)} />)}</ul>
     <p class="mt-4">
-      <a class="prose-link font-semibold" href={ROUTES.incident[lang]}>{v.postmortem}</a>
+      <a class="prose-link font-semibold" href={ROUTES.infra[lang]}>{lang === "fr" ? "Le VPS et l'infra perso" : "The VPS and personal infrastructure"}</a>
     </p>
   </section>
 
-  <section class="mt-12">
+  <section id="steam-roblox-agents" class="mt-12 scroll-mt-20">
     <h3 class={h3}>{sra.title}</h3>
     <FlowDiagram id="sra" label={v.graphLabel} diagram={sraGraph(lang)} />
     <ul class:list={[list, col]}>{sra.items.map((i) => <li set:html={rich(i)} />)}</ul>

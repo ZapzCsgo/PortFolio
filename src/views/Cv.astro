@@ -30,6 +30,7 @@ const contacts = [
     <header>
       <h1 class="text-3xl font-bold">{NAME}</h1>
       <p class="mt-1 text-lg font-semibold text-accent">{c.heading}</p>
+      <p class="font-semibold">{c.sub}</p>
       <p class="mt-1 text-muted">
         {
           contacts.map((x, i) => (
@@ -142,5 +143,10 @@ const contacts = [
     .cv a {
       text-decoration: none;
     }
+  }
+  .cv,
+  .cv * {
+    font-feature-settings: "calt" 0, "case" 0, "liga" 0;
+    font-variant-ligatures: none;
   }
 </style>

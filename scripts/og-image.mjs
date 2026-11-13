@@ -9,14 +9,14 @@ const logo = (await readFile(ROOT + "public/icon-512.png")).toString("base64");
 
 const TEXT = {
   fr: {
-    role: "Alternance DevOps / Cloud / SRE",
-    where: "Nice, Sophia Antipolis, Monaco",
-    tags: ["App en production", "Postmortem d'incident", "CI, Docker, supervision"],
+    role: "Développeur IA, web et DevOps",
+    where: "Stage de 6 mois · Nice / Côte d'Azur ou télétravail",
+    tags: ["App en prod, 3 langues", "Agents IA encadrés", "Déploiement contrôlé"],
   },
   en: {
-    role: "DevOps / Cloud / SRE work-study",
-    where: "Nice, Sophia Antipolis, Monaco",
-    tags: ["App in production", "Incident postmortem", "CI, Docker, monitoring"],
+    role: "AI, web and DevOps developer",
+    where: "6-month internship · Nice / French Riviera or remote",
+    tags: ["App live in 3 languages", "AI agents with guardrails", "Checked releases"],
   },
 };
 
